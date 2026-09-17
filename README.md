@@ -29,6 +29,9 @@ the existing `dist/` build. Rebuild after source changes; do not leave another
 server on that port. Run a single test file with `npm test -- tests/site.spec.ts`.
 CI runs type checking, the static build, and the same browser smoke tests, including
 a mobile browser with JavaScript disabled. Tests never submit a real contact message.
+`tests/home.spec.ts` checks both audience journeys and the four exact store links,
+plus visible content and overflow at 320, 768, and 1440 CSS pixels. It also scans
+both homepages with axe at those widths in the JavaScript-enabled browser project.
 
 To inspect the build manually, run `npm run preview`. Deploy the **contents of
 `dist/`** at the domain root on a static host that serves directory `index.html`
@@ -56,8 +59,13 @@ no browser-language detection or automatic language redirect.
 - `src/styles/global.css`: graphite/gold palette, responsive layout, and focus styles.
 
 Legal wording and original update dates are carried over from the previous site.
-The homepage's existing claims and App Store placeholder are retained for the
-later content tickets. This migration is not a legal or product-claims audit.
+The homepage describes the free BookMe platform for Moldova, with separate paths
+for clients and for salons or independent professionals. `DownloadApps.astro`
+contains the exact client/business store URLs and explains the BookMe Salon name
+on the App Store. `AppPreview.astro` renders labeled fictional search/calendar
+illustrations as responsive HTML/CSS, with localized accessible descriptions and
+no personal data or image downloads. All homepage content is rendered in the
+static HTML; it does not depend on JavaScript or an entrance animation.
 
 DM Sans and Instrument Serif are bundled locally from the pinned Fontsource
 packages with Latin and Latin Extended subsets, including Romanian diacritics.

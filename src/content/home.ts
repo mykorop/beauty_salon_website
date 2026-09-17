@@ -1,26 +1,66 @@
 import type { Locale } from '../i18n';
 
+interface Feature {
+  title: string;
+  body: string;
+}
+
+interface AudienceContent {
+  tag: string;
+  title: string;
+  intro: string;
+  features: Feature[];
+  download: string;
+}
+
 interface HomeContent {
   title: string;
   description: string;
   heading: string;
   intro: string;
-  download: string;
+  eyebrow: string;
+  clientLink: string;
+  businessLink: string;
   howLink: string;
   stepsTitle: string;
   stepsIntro: string;
-  steps: { title: string; body: string }[];
+  steps: Feature[];
   featuresTitle: string;
   featuresIntro: string;
-  features: { icon: string; title: string; body: string }[];
-  businessTag: string;
-  businessTitle: string;
-  businessIntro: string;
-  benefits: string[];
+  client: AudienceContent;
+  business: AudienceContent;
+  preview: {
+    searchLabel: string;
+    searchCaption: string;
+    searchTitle: string;
+    searchPlaceholder: string;
+    location: string;
+    services: [string, string, string];
+    exampleSalon: string;
+    exampleProfessional: string;
+    salonType: string;
+    professionalType: string;
+    availability: string;
+    calendarLabel: string;
+    calendarCaption: string;
+    calendarTitle: string;
+    day: string;
+    team: [string, string];
+    appointment: string;
+    available: string;
+  };
+  downloads: {
+    title: string;
+    intro: string;
+    clientAudience: string;
+    clientDescription: string;
+    businessAudience: string;
+    businessDescription: string;
+    googlePlay: string;
+    appStore: string;
+  };
   contactTitle: string;
   contactIntro: string;
-  reviews: string;
-  services: string[];
   name: string;
   email: string;
   message: string;
@@ -32,89 +72,78 @@ interface HomeContent {
 }
 
 export const homeContent: Record<Locale, HomeContent> = {
-  en: {
-    title: 'BookMe — Beauty Salon Booking App',
-    description: 'BookMe lets you instantly book appointments at beauty salons near you. Browse masters, check real-time availability, and confirm your booking in seconds.',
-    heading: 'Book beauty appointments, instantly.',
-    intro: 'BookMe connects you with top beauty salons and masters near you. Browse, pick, and confirm your appointment in seconds — no calls, no waiting.',
-    download: 'Download on the App Store',
-    howLink: 'See how it works',
-    stepsTitle: 'Book an appointment in 3 steps',
-    stepsIntro: 'No account required for browsing. Booking takes under a minute.',
-    steps: [
-      { title: 'Find a salon', body: 'Browse beauty salons in your area. Filter by service type, rating, or distance.' },
-      { title: 'Choose your master', body: 'View master profiles, specializations, portfolios, and real customer reviews.' },
-      { title: 'Pick a time', body: 'See live availability and confirm your appointment instantly. Get a reminder before your visit.' },
-    ],
-    featuresTitle: 'Everything you need for your beauty routine',
-    featuresIntro: 'BookMe is built around simplicity — so you spend less time scheduling and more time enjoying.',
-    features: [
-      { icon: '📍', title: 'Salons near you', body: 'Discover vetted beauty salons in your neighborhood, sorted by proximity and popularity.' },
-      { icon: '👤', title: 'Choose your master', body: 'Every master has a profile with photos of their work, services offered, and client ratings.' },
-      { icon: '📅', title: 'Real-time availability', body: "Slots update instantly — no double-bookings, no surprises. What you see is what's free." },
-      { icon: '🔔', title: 'Smart reminders', body: 'Automatic push notifications remind you before your appointment so you never miss a visit.' },
-      { icon: '⭐', title: 'Ratings & reviews', body: 'Leave feedback after every visit. Honest reviews help the community find the best masters.' },
-      { icon: '💬', title: 'No phone calls needed', body: 'Everything happens in the app. Browse, book, and manage appointments without a single call.' },
-    ],
-    businessTag: 'For businesses',
-    businessTitle: 'Grow your salon with BookMe',
-    businessIntro: 'Join hundreds of beauty salons already using BookMe to fill their schedules. Our platform connects you with clients who are actively looking to book — no marketing budget required.',
-    benefits: [
-      "Manage your team's availability in one place",
-      'Reduce no-shows with automatic client reminders',
-      'Build your online reputation through verified reviews',
-      'Get discovered by new clients in your area',
-    ],
-    contactTitle: 'Get in touch',
-    contactIntro: "Questions about the app, partnership inquiries, or anything else — we'd love to hear from you.",
-    reviews: '4.9 · 132 reviews',
-    services: ['Haircut', 'Color', 'Manicure', 'Pedicure'],
-    name: 'Your name',
-    email: 'Email address',
-    message: 'How can we help?',
-    send: 'Send message',
-    sending: 'Sending...',
-    sent: 'Sent!',
-    error: 'Error — Try again',
-    formNote: 'We respond within one business day. No spam, ever.',
-  },
   ro: {
-    title: 'BookMe — Programări la saloane de înfrumusețare',
-    description: 'BookMe îți permite să te programezi instant la saloanele de înfrumusețare din apropiere. Descoperă specialiști, verifică disponibilitatea în timp real și confirmă programarea în câteva secunde.',
-    heading: 'Programează-te la salon, instant.',
-    intro: 'BookMe te conectează cu saloane de înfrumusețare și specialiști de top din apropiere. Descoperă, alege și confirmă programarea în câteva secunde — fără apeluri, fără așteptare.',
-    download: 'Descarcă din App Store',
+    title: 'BookMe — Programări la salon în Moldova',
+    description: 'BookMe este platforma gratuită de programări la servicii de înfrumusețare din Moldova. Găsește un salon sau organizează-ți afacerea cu BookMe Business.',
+    heading: 'Programări la salon, în ritmul tău.',
+    intro: 'Descoperă saloane și specialiști din Moldova, alege serviciul și găsește un loc în agendă. Ai o afacere? Organizează-ți programările, serviciile și echipa cu BookMe Business.',
+    eyebrow: 'Platformă gratuită · Moldova',
+    clientLink: 'Vreau o programare',
+    businessLink: 'Îmi organizez afacerea',
     howLink: 'Vezi cum funcționează',
-    stepsTitle: 'Programează-te în 3 pași',
-    stepsIntro: 'Nu ai nevoie de cont pentru a explora. Programarea durează mai puțin de un minut.',
+    stepsTitle: 'De la căutare la programare. În 3 pași.',
+    stepsIntro: 'Următoarea vizită începe în aplicația BookMe pentru clienți.',
     steps: [
-      { title: 'Găsește un salon', body: 'Descoperă saloanele de înfrumusețare din zona ta. Filtrează după tipul serviciului, evaluare sau distanță.' },
-      { title: 'Alege specialistul', body: 'Vezi profilurile specialiștilor, specializările, portofoliile și recenziile clienților reali.' },
-      { title: 'Alege ora', body: 'Verifică disponibilitatea în timp real și confirmă programarea instant. Primește un memento înainte de vizită.' },
+      { title: 'Găsește un salon', body: 'Caută saloane și specialiști independenți din Moldova. Explorează serviciile și profilurile lor.' },
+      { title: 'Alege serviciul și specialistul', body: 'Consultă serviciile oferite și alege specialistul potrivit pentru vizita ta.' },
+      { title: 'Alege ora și confirmă', body: 'Selectează o oră disponibilă și confirmă programarea. Revino în aplicație pentru a vedea detaliile vizitei.' },
     ],
-    featuresTitle: 'Tot ce ai nevoie pentru rutina ta de îngrijire',
-    featuresIntro: 'BookMe pune simplitatea pe primul loc — ca să petreci mai puțin timp planificând și mai mult timp bucurându-te de rezultat.',
-    features: [
-      { icon: '📍', title: 'Saloane în apropiere', body: 'Descoperă saloane de înfrumusețare verificate din cartierul tău, ordonate după apropiere și popularitate.' },
-      { icon: '👤', title: 'Alege specialistul', body: 'Fiecare specialist are un profil cu fotografii ale lucrărilor, servicii oferite și evaluări de la clienți.' },
-      { icon: '📅', title: 'Disponibilitate în timp real', body: 'Orele disponibile se actualizează instant — fără programări suprapuse, fără surprize. Ceea ce vezi este disponibil.' },
-      { icon: '🔔', title: 'Mementouri inteligente', body: 'Notificările push automate îți amintesc de programare, ca să nu ratezi nicio vizită.' },
-      { icon: '⭐', title: 'Evaluări și recenzii', body: 'Lasă o recenzie după fiecare vizită. Recenziile sincere ajută comunitatea să găsească cei mai buni specialiști.' },
-      { icon: '💬', title: 'Fără apeluri telefonice', body: 'Totul se întâmplă în aplicație. Explorează, rezervă și gestionează programările fără niciun apel.' },
-    ],
-    businessTag: 'Pentru afaceri',
-    businessTitle: 'Dezvoltă-ți salonul cu BookMe',
-    businessIntro: 'Alătură-te sutelor de saloane de înfrumusețare care folosesc deja BookMe pentru a-și completa agenda. Platforma noastră te conectează cu clienți care caută activ o programare — fără buget de marketing.',
-    benefits: [
-      'Gestionează disponibilitatea echipei într-un singur loc',
-      'Redu absențele cu mementouri automate pentru clienți',
-      'Construiește-ți reputația online prin recenzii verificate',
-      'Fii descoperit de clienți noi din zona ta',
-    ],
+    featuresTitle: 'De ambele părți ale programării.',
+    featuresIntro: 'O aplicație pentru timpul tău. O aplicație pentru afacerea ta.',
+    client: {
+      tag: '01 / Pentru clienți',
+      title: 'Un loc pentru rutina ta de îngrijire.',
+      intro: 'De la prima căutare până la următoarea vizită, BookMe aduce opțiunile și programările tale în același loc.',
+      features: [
+        { title: 'Caută în Moldova', body: 'Descoperă saloane și specialiști independenți și explorează serviciile disponibile.' },
+        { title: 'Alege ce ți se potrivește', body: 'Alege serviciul, specialistul și o oră disponibilă, direct în aplicație.' },
+        { title: 'Gestionează-ți programările', body: 'Consultă vizitele viitoare, verifică detaliile și anulează o programare când planurile se schimbă.' },
+      ],
+      download: 'Descarcă BookMe pentru clienți',
+    },
+    business: {
+      tag: '02 / Pentru afaceri',
+      title: 'Agenda ta. Echipa ta. În același loc.',
+      intro: 'Un salon cu o echipă sau un specialist independent: BookMe Business îți oferă un loc pentru organizarea activității de zi cu zi.',
+      features: [
+        { title: 'Calendarul de lucru', body: 'Vezi programările și gestionează orele de lucru și disponibilitatea din calendar.' },
+        { title: 'Serviciile tale', body: 'Organizează lista de servicii, durata și prețurile, astfel încât clienții să știe ce pot alege.' },
+        { title: 'În echipă sau independent', body: 'Gestionează specialiștii și programul echipei. Lucrezi pe cont propriu? Folosește aplicația pentru propria agendă și propriile servicii.' },
+      ],
+      download: 'Descarcă BookMe Business',
+    },
+    preview: {
+      searchLabel: 'Exemplu ilustrativ de căutare în BookMe: servicii, un salon și un specialist independent fictivi.',
+      searchCaption: 'Machetă ilustrativă · Exemple fictive, fără date personale.',
+      searchTitle: 'Ce îți rezervi astăzi?',
+      searchPlaceholder: 'Caută un serviciu sau un salon',
+      location: 'Moldova',
+      services: ['Tunsoare', 'Manichiură', 'Îngrijire'],
+      exampleSalon: 'Salon demonstrativ',
+      exampleProfessional: 'Specialist demonstrativ',
+      salonType: 'Salon de înfrumusețare',
+      professionalType: 'Specialist independent',
+      availability: 'Exemplu de ore disponibile',
+      calendarLabel: 'Exemplu ilustrativ de calendar BookMe Business: două coloane de specialiști, programări și ore libere fictive.',
+      calendarCaption: 'Calendar ilustrativ · Programări și specialiști fictivi.',
+      calendarTitle: 'O privire asupra zilei',
+      day: 'Luni · Zi demonstrativă',
+      team: ['Specialist A', 'Specialist B'],
+      appointment: 'Programare',
+      available: 'Timp disponibil',
+    },
+    downloads: {
+      title: 'Următorul pas începe aici.',
+      intro: 'Două aplicații. O platformă gratuită pentru programări la servicii de înfrumusețare în Moldova.',
+      clientAudience: 'Pentru clienți',
+      clientDescription: 'Găsește un salon sau un specialist independent și gestionează-ți programările în aplicația BookMe pentru clienți.',
+      businessAudience: 'Pentru saloane și specialiști independenți',
+      businessDescription: 'Gestionează calendarul, serviciile și echipa cu BookMe Business. În App Store, aceeași aplicație pentru afaceri se numește BookMe Salon.',
+      googlePlay: 'Descarcă din Google Play',
+      appStore: 'Descarcă din App Store',
+    },
     contactTitle: 'Contactează-ne',
     contactIntro: 'Întrebări despre aplicație, propuneri de parteneriat sau orice altceva — ne-ar face plăcere să ne scrii.',
-    reviews: '4,9 · 132 de recenzii',
-    services: ['Tunsoare', 'Vopsire', 'Manichiură', 'Pedichiură'],
     name: 'Numele tău',
     email: 'Adresa de e-mail',
     message: 'Cum te putem ajuta?',
@@ -122,6 +151,87 @@ export const homeContent: Record<Locale, HomeContent> = {
     sending: 'Se trimite...',
     sent: 'Trimis!',
     error: 'Eroare — Încearcă din nou',
-    formNote: 'Răspundem în termen de o zi lucrătoare. Fără spam, niciodată.',
+    formNote: 'Mesajul tău ajunge la echipa BookMe.',
+  },
+  en: {
+    title: 'BookMe — Beauty appointments in Moldova',
+    description: 'BookMe is the free platform for beauty appointments in Moldova. Find a salon or organize your business with BookMe Business.',
+    heading: 'Beauty appointments, at your pace.',
+    intro: 'Discover salons and beauty professionals in Moldova, choose a service and find a time that fits. Running a business? Organize your appointments, services and team with BookMe Business.',
+    eyebrow: 'Free platform · Moldova',
+    clientLink: 'Find my next appointment',
+    businessLink: 'Organize my business',
+    howLink: 'See how it works',
+    stepsTitle: 'From search to appointment. In 3 steps.',
+    stepsIntro: 'Your next visit starts in the BookMe client app.',
+    steps: [
+      { title: 'Find a salon', body: 'Search for salons and independent beauty professionals in Moldova. Explore their services and profiles.' },
+      { title: 'Choose a service and professional', body: 'Browse the services on offer and choose the right professional for your visit.' },
+      { title: 'Pick a time and confirm', body: 'Select an available time and confirm your appointment. Come back to the app to check your visit details.' },
+    ],
+    featuresTitle: 'Both sides of an appointment.',
+    featuresIntro: 'One app for your time. One app for your business.',
+    client: {
+      tag: '01 / For clients',
+      title: 'A place for your beauty routine.',
+      intro: 'From the first search to your next visit, BookMe brings your options and appointments together.',
+      features: [
+        { title: 'Search in Moldova', body: 'Discover salons and independent beauty professionals and explore their available services.' },
+        { title: 'Choose what suits you', body: 'Pick your service, professional and an available time, directly in the app.' },
+        { title: 'Manage your appointments', body: 'See upcoming visits, check the details and cancel an appointment when your plans change.' },
+      ],
+      download: 'Download BookMe for clients',
+    },
+    business: {
+      tag: '02 / For businesses',
+      title: 'Your calendar. Your team. Together.',
+      intro: 'Whether you run a salon with a team or work as an independent professional, BookMe Business gives you a place to organize your day.',
+      features: [
+        { title: 'Your working calendar', body: 'See appointments and manage working hours and availability in your calendar.' },
+        { title: 'Your services', body: 'Organize your services, durations and prices so clients know what they can choose.' },
+        { title: 'With a team or on your own', body: 'Manage professionals and team schedules. Working independently? Use the app for your own calendar and services.' },
+      ],
+      download: 'Download BookMe Business',
+    },
+    preview: {
+      searchLabel: 'Illustrative BookMe search preview with services, a fictional salon and an independent professional.',
+      searchCaption: 'Interface illustration · Fictional examples, no personal data.',
+      searchTitle: 'What will you book today?',
+      searchPlaceholder: 'Search for a service or salon',
+      location: 'Moldova',
+      services: ['Haircut', 'Manicure', 'Beauty care'],
+      exampleSalon: 'Example salon',
+      exampleProfessional: 'Example professional',
+      salonType: 'Beauty salon',
+      professionalType: 'Independent professional',
+      availability: 'Example available times',
+      calendarLabel: 'Illustrative BookMe Business calendar with two professional columns, fictional appointments and available times.',
+      calendarCaption: 'Calendar illustration · Fictional appointments and professionals.',
+      calendarTitle: 'Your day at a glance',
+      day: 'Monday · Example day',
+      team: ['Professional A', 'Professional B'],
+      appointment: 'Appointment',
+      available: 'Available time',
+    },
+    downloads: {
+      title: 'Your next step starts here.',
+      intro: 'Two apps. One free platform for beauty appointments in Moldova.',
+      clientAudience: 'For clients',
+      clientDescription: 'Find a salon or an independent beauty professional and manage your appointments in the BookMe client app.',
+      businessAudience: 'For salons & independent professionals',
+      businessDescription: 'Manage your calendar, services and team with BookMe Business. On the App Store, the same business app is called BookMe Salon.',
+      googlePlay: 'Get it on Google Play',
+      appStore: 'Download on the App Store',
+    },
+    contactTitle: 'Get in touch',
+    contactIntro: "Questions about the app, partnership inquiries, or anything else — we'd love to hear from you.",
+    name: 'Your name',
+    email: 'Email address',
+    message: 'How can we help?',
+    send: 'Send message',
+    sending: 'Sending...',
+    sent: 'Sent!',
+    error: 'Error — Try again',
+    formNote: 'Your message goes to the BookMe team.',
   },
 };

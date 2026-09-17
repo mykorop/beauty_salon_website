@@ -1,0 +1,48 @@
+---
+import { homeContent } from '../content/home';
+import type { Locale } from '../i18n';
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const text = homeContent[locale].downloads;
+const apps = [
+  {
+    id: 'client', name: 'BookMe', audience: text.clientAudience, description: text.clientDescription,
+    android: 'https://play.google.com/store/apps/details?id=md.bookme.client',
+    ios: 'https://apps.apple.com/us/app/bookme/id6779576243',
+  },
+  {
+    id: 'business', name: 'BookMe Business', audience: text.businessAudience, description: text.businessDescription,
+    android: 'https://play.google.com/store/apps/details?id=md.bookme.business',
+    ios: 'https://apps.apple.com/ua/app/bookme-salon/id6779576340?l=uk',
+  },
+];
+---
+<section id="download" class="section section-alt" aria-labelledby="download-title">
+  <div class="section-inner">
+    <h2 id="download-title">{text.title}</h2>
+    <p class="section-subtitle">{text.intro}</p>
+    <div class="download-grid">
+      {apps.map((app) => (
+        <section id={`download-${app.id}`} class="download-card" aria-labelledby={`download-${app.id}-title`}>
+          <span class="eyebrow">{app.audience}</span>
+          <h3 id={`download-${app.id}-title`}>{app.name}</h3>
+          <p>{app.description}</p>
+          <div class="store-links">
+            <a href={app.android} class="btn-primary" aria-label={`${app.name} — ${text.googlePlay}`}>{text.googlePlay}</a>
+            <a href={app.ios} class="btn-secondary" aria-label={`${app.id === 'business' ? 'BookMe Business / BookMe Salon' : app.name} — ${text.appStore}`}>{text.appStore}</a>
+          </div>
+        </section>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .download-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; }
+  .download-card { padding: clamp(1.25rem, 3vw, 2.5rem); border: 1px solid var(--border); border-radius: 1rem; background: var(--bg); display: flex; flex-direction: column; align-items: flex-start; }
+  .download-card h3 { font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 2.25rem; margin: 1rem 0 0.5rem; }
+  .download-card p { color: var(--text-muted); margin-bottom: 2rem; }
+  .store-links { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: auto; }
+  @media (max-width: 768px) { .download-grid { grid-template-columns: 1fr; } }
+</style>

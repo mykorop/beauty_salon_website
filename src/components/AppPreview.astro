@@ -1,0 +1,106 @@
+---
+import { homeContent } from '../content/home';
+import type { Locale } from '../i18n';
+
+interface Props { locale: Locale; kind: 'search' | 'calendar' }
+const { locale, kind } = Astro.props;
+const text = homeContent[locale].preview;
+---
+<figure class:list={['app-preview', kind]}>
+  <div class="preview-window" role="img" aria-label={kind === 'search' ? text.searchLabel : text.calendarLabel}>
+    <div aria-hidden="true">
+      <div class="preview-topbar">
+        <span class="preview-brand">BookMe<span class="brand-dot">.</span></span>
+        <span class="preview-edition">{kind === 'search' ? text.location : 'Business'}</span>
+      </div>
+      {kind === 'search' ? (
+        <div class="search-body">
+          <p class="preview-title">{text.searchTitle}</p>
+          <div class="search-field">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="10.5" cy="10.5" r="6.5" /><path d="m16 16 4 4" /></svg>
+            <span>{text.searchPlaceholder}</span>
+          </div>
+          <div class="service-chips">{text.services.map((service) => <span>{service}</span>)}</div>
+          <div class="search-result">
+            <div class="salon-art"><span>B</span><i></i></div>
+            <div class="result-caption"><strong>{text.exampleSalon}</strong><span>{text.salonType}</span></div>
+          </div>
+          <div class="professional-result">
+            <span class="professional-mark">B.</span>
+            <div class="result-caption"><strong>{text.exampleProfessional}</strong><span>{text.professionalType}</span></div>
+            <span class="result-arrow">↗</span>
+          </div>
+          <div class="availability">
+            <p>{text.availability}</p>
+            <div class="time-slots"><span>10:00</span><span>12:30</span><span>15:00</span></div>
+          </div>
+        </div>
+      ) : (
+        <div class="calendar-body">
+          <p class="preview-title">{text.calendarTitle}</p>
+          <p class="calendar-day">{text.day}</p>
+          <div class="calendar-grid">
+            <span></span><span class="team-label">{text.team[0]}</span><span class="team-label">{text.team[1]}</span>
+            <span class="calendar-time">09:00</span>
+            <div class="appointment gold"><span>{text.appointment}</span><strong>{text.services[0]}</strong><span>09:00 – 10:00</span></div>
+            <div class="calendar-free"><span>{text.available}</span></div>
+            <span class="calendar-time">10:00</span>
+            <div class="calendar-free"><span>{text.available}</span></div>
+            <div class="appointment"><span>{text.appointment}</span><strong>{text.services[1]}</strong><span>10:00 – 11:00</span></div>
+            <span class="calendar-time">11:00</span>
+            <div class="appointment"><span>{text.appointment}</span><strong>{text.services[2]}</strong><span>11:00 – 12:00</span></div>
+            <div class="calendar-free"><span>{text.available}</span></div>
+          </div>
+        </div>
+      )}
+    </div>
+  </div>
+  <figcaption>{kind === 'search' ? text.searchCaption : text.calendarCaption}</figcaption>
+</figure>
+
+<style>
+  .app-preview { min-width: 0; width: 100%; }
+  .search { max-width: 420px; margin-inline: auto; }
+  .preview-window { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 1.25rem; box-shadow: 0 24px 60px rgb(0 0 0 / 18%); overflow: hidden; }
+  .preview-topbar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem 1.5rem; border-bottom: 1px solid var(--border); }
+  .preview-brand { font-family: 'Instrument Serif', serif; font-size: 1.75rem; line-height: 1; }
+  .brand-dot { color: var(--accent); }
+  .preview-edition { color: var(--accent); font-size: 0.75rem; letter-spacing: 0.06em; }
+  .search-body, .calendar-body { padding: clamp(1rem, 3vw, 1.5rem); }
+  .preview-title { font-family: 'Instrument Serif', serif; font-size: clamp(1.5rem, 2.5vw, 2rem); line-height: 1.2; margin-bottom: 1rem; }
+  .search-field { display: flex; align-items: center; gap: 0.6rem; padding: 0.8rem; background: var(--bg); border: 1px solid var(--border); border-radius: 0.5rem; color: var(--text-muted); font-size: 0.75rem; }
+  .search-field svg { flex-shrink: 0; }
+  .service-chips { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 1rem 0; }
+  .service-chips span { border: 1px solid var(--border); border-radius: 2rem; padding: 0.3rem 0.7rem; font-size: 0.7rem; color: var(--text-muted); }
+  .service-chips span:first-child { color: var(--bg); background: var(--accent); border-color: var(--accent); }
+  .search-result { border: 1px solid var(--border); border-radius: 0.6rem; overflow: hidden; }
+  .salon-art { position: relative; height: 120px; overflow: hidden; display: flex; align-items: center; justify-content: center; background: #49463d; }
+  .salon-art::before, .salon-art::after { content: ''; position: absolute; width: 90px; height: 150px; border: 1px solid #c0a978; border-radius: 90px 90px 0 0; transform: rotate(24deg); }
+  .salon-art::before { left: -15px; top: 20px; }
+  .salon-art::after { right: -15px; bottom: 20px; transform: rotate(-24deg); }
+  .salon-art > span { font-family: 'Instrument Serif', serif; font-size: 5rem; font-style: italic; line-height: 1; color: #eed49e; z-index: 1; }
+  .salon-art i { position: absolute; width: 94px; height: 94px; border: 1px solid #c0a978; border-radius: 50%; }
+  .result-caption { display: flex; flex-direction: column; min-width: 0; }
+  .search-result .result-caption { padding: 0.75rem 1rem; }
+  .result-caption strong { font-size: 0.85rem; font-weight: 500; }
+  .result-caption > span { font-size: 0.7rem; color: var(--text-muted); }
+  .professional-result { display: flex; align-items: center; gap: 0.75rem; padding-block: 1rem; }
+  .professional-mark { display: grid; place-items: center; flex-shrink: 0; width: 40px; height: 48px; border-radius: 2rem 2rem 0.3rem 0.3rem; background: #363f3c; color: #d8e3dd; font-family: 'Instrument Serif', serif; font-size: 1.5rem; }
+  .result-arrow { margin-left: auto; color: var(--accent); }
+  .availability { border-top: 1px solid var(--border); padding-top: 0.8rem; }
+  .availability p, .calendar-day { color: var(--text-muted); font-size: 0.75rem; margin-bottom: 0.6rem; }
+  .time-slots { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.5rem; }
+  .time-slots span { text-align: center; border: 1px solid var(--border); border-radius: 0.35rem; padding: 0.4rem; color: var(--accent); font-size: 0.8rem; }
+  figcaption { color: var(--text-muted); font-size: 0.7rem; text-align: center; margin-top: 1rem; }
+  .calendar .preview-title { margin-bottom: 0.5rem; }
+  .calendar-grid { display: grid; grid-template-columns: auto repeat(2, minmax(0, 1fr)); gap: 0.6rem; margin-top: 1.5rem; }
+  .team-label { color: var(--text-muted); font-size: 0.65rem; padding-bottom: 0.5rem; overflow-wrap: anywhere; }
+  .calendar-time { color: var(--text-muted); font-size: 0.65rem; padding-top: 0.7rem; }
+  .appointment, .calendar-free { padding: 0.75rem 0.6rem; border-radius: 0.35rem; min-height: 105px; overflow-wrap: anywhere; }
+  .appointment { display: flex; flex-direction: column; background: #343e3a; border-left: 2px solid #a9bcaf; }
+  .appointment.gold { background: #443d2e; border-color: var(--accent); }
+  .appointment > span { font-size: 0.6rem; color: var(--text-muted); }
+  .appointment strong { font-size: 0.75rem; font-weight: 500; margin-block: 0.3rem; }
+  .calendar-free { display: grid; place-items: center; border: 1px dashed var(--border); }
+  .calendar-free span { font-size: 0.65rem; color: var(--text-muted); text-align: center; }
+</style>
