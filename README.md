@@ -50,6 +50,13 @@ no browser-language detection or automatic language redirect.
 
 ## Editing
 
+Favicon sources, imagegen prompts, export instructions, and visual review sheets
+are documented in [design/branding](design/branding/README.md). Icons and RO/EN
+social cards are committed static files in `public/`; normal builds need no image
+service. `tests/branding.spec.ts` checks their production formats and dimensions,
+the web manifest, and localized Open Graph/Twitter metadata on all eight pages.
+The production origin for absolute social URLs is `site` in `astro.config.mjs`.
+
 - `src/i18n.ts`: shared labels and page URL mapping.
 - `src/content/home.ts`: localized homepage copy.
 - `src/content/legal/{ro,en}/`: legal document bodies; shared metadata lives in
