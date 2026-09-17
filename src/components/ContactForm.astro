@@ -1,22 +1,29 @@
 ---
 import { homeContent } from '../content/home';
-import type { Locale } from '../i18n';
+import { labels, pageUrl, type Locale } from '../i18n';
 interface Props { locale: Locale }
 const { locale } = Astro.props;
 const text = homeContent[locale];
 ---
+<p id="contact-hint" class="form-hint">{text.formHint}</p>
 <form id="contact-form" class="contact-form" action="https://formbold.com/s/oD7mJ" method="POST"
-  data-sending={text.sending} data-sent={text.sent} data-error={text.error}>
+  aria-describedby="contact-hint"
+  data-sending={text.sending} data-sent={text.sent} data-error={text.error} data-invalid={text.invalid}>
   <label for="contact-name">{text.name}</label>
-  <input id="contact-name" type="text" name="name" autocomplete="name" required />
+  <input id="contact-name" type="text" name="name" autocomplete="name" required pattern=".*\S.*"
+    aria-describedby="contact-name-error" data-error={text.nameError} />
+  <p id="contact-name-error" class="field-error" hidden></p>
   <label for="contact-email">{text.email}</label>
-  <input id="contact-email" type="email" name="email" autocomplete="email" required />
+  <input id="contact-email" type="email" name="email" autocomplete="email" required
+    aria-describedby="contact-email-error" data-error={text.emailError} />
+  <p id="contact-email-error" class="field-error" hidden></p>
   <label for="contact-message">{text.message}</label>
   <textarea id="contact-message" name="message" rows="5"></textarea>
   <button type="submit">{text.send}</button>
   <p class="form-status" role="status" aria-live="polite" aria-atomic="true"></p>
 </form>
-<p class="form-note">{text.formNote}</p>
+<p class="form-note">{text.formNote} <a href={pageUrl(locale, 'privacy')}>{labels[locale].privacyTitle}</a></p>
+<p class="support-alternative">{text.supportAlternative} <a href="mailto:support@bookme.md">support@bookme.md</a>.</p>
 
 <script>
   const form = document.querySelector<HTMLFormElement>('#contact-form');
@@ -24,9 +31,35 @@ const text = homeContent[locale];
   const status = form?.querySelector<HTMLElement>('[role="status"]');
 
   if (form && button && status) {
+    // Keep native validation when JavaScript is unavailable; enhance it with
+    // localized, persistent field errors once the submit handler is ready.
+    form.noValidate = true;
+    const fields = [...form.querySelectorAll<HTMLInputElement>('input[required]')];
+    const validate = (field: HTMLInputElement) => {
+      const valid = field.validity.valid;
+      const error = form.querySelector<HTMLElement>(`#${field.id}-error`);
+      field.setAttribute('aria-invalid', String(!valid));
+      if (error) {
+        error.textContent = valid ? '' : field.dataset.error ?? '';
+        error.hidden = valid;
+      }
+      return valid;
+    };
+    for (const field of fields) {
+      field.addEventListener('input', () => {
+        if (field.getAttribute('aria-invalid') === 'true') validate(field);
+      });
+    }
+
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
       if (button.disabled) return;
+      const invalidFields = fields.filter((field) => !validate(field));
+      if (invalidFields.length) {
+        status.textContent = form.dataset.invalid ?? '';
+        invalidFields[0].focus();
+        return;
+      }
       button.disabled = true;
       status.textContent = form.dataset.sending ?? '';
 

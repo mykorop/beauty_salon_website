@@ -75,4 +75,19 @@ are made by the website.
 The contact form retains the FormBold endpoint `https://formbold.com/s/oD7mJ`,
 `POST`, and fields `name`, `email`, and `message`. With JavaScript it sends
 `FormData` with `Accept: application/json`; without JavaScript it submits through
-the native form action. The visible labels and status messages are localized.
+the native form action. Name and email are required; the message is optional.
+JavaScript adds localized inline validation with focus on the first invalid field,
+and a live region announces validation, sending, success, and failure. Sending
+disables repeat submissions; only an HTTP success clears the form, and failures
+preserve all fields for retry. A localized privacy link and `support@bookme.md`
+are always available beside the form.
+
+`Faq.astro` renders six localized questions using native `details`/`summary`, so
+answers can be opened with the keyboard and without JavaScript. The FAQ links to
+the account deletion instructions in the current language.
+
+`tests/faq.spec.ts` checks both languages and keyboard interaction with and without
+JavaScript. `tests/contact.spec.ts` intercepts FormBold to cover the exact POST
+contract, validation, delayed responses, duplicate prevention, success, server
+and network failures, retry, and sending another message. Axe scans cover the
+expanded FAQ and the idle, invalid, pending, successful, and failed form states.

@@ -254,6 +254,23 @@ section[id] {
     color: var(--text);
 }
 
+.form-hint {
+    text-align: left;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin-bottom: 1.5rem;
+}
+
+.field-error {
+    color: var(--accent);
+    font-size: 0.85rem;
+    margin-top: -0.5rem;
+}
+
+.contact-form [aria-invalid="true"] {
+    border-color: var(--accent);
+}
+
 .contact-form button:disabled {
     cursor: wait;
 }
@@ -289,6 +306,12 @@ section[id] {
     color: var(--text-muted);
     margin-top: 1rem;
     text-align: center;
+}
+
+.support-alternative {
+    margin-top: 1.25rem;
+    font-size: 0.9rem;
+    color: var(--text-muted);
 }
 
 /* Footer */

@@ -3,6 +3,7 @@ import SiteLayout from '../layouts/SiteLayout.astro';
 import ContactForm from './ContactForm.astro';
 import DownloadApps from './DownloadApps.astro';
 import AppPreview from './AppPreview.astro';
+import Faq from './Faq.astro';
 import { homeContent } from '../content/home';
 import type { Locale } from '../i18n';
 interface Props { locale: Locale }
@@ -80,8 +81,9 @@ const text = homeContent[locale];
   </section>
 
   <DownloadApps locale={locale} />
+  <Faq locale={locale} />
 
-  <section id="contact" class="section" aria-labelledby="contact-title">
+  <section id="contact" class="section section-alt" aria-labelledby="contact-title">
     <div class="section-inner contact-section">
       <h2 id="contact-title">{text.contactTitle}</h2>
       <p class="section-subtitle">{text.contactIntro}</p>

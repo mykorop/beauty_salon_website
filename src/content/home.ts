@@ -59,6 +59,12 @@ interface HomeContent {
     googlePlay: string;
     appStore: string;
   };
+  faq: {
+    title: string;
+    intro: string;
+    items: { question: string; answer: string }[];
+    deletionLink: string;
+  };
   contactTitle: string;
   contactIntro: string;
   name: string;
@@ -68,7 +74,12 @@ interface HomeContent {
   sending: string;
   sent: string;
   error: string;
+  formHint: string;
+  invalid: string;
+  nameError: string;
+  emailError: string;
   formNote: string;
+  supportAlternative: string;
 }
 
 export const homeContent: Record<Locale, HomeContent> = {
@@ -142,16 +153,34 @@ export const homeContent: Record<Locale, HomeContent> = {
       googlePlay: 'Descarcă din Google Play',
       appStore: 'Descarcă din App Store',
     },
+    faq: {
+      title: 'Întrebări frecvente',
+      intro: 'Despre aplicații, programări și contul tău.',
+      items: [
+        { question: 'Ce aplicație să aleg?', answer: 'Alege BookMe pentru a găsi servicii și a face programări. Dacă ai un salon sau lucrezi independent, folosește BookMe Business pentru calendar, servicii și echipă. În App Store, aplicația pentru afaceri se numește BookMe Salon.' },
+        { question: 'Unde pot folosi BookMe?', answer: 'BookMe este o platformă pentru Moldova. În aplicație poți explora saloanele, specialiștii și serviciile disponibile, apoi alege o oră pentru programare.' },
+        { question: 'BookMe este gratuit?', answer: 'Da. Platforma BookMe este gratuită pentru clienți, saloane și specialiști independenți. Serviciile rezervate se plătesc separat, direct prestatorului.' },
+        { question: 'Cum plătesc serviciile rezervate?', answer: 'Plătești serviciile direct salonului sau specialistului care le oferă. Verifică prețul și modalitatea de plată cu prestatorul. BookMe este platforma de programări; serviciul este oferit de salon sau specialist.' },
+        { question: 'Am nevoie de un cont?', answer: 'Un cont îți permite să faci și să gestionezi programările în aplicație. Păstrează datele de conectare confidențiale. Dacă ai nevoie de ajutor cu accesul la cont, scrie-ne la support@bookme.md.' },
+        { question: 'Cum îmi șterg contul și datele?', answer: 'Poți solicita ștergerea din aplicație sau ne poți scrie la support@bookme.md dacă nu mai ai acces. Consultă pașii pentru contul tău și informațiile despre datele care se șterg sau pot fi păstrate.' },
+      ],
+      deletionLink: 'Vezi pașii pentru ștergerea contului',
+    },
     contactTitle: 'Contactează-ne',
     contactIntro: 'Întrebări despre aplicație, propuneri de parteneriat sau orice altceva — ne-ar face plăcere să ne scrii.',
     name: 'Numele tău',
     email: 'Adresa de e-mail',
     message: 'Cum te putem ajuta?',
     send: 'Trimite mesajul',
-    sending: 'Se trimite...',
-    sent: 'Trimis!',
-    error: 'Eroare — Încearcă din nou',
-    formNote: 'Mesajul tău ajunge la echipa BookMe.',
+    sending: 'Se trimite mesajul…',
+    sent: 'Mesajul tău a fost trimis. Îți mulțumim că ne-ai scris!',
+    error: 'Nu am putut confirma trimiterea mesajului. Datele introduse au fost păstrate. Încearcă din nou sau scrie la support@bookme.md.',
+    formHint: 'Numele și adresa de e-mail sunt obligatorii. Mesajul este opțional.',
+    invalid: 'Verifică numele și adresa de e-mail înainte de a trimite.',
+    nameError: 'Introdu numele tău.',
+    emailError: 'Introdu o adresă de e-mail validă.',
+    formNote: 'Numele, adresa de e-mail și mesajul sunt transmise prin FormBold echipei BookMe pentru a răspunde solicitării tale.',
+    supportAlternative: 'Preferi e-mailul sau formularul nu funcționează? Scrie-ne la',
   },
   en: {
     title: 'BookMe — Beauty appointments in Moldova',
@@ -223,15 +252,33 @@ export const homeContent: Record<Locale, HomeContent> = {
       googlePlay: 'Get it on Google Play',
       appStore: 'Download on the App Store',
     },
+    faq: {
+      title: 'Frequently asked questions',
+      intro: 'About the apps, appointments and your account.',
+      items: [
+        { question: 'Which app should I choose?', answer: 'Choose BookMe to find services and book appointments. If you run a salon or work independently, use BookMe Business for your calendar, services and team. On the App Store, the business app is called BookMe Salon.' },
+        { question: 'Where can I use BookMe?', answer: 'BookMe is a platform for Moldova. Explore available salons, professionals and services in the app, then choose a time for your appointment.' },
+        { question: 'Is BookMe free?', answer: 'Yes. The BookMe platform is free for clients, salons and independent professionals. Booked services are paid for separately, directly to the provider.' },
+        { question: 'How do I pay for booked services?', answer: 'Pay for services directly to the salon or professional providing them. Check the price and payment method with your provider. BookMe is the booking platform; the salon or professional provides the service.' },
+        { question: 'Do I need an account?', answer: 'An account lets you book and manage appointments in the app. Keep your sign-in details confidential. If you need help accessing your account, email us at support@bookme.md.' },
+        { question: 'How do I delete my account and data?', answer: 'You can request deletion in the app or email support@bookme.md if you no longer have access. Check the steps for your account and the information about data that is deleted or may be retained.' },
+      ],
+      deletionLink: 'See the account deletion steps',
+    },
     contactTitle: 'Get in touch',
     contactIntro: "Questions about the app, partnership inquiries, or anything else — we'd love to hear from you.",
     name: 'Your name',
     email: 'Email address',
     message: 'How can we help?',
     send: 'Send message',
-    sending: 'Sending...',
-    sent: 'Sent!',
-    error: 'Error — Try again',
-    formNote: 'Your message goes to the BookMe team.',
+    sending: 'Sending your message…',
+    sent: 'Your message has been sent. Thank you for contacting BookMe!',
+    error: 'We could not confirm your message was sent. Your text has been kept. Try again or email support@bookme.md.',
+    formHint: 'Name and email address are required. The message is optional.',
+    invalid: 'Check your name and email address before sending.',
+    nameError: 'Enter your name.',
+    emailError: 'Enter a valid email address.',
+    formNote: 'Your name, email address and message are sent through FormBold to the BookMe team to respond to your request.',
+    supportAlternative: 'Prefer email or having trouble with the form? Write to',
   },
 };
