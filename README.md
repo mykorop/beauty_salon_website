@@ -58,7 +58,16 @@ no browser-language detection or automatic language redirect.
 - `src/components/`: shared navigation, footer, language links, homepage, and form.
 - `src/styles/global.css`: graphite/gold palette, responsive layout, and focus styles.
 
-Legal wording and original update dates are carried over from the previous site.
+Privacy and account-deletion wording in both languages follows the
+[data audit](.scratch/bookme-website-refresh/audit/README.md). The
+[editorial evidence record](.scratch/bookme-website-refresh/audit/privacy-publication.md)
+maps claims to evidence and records outstanding operational/legal confirmations.
+Terms retain their original wording and date for the separate terms ticket.
+The legal layout generates section navigation from Markdown headings and includes
+print styles. `tests/privacy.spec.ts` covers the four privacy/deletion URLs, rights
+and email-request links, keyboard section navigation, print output, 320/768/1440px
+layouts, and axe checks. Content and navigation also run without JavaScript;
+axe runs in the JavaScript-enabled project. No deletion email is sent by tests.
 The homepage describes the free BookMe platform for Moldova, with separate paths
 for clients and for salons or independent professionals. `DownloadApps.astro`
 contains the exact client/business store URLs and explains the BookMe Salon name

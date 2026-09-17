@@ -1,45 +1,53 @@
-Această pagină explică modul în care poți șterge contul tău **BookMe** sau **BookMe Business** și datele personale asociate acestuia. Ștergerea contului este permanentă și nu poate fi anulată.
+Această pagină acoperă **BookMe** pentru clienți și **BookMe Business** pentru saloane și specialiști, publicat ca **BookMe Salon** în App Store. Operatorul este **BOOKME HUB, SRL**, str. Glinka 4, ap./of. 10, Bălți, Moldova. Contact: [support@bookme.md](mailto:support@bookme.md).
 
-## Opțiunea 1: Șterge contul din aplicație
+**Ștergerea din aplicație dezactivează contul și începe o curățare parțială. Nu șterge imediat toate datele asociate.** Eliminarea finală a înregistrărilor rămase necesită un proces separat prin asistență, descris mai jos. Dezinstalarea aplicației nu șterge contul.
 
-Cea mai rapidă modalitate de a șterge contul este direct din aplicație:
+Poți solicita ștergerea contului și a datelor asociate fără autentificare și fără aplicația instalată. Dacă butonul nu deschide o aplicație de e-mail, scrie la **support@bookme.md** din serviciul tău obișnuit de e-mail.
 
-- În aplicația **BookMe** (pentru clienți): autentifică-te, accesează fila **Profil** și apasă **Șterge contul**
-- În aplicația **BookMe Business** (pentru saloane și specialiști): autentifică-te, accesează fila **Setări** și apasă **Șterge contul**
-- Confirmă ștergerea atunci când ți se solicită
+## Solicită ștergerea prin asistență
 
-Contul tău și datele asociate sunt șterse imediat după confirmare.
+1. Scrie la **support@bookme.md** cu subiectul **Cerere de ștergere a contului BookMe**. Dacă este posibil, folosește adresa asociată contului tău BookMe.
+2. Indică aplicația și rolul folosit: client, administrator de salon sau specialist. Solicită ștergerea contului și a datelor personale asociate. Dacă ai folosit deja ștergerea din aplicație, menționează și acest lucru.
+3. Dacă nu mai ai acces la adresa contului, explică situația în mesaj. Asistența va trebui să verifice că cererea îți aparține. Nu trimite parole, coduri de autentificare sau acte de identitate în mesajul inițial.
 
-## Opțiunea 2: Solicită ștergerea prin e-mail
+Angajamentul nostru de asistență este să soluționăm cererile de ștergere a contului în **30 de zile de la primire** și să răspundem cu rezultatul. Datele rămase trebuie verificate și eliminate din serviciile relevante; mesajul de succes din aplicație nu confirmă încheierea acestei operațiuni. Cere asistenței confirmarea eliminării finale și explicații despre orice date încă păstrate.
 
-Dacă nu mai poți accesa aplicația, poți solicita ștergerea contului prin e-mail:
+## Începe ștergerea în aplicație
 
-- Trimite un e-mail la **support@bookme.md** de la adresa de e-mail cu care este înregistrat contul tău BookMe
-- Folosește subiectul **„Account deletion request”**
-- Vom verifica solicitarea și vom șterge contul în termen de **30 de zile**, apoi îți vom confirma printr-un răspuns când procesul este finalizat
+Autentifică-te în contul pe care vrei să îl ștergi și urmează traseul rolului tău. Denumirile corespund limbii selectate în aplicație.
 
-## Ce date sunt șterse
+- **BookMe — client:** Profil → Șterge contul.
+- **BookMe Business / BookMe Salon — salon:** Setările administratorului → Șterge contul.
+- **BookMe Business / BookMe Salon — specialist:** Setările specialistului → Șterge contul.
 
-Când contul tău este șters, eliminăm permanent:
+Introdu **DELETE** în dialogul de confirmare și confirmă. Poți anula înainte de confirmare. După reușita cererii, aplicația șterge sesiunea de autentificare și revine la ecranul de intrare. Dacă apare o eroare sau pierzi accesul înainte de finalizare, contactează asistența pentru verificarea etapelor rămase.
 
-- Contul și datele tale de autentificare (inclusiv conturile create prin autentificarea cu Google sau Apple)
-- Informațiile de profil: nume, adresă de e-mail, număr de telefon și fotografie de profil
-- Rezervările și istoricul programărilor tale
-- Recenziile și evaluările tale
-- Pentru conturile de afaceri: profilul salonului sau al specialistului, serviciile, galeria foto și certificatele încărcate
-- Istoricul notificărilor și tokenurile push ale dispozitivelor
-- Preferințele aplicației, precum limba și filtrele salvate
+## Ce se întâmplă în procesul de ștergere
+
+### 1. Dezactivarea contului
+
+Profilul clientului, salonului sau specialistului este marcat ca inactiv. Legătura activă a specialistului cu salonul este și ea dezactivată. Aceasta oprește utilizarea normală a contului; înregistrarea profilului nu este ștearsă în această etapă. Ștergerea contului unui salon nu șterge conturile celorlalți specialiști.
+
+### 2. Curățarea automată
+
+Procesul actual elimină istoricul notificărilor din aplicație și înregistrările dispozitivelor pentru notificări push ale contului. De asemenea, încearcă să încheie sesiunile de autentificare și să elimine identitatea de autentificare BookMe. Unele etape de curățare pot eșua independent. Un răspuns de succes nu dovedește că fiecare serviciu extern a încheiat curățarea.
+
+Această etapă nu șterge toate datele profilului, programările, recenziile, datele de afaceri sau fișierele încărcate. Preferințe de pe dispozitiv, precum limba și filtrele de căutare salvate, pot rămâne. Ștergerea identității de autentificare BookMe nu șterge contul Google sau Apple.
+
+### 3. Eliminarea finală prin asistență
+
+Folosește cererea prin e-mail de mai sus pentru curățarea finală a datelor personale rămase. Acest proces separat trebuie să acopere datele profilului și programărilor, autorul recenziilor, datele și legăturile de afaceri, fotografiile și fișierele certificatelor, referințele rămase de autentificare sau notificare și înregistrările relevante de asistență sau diagnostic. Nu este o ștergere completă, automată și imediată declanșată de butonul din aplicație.
 
 ## Ce date pot fi păstrate
 
-Unele date pot fi păstrate pentru o perioadă limitată după ștergere:
+Până la curățarea finală, pot rămâne numele, e-mailul, telefonul, imaginea de profil, istoricul programărilor, textul și autorul recenziilor, precum și serviciile, orarul și certificatele afacerii. **O recenzie poate afișa în continuare numele sau avatarul tău după ștergerea din aplicație.** Menționează conținutul public rămas în cererea către asistență, pentru a putea fi găsit.
 
-- Copiile reziduale din copiile de siguranță criptate sunt eliminate în termen de **90 de zile**
-- Înregistrările pe care suntem obligați legal să le păstrăm (de exemplu, în scopuri contabile sau de prevenire a fraudei) sunt păstrate doar atât timp cât cere legea
-- Înregistrările programărilor deja partajate cu saloanele pe care le-ai vizitat pot rămâne în evidențele lor comerciale, fără a mai fi legate de contul tău
+Informațiile despre programări deja transmise unui salon sau specialist pot rămâne în evidențele și mesajele acestuia. Ele **nu sunt anonimizate automat** când ștergi contul BookMe. Poți contacta prestatorul despre propriile sale evidențe și BookMe despre datele de pe platformă. Ștergerea contului nu trebuie considerată confirmare a anulării programărilor viitoare; stabilește schimbările cu prestatorul.
 
-## Contactează-ne
+Termenul declarat de operator pentru copiile de siguranță reziduale este de **până la 90 de zile**. Este un angajament privind păstrarea copiilor de siguranță, separat de procesul de asistență de 30 de zile; nu înseamnă că toate înregistrările active, jurnalele sau mesajele către asistență sunt șterse automat după 90 de zile.
 
-Dacă ai întrebări despre ștergerea contului sau datele tale personale, ne poți contacta la:
+Faptul că datele rămân nu dovedește, în sine, un motiv legal de păstrare. Această pagină nu invocă o excepție generală de contabilitate sau prevenire a fraudei pentru datele tale. Dacă unele date nu pot fi șterse, cere asistenței categoria exactă, motivul și durata păstrării.
 
-E-mail: support@bookme.md
+## Întrebări despre confidențialitate și alte drepturi
+
+Pentru acces, rectificare, restricționare, opoziție sau alte cereri privind confidențialitatea, scrie la [support@bookme.md](mailto:support@bookme.md). Consultă [Politica de confidențialitate](privacy.html) pentru datele prelucrate, drepturile tale conform Legii moldovenești nr. 195/2024 și datele de contact ale CNPDCP, autoritatea de supraveghere.

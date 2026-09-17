@@ -1,45 +1,53 @@
-This page explains how to delete your **BookMe** or **BookMe Business** account and the personal data associated with it. Account deletion is permanent and cannot be undone.
+This page covers **BookMe** for clients and **BookMe Business** for salons and specialists, listed as **BookMe Salon** on the App Store. The operator is **BOOKME HUB, SRL**, str. Glinka 4, ap./of. 10, Bălți, Moldova. Contact: [support@bookme.md](mailto:support@bookme.md).
 
-## Option 1: Delete your account in the app
+**In-app deletion disables your account and starts partial cleanup. It does not immediately erase all associated data.** Final removal of remaining records requires a separate process through support, described below. Uninstalling the app does not delete your account.
 
-The fastest way to delete your account is directly in the app:
+You can request account and associated-data deletion without signing in or installing the app. If this button does not open an email app, write to **support@bookme.md** from your usual email service.
 
-- In the **BookMe** app (clients): sign in, go to the **Profile** tab, and tap **Delete account**
-- In the **BookMe Business** app (salons and specialists): sign in, go to the **Settings** tab, and tap **Delete account**
-- Confirm the deletion when prompted
+## Request deletion through support
 
-Your account and associated data are deleted immediately after confirmation.
+1. Email **support@bookme.md** with the subject **BookMe account deletion request**. Where possible, use the email associated with your BookMe account.
+2. Tell us which app and role you use: client, salon administrator or specialist. Ask for deletion of your account and associated personal data. If you have already used in-app deletion, mention that too.
+3. If you cannot access the account email, explain this in your message. Support will need to verify that the request is yours. Do not send passwords, sign-in codes or identity documents in the initial email.
 
-## Option 2: Request deletion by email
+Our support commitment is to handle account-deletion requests within **30 days of receipt** and reply with the outcome. Remaining data needs to be checked and removed across the relevant services; the in-app success message is not confirmation that this work is complete. Ask support for confirmation of final removal and an explanation of any data still held.
 
-If you can no longer access the app, you can request account deletion by email:
+## Start deletion in your app
 
-- Send an email to **support@bookme.md** from the email address your BookMe account is registered with
-- Use the subject line **"Account deletion request"**
-- We will verify the request and delete your account within **30 days**, and confirm by reply once it is done
+Sign in to the account you want to delete and follow the route for your role. Labels follow the language selected in the app.
 
-## What data is deleted
+- **BookMe — client:** Profile → Delete account.
+- **BookMe Business / BookMe Salon — salon:** Administrator settings → Delete account.
+- **BookMe Business / BookMe Salon — specialist:** Specialist settings → Delete account.
 
-When your account is deleted, we permanently remove:
+Enter **DELETE** in the confirmation dialog and confirm. You can cancel before confirming. After the request succeeds, the app clears the sign-in session and returns to the sign-in screen. If it reports an error or you lose access before completion, contact support so the remaining steps can be checked.
 
-- Your account and sign-in credentials (including accounts created with Google or Apple sign-in)
-- Profile information: name, email address, phone number, and profile photo
-- Your bookings and appointment history
-- Your reviews and ratings
-- For business accounts: your salon or specialist profile, services, photo gallery, and uploaded certificates
-- Notification history and device push tokens
-- App preferences, such as language and saved filters
+## What happens in the deletion process
+
+### 1. Account deactivation
+
+The client, salon or specialist profile is marked inactive. A specialist's active salon link is also deactivated. This ends normal account use; the profile record itself is not erased at this stage. Removing a salon account does not delete other specialists' accounts.
+
+### 2. Automatic cleanup
+
+The current process removes the account's in-app notification history and registered push-device records. It also attempts to end sign-in sessions and remove the BookMe sign-in identity. Some cleanup steps can fail independently. A successful response does not prove that every external service has completed cleanup.
+
+This step does not erase all profile details, appointments, reviews, business records or uploaded files. Device preferences such as language and saved search filters can remain. Deleting your BookMe sign-in identity does not delete your Google or Apple account.
+
+### 3. Final removal through support
+
+Use the email request above for final cleanup of remaining personal data. This separate process must cover profile and appointment records, review authorship, business details and links, photos and certificate files, remaining sign-in or notification references, and relevant support or diagnostic records. It is not an automatic, immediate purge triggered by the app button.
 
 ## What data may be retained
 
-Some data may be kept for a limited time after deletion:
+Until final cleanup, remaining records can include your name, email, phone, profile image, booking history, review text and authorship, and business services, schedules and certificates. **A review may still show your name or avatar after in-app deletion.** Include any remaining public content in your support request so it can be located.
 
-- Residual copies in encrypted backups are removed within **90 days**
-- Records that we are legally required to keep (for example, for accounting or fraud-prevention purposes) are retained only for as long as the law requires
-- Appointment records already shared with the salons you visited may remain in their business records, no longer linked to your account
+Appointment information already shared with a salon or specialist may remain in their records and messages. It is **not automatically anonymised** when you delete your BookMe account. You can contact that provider about its own records and contact BookMe about data held on the platform. Account deletion should not be treated as confirmation that upcoming appointments have been cancelled; arrange any changes with the provider.
 
-## Contact Us
+The operator's stated period for residual backup copies is **up to 90 days**. This is a backup retention commitment, separate from the 30-day support process; it is not a claim that all live records, logs or support messages are automatically erased after 90 days.
 
-If you have questions about account deletion or your personal data, please contact us at:
+Remaining data is not, by itself, evidence of a lawful reason to keep it. This page does not claim a general accounting or fraud-prevention exception for your records. If any data cannot be erased, request the specific category, reason and retention period from support.
 
-Email: support@bookme.md
+## Privacy questions and other rights
+
+For access, correction, restriction, objection or other privacy requests, write to [support@bookme.md](mailto:support@bookme.md). See our [Privacy Policy](privacy.html) for the data we process, your rights under Moldovan Law No. 195/2024 and the contact details of CNPDCP, the supervisory authority.
