@@ -62,9 +62,13 @@ Privacy and account-deletion wording in both languages follows the
 [data audit](.scratch/bookme-website-refresh/audit/README.md). The
 [editorial evidence record](.scratch/bookme-website-refresh/audit/privacy-publication.md)
 maps claims to evidence and records outstanding operational/legal confirmations.
-Terms retain their original wording and date for the separate terms ticket.
+The terms follow the confirmed free-platform/provider model, client/business age
+rules and mandatory user protections. Their [evidence record](.scratch/bookme-website-refresh/audit/terms-publication.md)
+maps both translations to product decisions and official legal guidance, including
+the limits of the source check. `tests/terms.spec.ts` covers the operator, provider,
+pricing, eligibility, protected rights and localized privacy/deletion/support links.
 The legal layout generates section navigation from Markdown headings and includes
-print styles. `tests/privacy.spec.ts` covers the four privacy/deletion URLs, rights
+print styles. `tests/legal.spec.ts` covers all six legal URLs, rights
 and email-request links, keyboard section navigation, print output, 320/768/1440px
 layouts, and axe checks. Content and navigation also run without JavaScript;
 axe runs in the JavaScript-enabled project. No deletion email is sent by tests.

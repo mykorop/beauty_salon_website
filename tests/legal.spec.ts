@@ -34,7 +34,7 @@ for (const locale of ['ro', 'en']) {
     await expect(main).toContainText(locale === 'ro' ? '30 de zile' : '30 days');
     await expect(main).toContainText(locale === 'ro' ? '90 de zile' : '90 days');
   });
-  for (const document of ['privacy', 'delete-account']) {
+  for (const document of ['privacy', 'terms', 'delete-account']) {
     for (const width of [320, 768, 1440]) {
       test(`${prefix}${document}.html is readable and accessible at ${width}px`, async ({ page, javaScriptEnabled }) => {
         await page.setViewportSize({ width, height: 900 });
