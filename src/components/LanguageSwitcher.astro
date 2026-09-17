@@ -1,0 +1,10 @@
+---
+import { labels, pageUrl, type Locale, type Page } from '../i18n';
+interface Props { locale: Locale; page: Page }
+const { locale, page } = Astro.props;
+---
+<nav class="languages" aria-label={labels[locale].language}>
+  <a href={pageUrl('ro', page)} lang="ro" hreflang="ro" aria-label="Română" aria-current={locale === 'ro' ? 'page' : undefined}>RO</a>
+  <span aria-hidden="true">/</span>
+  <a href={pageUrl('en', page)} lang="en" hreflang="en" aria-label="English" aria-current={locale === 'en' ? 'page' : undefined}>EN</a>
+</nav>

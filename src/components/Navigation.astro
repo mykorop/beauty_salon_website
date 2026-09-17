@@ -1,0 +1,21 @@
+---
+import LanguageSwitcher from './LanguageSwitcher.astro';
+import { labels, pageUrl, type Locale, type Page } from '../i18n';
+interface Props { locale: Locale; page: Page }
+const { locale, page } = Astro.props;
+const text = labels[locale];
+const home = pageUrl(locale, 'home');
+---
+<header class="site-header">
+  <div class="nav-shell">
+    <a href={home} class="logo" aria-label="BookMe">BookMe<span aria-hidden="true">.</span></a>
+    <nav class="nav-links" aria-label={text.navigation}>
+      <a href={`${home}#how-it-works`}>{text.how}</a>
+      <a href={`${home}#features`}>{text.features}</a>
+      <a href={`${home}#contact`}>{text.contact}</a>
+      <a href={pageUrl(locale, 'privacy')} aria-current={page === 'privacy' ? 'page' : undefined}>{text.privacy}</a>
+      <a href={pageUrl(locale, 'terms')} aria-current={page === 'terms' ? 'page' : undefined}>{text.terms}</a>
+    </nav>
+    <LanguageSwitcher locale={locale} page={page} />
+  </div>
+</header>

@@ -1,0 +1,15 @@
+---
+import SiteLayout from './SiteLayout.astro';
+import { legalContent, type LegalPage } from '../content/legal';
+import type { Locale } from '../i18n';
+interface Props { locale: Locale; page: LegalPage }
+const { locale, page } = Astro.props;
+const { Content, title, updated } = legalContent[locale][page];
+---
+<SiteLayout locale={locale} page={page} title={`${title} — BookMe`}>
+  <article class="legal-page">
+    <h1>{title}</h1>
+    <p class="updated">{updated}</p>
+    <Content />
+  </article>
+</SiteLayout>

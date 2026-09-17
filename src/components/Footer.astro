@@ -1,0 +1,14 @@
+---
+import { labels, pageUrl, type Locale } from '../i18n';
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const text = labels[locale];
+---
+<footer class="footer">
+  <p>&copy; 2026 BookMe. {text.rights}</p>
+  <div class="footer-links">
+    <a href={pageUrl(locale, 'privacy')}>{text.privacyTitle}</a>
+    <a href={pageUrl(locale, 'terms')}>{text.termsTitle}</a>
+    <a href={pageUrl(locale, 'delete-account')}>{text.deletion}</a>
+  </div>
+</footer>

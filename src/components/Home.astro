@@ -1,0 +1,88 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import ContactForm from './ContactForm.astro';
+import { homeContent } from '../content/home';
+import type { Locale } from '../i18n';
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const text = homeContent[locale];
+---
+<SiteLayout locale={locale} page="home" title={text.title} description={text.description}>
+  <section class="hero">
+    <div class="hero-content">
+      <h1>{text.heading}</h1>
+      <p>{text.intro}</p>
+      <div class="hero-ctas">
+        <a href="#" class="btn-primary">
+          <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" /></svg>
+          {text.download}
+        </a>
+        <a href="#how-it-works" class="btn-secondary">{text.howLink}</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="how-it-works" class="section">
+    <div class="section-inner">
+      <h2>{text.stepsTitle}</h2>
+      <p class="section-subtitle">{text.stepsIntro}</p>
+      <ol class="steps">
+        {text.steps.map((step, index) => (
+          <li class="step">
+            <div class="step-number" aria-hidden="true">0{index + 1}</div>
+            <h3>{step.title}</h3>
+            <p>{step.body}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section id="features" class="section section-alt">
+    <div class="section-inner">
+      <h2>{text.featuresTitle}</h2>
+      <p class="section-subtitle">{text.featuresIntro}</p>
+      <div class="features-grid">
+        {text.features.map((feature) => (
+          <div class="feature-card">
+            <div class="feature-icon" aria-hidden="true">{feature.icon}</div>
+            <h3>{feature.title}</h3>
+            <p>{feature.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-inner for-salons">
+      <div class="for-salons-text">
+        <span class="tag">{text.businessTag}</span>
+        <h2>{text.businessTitle}</h2>
+        <p>{text.businessIntro}</p>
+        <ul class="salon-benefits">{text.benefits.map((benefit) => <li>{benefit}</li>)}</ul>
+        <a href="#contact" class="btn-secondary">{text.contactTitle}</a>
+      </div>
+      <div class="for-salons-visual">
+        <div class="mock-card">
+          <div class="mock-salon-name">Luxe Studio</div>
+          <div class="mock-rating"><span aria-hidden="true">★★★★★</span> <span>{text.reviews}</span></div>
+          <div class="mock-services">{text.services.map((service) => <span>{service}</span>)}</div>
+          <div class="mock-slots">
+            {['10:00', '11:30', '13:00', '14:30', '16:00', '17:30'].map((time, index) => (
+              <div class:list={['mock-slot', index % 3 === 2 ? 'taken' : 'available']}>{time}</div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="section section-alt">
+    <div class="section-inner contact-section">
+      <h2>{text.contactTitle}</h2>
+      <p class="section-subtitle">{text.contactIntro}</p>
+      <ContactForm locale={locale} />
+    </div>
+  </section>
+</SiteLayout>
