@@ -27,6 +27,8 @@ npm test
 `npm test` starts its own production preview server on `127.0.0.1:4329` and tests
 the existing `dist/` build. Rebuild after source changes; do not leave another
 server on that port. Run a single test file with `npm test -- tests/site.spec.ts`.
+Run `npm run test:seo` to rebuild and check SEO on the production HTML, including
+metadata, language alternatives, sitemap, JSON-LD, links and HTTP 404 behavior.
 CI runs type checking, the static build, and the same browser smoke tests, including
 a mobile browser with JavaScript disabled. Tests never submit a real contact message.
 `tests/home.spec.ts` checks both audience journeys and the four exact store links,
@@ -35,7 +37,9 @@ both homepages with axe at those widths in the JavaScript-enabled browser projec
 
 To inspect the build manually, run `npm run preview`. Deploy the **contents of
 `dist/`** at the domain root on a static host that serves directory `index.html`
-files and direct `.html` URLs. No Node server or SPA fallback is needed in production.
+files and direct `.html` URLs. Configure the host's error document as `404.html`
+with HTTP status **404** for unknown URLs. No Node server or SPA fallback is needed
+in production. See the [SEO guide and future production checks](docs/seo.md).
 
 | Page | Romanian | English |
 | --- | --- | --- |
@@ -45,7 +49,7 @@ files and direct `.html` URLs. No Node server or SPA fallback is needed in produ
 | Account deletion | `/delete-account.html` | `/en/delete-account.html` |
 
 Astro's [`build.format: 'preserve'`](https://docs.astro.build/en/reference/configuration-reference/#buildformat)
-produces exactly eight HTML files while retaining existing public URLs. There is
+produces eight indexable HTML pages plus `404.html` while retaining existing public URLs. There is
 no browser-language detection or automatic language redirect.
 
 ## Editing
@@ -55,9 +59,11 @@ are documented in [design/branding](design/branding/README.md). Icons and RO/EN
 social cards are committed static files in `public/`; normal builds need no image
 service. `tests/branding.spec.ts` checks their production formats and dimensions,
 the web manifest, and localized Open Graph/Twitter metadata on all eight pages.
-The production origin for absolute social URLs is `site` in `astro.config.mjs`.
+The production origin is `siteOrigin` in `src/i18n.ts`, also used by `site` in
+`astro.config.mjs`, canonical URLs, social URLs and the generated sitemap/robots files.
 
-- `src/i18n.ts`: shared labels and page URL mapping.
+- `src/i18n.ts`: shared labels, production origin and the canonical public page map.
+- `src/content/apps.ts`: app identities and store links shared by downloads and JSON-LD.
 - `src/content/home.ts`: localized homepage copy.
 - `src/content/legal/{ro,en}/`: legal document bodies; shared metadata lives in
   `src/content/legal.ts`.

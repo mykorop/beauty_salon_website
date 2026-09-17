@@ -1,0 +1,45 @@
+---
+import { absolutePageUrl, locales, siteOrigin, type Locale, type Page } from '../i18n';
+import { getApps } from '../content/apps';
+
+interface Props { locale: Locale; page: Page; title: string; description: string }
+const { locale, page, title, description } = Astro.props;
+const canonical = absolutePageUrl(locale, page);
+const organization = { '@id': `${siteOrigin}/#organization` };
+const website = { '@id': `${siteOrigin}/#website` };
+const apps = page === 'home' ? getApps(locale).map((app) => ({
+  '@type': 'SoftwareApplication',
+  '@id': `${siteOrigin}/#${app.id}-app`,
+  name: app.name,
+  alternateName: app.id === 'business' ? app.alternateName : undefined,
+  description: app.description,
+  url: `${canonical}#download-${app.id}`,
+  applicationCategory: app.applicationCategory,
+  operatingSystem: ['Android', 'iOS'],
+  isAccessibleForFree: true,
+  installUrl: [app.android, app.ios],
+  publisher: organization,
+})) : [];
+const data = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization', ...organization,
+      name: 'BookMe', legalName: 'BOOKME HUB, SRL', url: `${siteOrigin}/`, email: 'support@bookme.md',
+    },
+    {
+      '@type': 'WebSite', ...website,
+      name: 'BookMe', url: `${siteOrigin}/`, inLanguage: locales, publisher: organization,
+    },
+    {
+      '@type': 'WebPage', '@id': `${canonical}#webpage`, url: canonical,
+      name: title, description, inLanguage: locale, isPartOf: website,
+      ...(apps.length ? { about: apps.map((app) => ({ '@id': app['@id'] })) } : {}),
+    },
+    ...apps,
+  ],
+};
+// Keep translated text from ever terminating the inline JSON script.
+const json = JSON.stringify(data).replace(/</g, '\\u003c');
+---
+<script type="application/ld+json" is:inline set:html={json} />

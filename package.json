@@ -12,7 +12,8 @@
     "check": "astro check",
     "build": "astro build",
     "preview": "astro preview",
-    "test": "playwright test"
+    "test": "playwright test",
+    "test:seo": "npm run build && playwright test tests/seo.spec.ts"
   },
   "dependencies": {
     "@astrojs/markdown-satteri": "0.4.1",

@@ -1,22 +1,12 @@
 ---
 import { homeContent } from '../content/home';
+import { getApps } from '../content/apps';
 import type { Locale } from '../i18n';
 
 interface Props { locale: Locale }
 const { locale } = Astro.props;
 const text = homeContent[locale].downloads;
-const apps = [
-  {
-    id: 'client', name: 'BookMe', audience: text.clientAudience, description: text.clientDescription,
-    android: 'https://play.google.com/store/apps/details?id=md.bookme.client',
-    ios: 'https://apps.apple.com/us/app/bookme/id6779576243',
-  },
-  {
-    id: 'business', name: 'BookMe Business', audience: text.businessAudience, description: text.businessDescription,
-    android: 'https://play.google.com/store/apps/details?id=md.bookme.business',
-    ios: 'https://apps.apple.com/ua/app/bookme-salon/id6779576340?l=uk',
-  },
-];
+const apps = getApps(locale);
 ---
 <section id="download" class="section section-alt" aria-labelledby="download-title">
   <div class="section-inner">

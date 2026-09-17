@@ -1,7 +1,7 @@
 ---
 import LanguageSwitcher from './LanguageSwitcher.astro';
 import { labels, pageUrl, type Locale, type Page } from '../i18n';
-interface Props { locale: Locale; page: Page }
+interface Props { locale: Locale; page?: Page }
 const { locale, page } = Astro.props;
 const text = labels[locale];
 const home = pageUrl(locale, 'home');

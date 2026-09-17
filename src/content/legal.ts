@@ -4,10 +4,10 @@ import { Content as DeletionRo, getHeadings as headingsDeletionRo } from './lega
 import { Content as PrivacyEn, getHeadings as headingsPrivacyEn } from './legal/en/privacy.md';
 import { Content as TermsEn, getHeadings as headingsTermsEn } from './legal/en/terms.md';
 import { Content as DeletionEn, getHeadings as headingsDeletionEn } from './legal/en/delete-account.md';
-import type { Locale } from '../i18n';
+import { pageNames, type Locale, type Page } from '../i18n';
 
-export const legalPages = ['privacy', 'terms', 'delete-account'] as const;
-export type LegalPage = (typeof legalPages)[number];
+export type LegalPage = Exclude<Page, 'home'>;
+export const legalPages = pageNames.filter((page): page is LegalPage => page !== 'home');
 
 export const legalContent = {
   ro: {

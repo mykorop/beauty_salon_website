@@ -1,0 +1,25 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import { pageUrl } from '../i18n';
+---
+<SiteLayout locale="ro" title="Pagină negăsită / Page not found — BookMe" description="Pagina căutată nu există. Revino la BookMe în română sau engleză.">
+  <section class="not-found" aria-labelledby="not-found-title">
+    <p class="error-code" aria-hidden="true">404</p>
+    <h1 id="not-found-title">Pagina nu a fost găsită</h1>
+    <p>Adresa poate fi greșită sau pagina nu mai este disponibilă.</p>
+    <a class="btn-primary" href={pageUrl('ro', 'home')}>Înapoi la pagina principală</a>
+    <div class="english-return" lang="en">
+      <p><strong>Page not found.</strong> The address may be incorrect or the page may no longer be available.</p>
+      <a class="btn-secondary" href={pageUrl('en', 'home')}>Back to the English homepage</a>
+    </div>
+  </section>
+</SiteLayout>
+
+<style>
+  .not-found { max-width: 48rem; margin: 0 auto; padding: clamp(3rem, 8vw, 6rem) 1.25rem; text-align: center; }
+  .error-code { font-family: 'Instrument Serif', serif; font-size: clamp(5rem, 15vw, 9rem); line-height: 1; color: var(--accent); }
+  h1 { font-family: 'Instrument Serif', serif; font-weight: 400; font-size: clamp(2.25rem, 5vw, 3.5rem); line-height: 1.15; margin: 1rem 0; text-wrap: balance; }
+  p:not(.error-code) { color: var(--text-muted); margin-bottom: 1.5rem; }
+  .english-return { margin-top: 2.5rem; padding-top: 2.5rem; border-top: 1px solid var(--border); }
+  a { justify-content: center; }
+</style>
