@@ -13,7 +13,10 @@
     "build": "astro build",
     "preview": "astro preview",
     "test": "playwright test",
-    "test:seo": "npm run build && playwright test tests/seo.spec.ts"
+    "test:seo": "npm run build && playwright test tests/seo.spec.ts",
+    "test:budgets": "playwright test tests/budgets.spec.ts --project=chromium",
+    "test:lighthouse": "node scripts/lighthouse.mjs",
+    "package:site": "mkdir -p artifacts && COPYFILE_DISABLE=1 tar -czf artifacts/bookme-website.tar.gz -C dist ."
   },
   "dependencies": {
     "@astrojs/markdown-satteri": "0.4.1",
@@ -24,6 +27,7 @@
   "devDependencies": {
     "@astrojs/check": "0.9.10",
     "@axe-core/playwright": "4.13.0",
+    "@lhci/cli": "0.15.1",
     "@playwright/test": "1.63.0",
     "@types/node": "24.13.5",
     "typescript": "5.9.3"

@@ -18,10 +18,12 @@ npm run dev
 ## Build and checks
 
 ```sh
-npx playwright install chromium
+npx playwright install --with-deps chromium firefox webkit
 npm run check
 npm run build
 npm test
+npm run test:lighthouse
+npm run package:site
 ```
 
 `npm test` starts its own production preview server on `127.0.0.1:4329` and tests
@@ -29,11 +31,15 @@ the existing `dist/` build. Rebuild after source changes; do not leave another
 server on that port. Run a single test file with `npm test -- tests/site.spec.ts`.
 Run `npm run test:seo` to rebuild and check SEO on the production HTML, including
 metadata, language alternatives, sitemap, JSON-LD, links and HTTP 404 behavior.
-CI runs type checking, the static build, and the same browser smoke tests, including
-a mobile browser with JavaScript disabled. Tests never submit a real contact message.
+CI runs type checking, the static build, Chromium/Firefox/WebKit tests (including
+mobile viewports without JavaScript), axe, per-page gzip budgets and 48 Lighthouse
+runs. Tests block non-local traffic and never submit a real contact message.
+Reports, failure screenshots/traces and the static archive are retained as CI
+artifacts. See [quality gates and manual acceptance](docs/quality-gates.md),
+[recorded results](docs/quality-report.md), and the [deployment handoff](docs/deployment.md).
 `tests/home.spec.ts` checks both audience journeys and the four exact store links,
 plus visible content and overflow at 320, 768, and 1440 CSS pixels. It also scans
-both homepages with axe at those widths in the JavaScript-enabled browser project.
+both homepages with axe at those widths in the JavaScript-enabled browser projects.
 
 To inspect the build manually, run `npm run preview`. Deploy the **contents of
 `dist/`** at the domain root on a static host that serves directory `index.html`
@@ -84,7 +90,7 @@ The legal layout generates section navigation from Markdown headings and include
 print styles. `tests/legal.spec.ts` covers all six legal URLs, rights
 and email-request links, keyboard section navigation, print output, 320/768/1440px
 layouts, and axe checks. Content and navigation also run without JavaScript;
-axe runs in the JavaScript-enabled project. No deletion email is sent by tests.
+axe runs in the JavaScript-enabled projects. No deletion email is sent by tests.
 The homepage describes the free BookMe platform for Moldova, with separate paths
 for clients and for salons or independent professionals. `DownloadApps.astro`
 contains the exact client/business store URLs and explains the BookMe Salon name

@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test, waitForFonts } from './fixtures';
 import AxeBuilder from '@axe-core/playwright';
 
 for (const path of ['/', '/en/']) {
@@ -21,8 +21,8 @@ for (const path of ['/', '/en/']) {
     test(`homepage content stays visible and fits ${width}px on ${path}`, async ({ page }) => {
       await page.setViewportSize({ width, height: 900 });
       await page.goto(path);
-      const dimensions = await page.evaluate(async () => {
-        await document.fonts.ready;
+      await waitForFonts(page);
+      const dimensions = await page.evaluate(() => {
         return { content: document.documentElement.scrollWidth, viewport: window.innerWidth };
       });
       expect(dimensions.viewport).toBe(width);
@@ -40,7 +40,7 @@ for (const path of ['/', '/en/']) {
       test.skip(!javaScriptEnabled, 'axe requires JavaScript; content and navigation are tested separately without it.');
       await page.setViewportSize({ width, height: 900 });
       await page.goto(path);
-      await page.evaluate(() => document.fonts.ready);
+      await waitForFonts(page);
       const results = await new AxeBuilder({ page }).analyze();
       expect(results.violations).toEqual([]);
     });

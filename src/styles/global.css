@@ -27,6 +27,11 @@ main {
 }
 
 a {
+    display: inline-flex;
+    align-items: center;
+    min-width: 44px;
+    min-height: 44px;
+    max-width: 100%;
     color: var(--accent);
     text-underline-offset: 0.2em;
 }
@@ -108,6 +113,7 @@ body {
 }
 
 .languages a {
+    justify-content: center;
     padding: 0.25rem;
     color: var(--text-muted);
     text-decoration: none;

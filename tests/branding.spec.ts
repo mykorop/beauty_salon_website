@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from './fixtures';
 
 const pages = [
   { path: '/index.html', url: '/', locale: 'ro', title: 'BookMe — Programări la salon în Moldova', description: /platforma gratuită.*Moldova/ },

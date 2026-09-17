@@ -3,4 +3,7 @@ dist/
 .astro/
 playwright-report/
 test-results/
+reports/
+.lighthouseci/
+artifacts/
 .DS_Store

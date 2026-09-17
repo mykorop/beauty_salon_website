@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from './fixtures';
 
 test('Romanian home is delivered as complete HTML, regardless of browser language', async ({ page }) => {
   const response = await page.goto('/index.html');

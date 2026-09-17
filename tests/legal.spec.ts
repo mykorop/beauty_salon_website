@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test, waitForFonts } from './fixtures';
 import AxeBuilder from '@axe-core/playwright';
 
 for (const locale of ['ro', 'en']) {
@@ -39,8 +39,8 @@ for (const locale of ['ro', 'en']) {
       test(`${prefix}${document}.html is readable and accessible at ${width}px`, async ({ page, javaScriptEnabled }) => {
         await page.setViewportSize({ width, height: 900 });
         await page.goto(`${prefix}${document}.html`);
-        const dimensions = await page.evaluate(async () => {
-          await window.document.fonts.ready;
+        await waitForFonts(page);
+        const dimensions = await page.evaluate(() => {
           return { content: window.document.documentElement.scrollWidth, viewport: window.innerWidth };
         });
         expect(dimensions.content).toBeLessThanOrEqual(dimensions.viewport);

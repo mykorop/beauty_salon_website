@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test, waitForFonts } from './fixtures';
 
 for (const filename of ['index.html', 'privacy.html', 'terms.html', 'delete-account.html']) {
   test(`language switch keeps the visitor on ${filename}`, async ({ page }) => {
@@ -39,9 +39,9 @@ for (const language of [
   });
 }
 
-test('keyboard users can skip to content and follow visible menu links', async ({ page }) => {
+test('keyboard users can skip to content and follow visible menu links', async ({ page, tabKey }) => {
   await page.goto('/terms.html');
-  await page.keyboard.press('Tab');
+  await page.keyboard.press(tabKey);
   const skip = page.getByRole('link', { name: 'Sari la conținut' });
   await expect(skip).toBeFocused();
   await expect(skip).toBeInViewport();
@@ -51,9 +51,9 @@ test('keyboard users can skip to content and follow visible menu links', async (
   await expect(page.getByRole('main')).toBeFocused();
 
   await page.goto('/terms.html');
-  await page.keyboard.press('Tab');
-  await page.keyboard.press('Tab');
-  await page.keyboard.press('Tab');
+  await page.keyboard.press(tabKey);
+  await page.keyboard.press(tabKey);
+  await page.keyboard.press(tabKey);
   const how = page.getByRole('navigation', { name: 'Navigare principală' }).getByRole('link', { name: 'Cum funcționează' });
   await expect(how).toBeFocused();
   await expect(how).toBeInViewport();
@@ -70,8 +70,8 @@ test('pages fit a 320px screen and load Romanian fonts from the same origin', as
   });
   for (const path of ['/', '/privacy.html', '/terms.html', '/delete-account.html', '/en/', '/en/privacy.html', '/en/terms.html', '/en/delete-account.html']) {
     await page.goto(path);
-    const widths = await page.evaluate(async () => {
-      await document.fonts.ready;
+    await waitForFonts(page);
+    const widths = await page.evaluate(() => {
       return { content: document.documentElement.scrollWidth, viewport: window.innerWidth };
     });
     expect(widths.content, path).toBeLessThanOrEqual(widths.viewport);

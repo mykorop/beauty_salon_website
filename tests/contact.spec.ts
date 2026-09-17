@@ -1,10 +1,11 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from './fixtures';
 import AxeBuilder from '@axe-core/playwright';
 
 const endpoint = 'https://formbold.com/s/oD7mJ';
 
 // A fallback interceptor keeps every test away from the real support inbox.
 test.beforeEach(async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 800 });
   await page.route(endpoint, (route) => route.abort());
 });
 

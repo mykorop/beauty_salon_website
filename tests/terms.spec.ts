@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from './fixtures';
 
 for (const locale of ['ro', 'en']) {
   const prefix = locale === 'ro' ? '/' : '/en/';
