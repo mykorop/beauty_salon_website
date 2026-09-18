@@ -9,10 +9,16 @@ const policy = `${pageUrl(locale, 'privacy')}#${policySection[locale]}`;
 const disclosure = provider?.disclosure[locale];
 ---
 <section id="cookie-notice" class="cookie-notice" aria-labelledby="cookie-title" data-locale={locale}>
-  <div>
+  <div class="cookie-copy">
     <h2 id="cookie-title">{text.title}</h2>
     <p>{provider ? text.enabledIntro : text.intro}</p>
-    <noscript><p>{text.noJs}</p><style>.cookie-actions { display: none !important; }</style></noscript>
+    <noscript>
+      <p>{text.noJs}</p>
+      <style is:inline>
+        .cookie-actions { display: none !important; }
+        .cookie-notice { position: static !important; max-height: none !important; margin: 1rem auto !important; overflow: visible !important; }
+      </style>
+    </noscript>
     <p class="cookie-error" data-consent-error hidden aria-live="polite">{text.error}</p>
   </div>
   <div class="cookie-actions">
@@ -23,7 +29,7 @@ const disclosure = provider?.disclosure[locale];
     <button type="button" data-cookie-open>{provider ? text.configure : text.details}</button>
     <button type="button" data-cookie-dismiss hidden>{text.dismiss}</button>
   </div>
-  <a href={policy}>{text.policy}</a>
+  <a class="cookie-policy" href={policy}>{text.policy}</a>
 </section>
 <dialog id="cookie-settings" class="cookie-dialog" aria-labelledby="cookie-settings-title">
   <h2 id="cookie-settings-title" tabindex="-1" autofocus>{text.settings}</h2>
@@ -51,10 +57,13 @@ const disclosure = provider?.disclosure[locale];
   import '../consent/controller';
 </script>
 <style is:global>
-  .cookie-notice { margin: 1rem auto; padding: 1rem; width: min(72rem, calc(100% - 2rem)); border: 1px solid var(--border); border-top: 2px solid var(--accent); border-radius: 0.75rem; background: var(--bg-elevated); }
+  .cookie-notice { position: fixed; inset-inline: 0; bottom: calc(1rem + env(safe-area-inset-bottom, 0px)); z-index: 50; display: grid; gap: 0.5rem 1.5rem; margin: 0 auto; padding: 1rem; width: min(72rem, calc(100% - 2rem - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px))); max-height: 50dvh; overflow-y: auto; overscroll-behavior: contain; border: 1px solid var(--border); border-top: 2px solid var(--accent); border-radius: 0.75rem; background: var(--bg-elevated); box-shadow: 0 12px 40px rgb(0 0 0 / 35%); }
   .cookie-notice h2, .cookie-dialog h2 { font-size: 1.25rem; }
+  .cookie-copy { min-width: 0; }
   .cookie-notice p { max-width: 75ch; }
+  .cookie-policy { width: fit-content; }
   .cookie-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 0.75rem; }
+  .cookie-notice > .cookie-actions { margin-top: 0; align-content: center; }
   .cookie-actions button { min-width: 44px; min-height: 44px; padding: 0.5rem 1rem; border: 1px solid var(--accent); border-radius: 0.5rem; background: var(--bg); color: var(--text); font: inherit; cursor: pointer; scroll-margin-block: 0.75rem; }
   .cookie-actions button:hover { background: var(--bg-elevated); }
   .cookie-dialog { margin: auto; width: min(38rem, calc(100% - 2rem)); max-height: calc(100dvh - 2rem); padding: 1.5rem; border: 1px solid var(--accent); border-radius: 0.75rem; background: var(--bg); color: var(--text); overflow-y: auto; overscroll-behavior: contain; }
@@ -65,5 +74,10 @@ const disclosure = provider?.disclosure[locale];
   .cookie-toggle input { width: 44px; height: 44px; flex: 0 0 44px; accent-color: var(--accent); }
   .cookie-error { color: var(--text); border-left: 3px solid var(--accent); padding-left: 0.75rem; }
   .cookie-notice [hidden], .cookie-dialog [hidden], .cookie-notice[hidden] { display: none; }
+  @media (min-width: 769px) {
+    .cookie-notice { grid-template-columns: minmax(0, 1fr) auto; }
+    .cookie-copy, .cookie-policy { grid-column: 1; }
+    .cookie-notice > .cookie-actions { grid-column: 2; grid-row: 1 / 3; max-width: 26rem; }
+  }
   @media print { .cookie-notice, .cookie-dialog, .cookie-dialog::backdrop { display: none !important; } }
 </style>

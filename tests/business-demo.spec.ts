@@ -243,7 +243,13 @@ for (const language of languages) {
       await page.setViewportSize({ width, height: 1000 });
       await page.goto(language.path);
       const demo = page.getByRole('region', { name: language.label, exact: true });
-      if (javaScriptEnabled) await demo.getByRole('button', { name: language.replay, exact: true }).click();
+      if (javaScriptEnabled) {
+        // Dismiss the floating notice before checking the illustration for occluded text.
+        const notice = page.locator('#cookie-notice');
+        await notice.getByRole('button', { name: language.path === '/en/' ? 'Understood' : 'Am înțeles', exact: true }).click();
+        await expect(notice).toBeHidden();
+        await demo.getByRole('button', { name: language.replay, exact: true }).click();
+      }
       for (let frame = javaScriptEnabled ? 1 : 6; frame <= 6; frame++) {
         await expect(demo.getByText(`${frame} / 6`, { exact: true })).toBeVisible();
         await demo.getByRole('img').scrollIntoViewIfNeeded();

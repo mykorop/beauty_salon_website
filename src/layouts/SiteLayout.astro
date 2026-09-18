@@ -66,8 +66,8 @@ const socialImageAlt = locale === 'ro'
   <body>
     <a class="skip-link" href="#main-content">{labels[locale].skip}</a>
     <Navigation locale={locale} page={page} />
-    <CookieConsent locale={locale} />
     <main id="main-content" tabindex="-1"><slot /></main>
     <Footer locale={locale} />
+    <CookieConsent locale={locale} />
   </body>
 </html>

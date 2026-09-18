@@ -8,7 +8,7 @@ const { locale } = Astro.props;
 const text = bookingDemoContent[locale];
 const calendarDays = [...Array.from({ length: 3 }, () => null), ...Array.from({ length: 31 }, (_, i) => i + 1)];
 ---
-<PhoneDemo id="client-demo" {...text}>
+<PhoneDemo id="client-demo" {...text} size="compact">
   {bookingFrames.map(({ name, duration }, index) => (
     <div class:list={['booking-frame', name]} data-frame data-duration={duration} data-caption={text.steps[index]} hidden={name !== 'success'}>
       {name === 'search' ? (

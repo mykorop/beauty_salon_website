@@ -8,15 +8,24 @@ interface Props {
   stepsTitle: string;
   steps: readonly string[];
   controls: { pause: string; resume: string; replay: string; next: string; finished: string };
+  size?: 'default' | 'compact';
 }
-const { id, label, description, caption, account, stepsTitle, steps, controls } = Astro.props;
+const { id, label, description, caption, account, stepsTitle, steps, controls, size = 'default' } = Astro.props;
 ---
-<section class="phone-demo" aria-label={label}>
+<section class:list={['phone-demo', { compact: size === 'compact' }]} aria-label={label}>
   <phone-playback data-pause={controls.pause} data-resume={controls.resume} data-finished={controls.finished}>
     <figure>
       <div class="phone" role="img" aria-label={description} aria-describedby={`${id}-steps`} data-phone>
+        <div class="phone-buttons" aria-hidden="true"><span></span><span></span><span></span></div>
         <div class="phone-screen" aria-hidden="true">
-          <div class="phone-status"><span>9:41</span><span class="camera"></span><span>▮▮▮ <span class="battery"></span></span></div>
+          <div class="phone-status">
+            <span>9:41</span><span class="camera"></span>
+            <span class="status-icons">
+              <svg viewBox="0 0 18 12" width="16" height="12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx="0.8" /><rect x="5" y="5.5" width="3" height="6.5" rx="0.8" /><rect x="10" y="3" width="3" height="9" rx="0.8" /><rect x="15" width="3" height="12" rx="0.8" /></svg>
+              <svg viewBox="0 0 16 12" width="14" height="12" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M1 3a11 11 0 0 1 14 0M3.5 6a7 7 0 0 1 9 0M6 9a3 3 0 0 1 4 0" /><circle cx="8" cy="11" r="0.8" fill="currentColor" stroke="none" /></svg>
+              <svg viewBox="0 0 25 12" width="23" height="12" fill="currentColor"><rect x="0.5" y="0.5" width="21" height="11" rx="3" fill="none" stroke="currentColor" opacity="0.45" /><rect x="2.5" y="2.5" width="17" height="7" rx="1.5" /><path d="M23 4v4c2 0 2-4 0-4Z" opacity="0.5" /></svg>
+            </span>
+          </div>
           <div class="phone-frames"><slot /></div>
           <div class="home-indicator"></div>
         </div>
@@ -46,12 +55,17 @@ const { id, label, description, caption, account, stepsTitle, steps, controls } 
 <style>
   .phone-demo { width: 100%; max-width: 370px; margin-inline: auto; }
   phone-playback { display: block; }
-  .phone { width: min(100%, 318px); height: 650px; padding: 7px; margin-inline: auto; background: #17181b; border: 1px solid #74736e; border-radius: 44px; box-shadow: inset 0 0 0 2px #383a3e, 0 30px 65px rgb(0 0 0 / 30%); }
-  .phone-screen { height: 100%; position: relative; display: flex; flex-direction: column; border-radius: 36px; overflow: hidden; background: #f6f6f7; color: #18181b; color-scheme: light; font-family: Arial, sans-serif; font-size: 14px; line-height: 1.4; }
-  .phone-status { display: flex; height: 39px; flex-shrink: 0; justify-content: space-between; align-items: center; padding: 0 18px; font-size: 11px; font-weight: 700; background: #fff; }
-  .camera { width: 70px; height: 19px; background: #17181b; border-radius: 20px; }
-  .camera::after { content: ''; display: block; width: 7px; height: 7px; border-radius: 50%; background: #303642; margin: 6px 9px 0 auto; }
-  .battery { display: inline-block; width: 15px; height: 8px; border: 1px solid currentColor; border-radius: 2px; margin-left: 3px; }
+  .phone { position: relative; width: min(100%, 318px); height: 650px; padding: 7px; margin-inline: auto; background: #101113; border: 1px solid #898b8f; border-radius: 44px; box-shadow: inset 0 0 0 1px #c0c1c4, inset 0 0 0 3px #34363a, inset 0 0 0 5px #08090b, 0 16px 36px -12px rgb(0 0 0 / 45%), 0 3px 8px rgb(0 0 0 / 20%); }
+  .phone::after, .phone-buttons span { position: absolute; width: 3px; border-radius: 2px; background: linear-gradient(90deg, #45474b, #a6a7aa, #4b4d51); box-shadow: 0 0 0 1px rgb(0 0 0 / 25%); }
+  .phone::after { content: ''; right: -4px; top: 155px; height: 64px; }
+  .phone-buttons span { left: -4px; top: 103px; height: 23px; }
+  .phone-buttons span:nth-child(2) { top: 148px; height: 43px; }
+  .phone-buttons span:nth-child(3) { top: 204px; height: 43px; }
+  .phone-screen { height: 100%; position: relative; display: flex; flex-direction: column; border-radius: 36px; overflow: hidden; background: #f6f6f7; color: #18181b; color-scheme: light; font-family: Arial, sans-serif; font-size: 14px; line-height: 1.4; box-shadow: 0 0 0 1px #000; }
+  .phone-status { position: relative; display: flex; height: 39px; flex-shrink: 0; justify-content: space-between; align-items: center; padding: 0 21px; font-size: 11px; font-weight: 700; background: #fff; }
+  .camera { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 78px; height: 22px; background: #08090b; border-radius: 20px; box-shadow: inset 0 0 0 1px rgb(255 255 255 / 6%); }
+  .camera::after { content: ''; position: absolute; right: 8px; top: 7px; width: 8px; height: 8px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #263345, #10151e 55%, #050609 70%); }
+  .status-icons { display: flex; align-items: center; gap: 4px; }
   .phone-frames { position: relative; flex: 1; min-height: 0; }
   .home-indicator { width: 88px; height: 4px; background: #18181b; border-radius: 10px; margin: 10px auto; flex-shrink: 0; }
   figcaption { text-align: center; font-size: 0.75rem; color: var(--text-muted); margin-top: 1.4rem; }
@@ -67,8 +81,17 @@ const { id, label, description, caption, account, stepsTitle, steps, controls } 
   summary { min-height: 44px; padding-block: 0.6rem; cursor: pointer; color: var(--accent); }
   ol { padding-left: 1.25rem; }
   li { padding: 0.25rem 0; }
+  /* Zoom scales the illustration and its layout space together, leaving controls full size. */
+  .compact .phone { width: 318px; height: 650px; zoom: calc(550 / 650); }
+  .compact figcaption { margin-top: 0.5rem; }
+  .compact .playback-controls { margin-top: 0.5rem; }
+  .compact .playback-step { margin-top: 0.25rem; }
+  .compact .demo-description { margin-top: 0; }
   @media (max-width: 380px) {
-    .phone { height: 630px; border-radius: 38px; }
-    .phone-screen { border-radius: 30px; font-size: 13px; }
+    .phone-demo:not(.compact) .phone { height: 630px; border-radius: 38px; }
+    .phone-demo:not(.compact) .phone-screen { border-radius: 30px; font-size: 13px; }
+  }
+  @media (max-width: 350px) {
+    .compact .phone { zoom: 0.78; }
   }
 </style>
