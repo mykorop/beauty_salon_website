@@ -1,5 +1,6 @@
 {
   "extends": "astro/tsconfigs/strict",
+  "compilerOptions": { "paths": { "#analytics-provider": ["./src/consent/provider.ts"] } },
   "include": [".astro/types.d.ts", "**/*"],
-  "exclude": ["dist", "node_modules", "playwright-report", "test-results"]
+  "exclude": ["dist", "dist-consent-test", "node_modules", "playwright-report", "test-results"]
 }

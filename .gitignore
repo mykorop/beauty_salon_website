@@ -1,5 +1,6 @@
 node_modules/
 dist/
+dist-consent-test/
 .astro/
 playwright-report/
 test-results/

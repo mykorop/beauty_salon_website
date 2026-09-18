@@ -22,6 +22,8 @@ jobs:
       - run: npm run check
       - run: npm run build
       - run: npm test
+      - run: npm run test:consent
+      - run: npm run test:consent-incomplete
       - run: npm run test:lighthouse
       - run: npm run package:site
       - uses: actions/upload-artifact@v4

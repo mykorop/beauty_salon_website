@@ -36,6 +36,18 @@ Diagnosticul tehnic poate include erori, identificatori ai cererilor, versiunea 
 
 Formularul de contact al site-ului trimite numele, e-mailul și mesajul tău către **FormBold**, pentru gestionarea solicitării. Numele și e-mailul sunt obligatorii; mesajul este opțional. Poți scrie direct asistenței prin e-mail. Corespondența de asistență este separată de profilul din aplicație și nu este ștearsă automat de butonul de ștergere a contului.
 
+## Cookies și tehnologii similare
+
+Site-ul public **nu are în prezent un furnizor de analiză conectat**. Setările cookie folosesc **localStorage**, adică stocare în browser, nu un cookie. BOOKME HUB, SRL păstrează o singură înregistrare necesară, `bookme.cookie-consent`, pentru a reține confirmarea mesajului sau alegerea explicită privind analiza. Ea conține versiunile schemei și ale mesajului/scopului/furnizorului, confirmarea sau alegerea, momentul acțiunii și expirarea. Nu conține un identificator de vizitator, adresă IP, e-mail sau istoric de navigare și nu reprezintă o dovadă server completă a consimțământului.
+
+Înregistrarea este valabilă **180 de zile de la acțiunea ta explicită**. Termenul este o decizie de produs, nu o cerință legală de păstrare. Citirea nu îl reînnoiește. localStorage nu șterge automat înregistrarea cât timp nu vizitezi site-ul; eliminăm înregistrările expirate la următoarea verificare. Ștergerea datelor browserului resetează alegerea. Dacă stocarea nu este disponibilă, afișăm o eroare și păstrăm analiza oprită pe pagina curentă; ascunderea mesajului nu garantează salvarea alegerii pentru pagina următoare.
+
+Alegerea se aplică doar **originii curente în acest browser**, în comun pentru paginile în română și engleză. Nu se transmite subdomeniilor, aplicației web, aplicațiilor mobile sau contului tău. Stocarea necesară a alegerii este separată de analiza opțională. Confirmarea unui mesaj fără furnizor conectat nu autorizează un furnizor viitor. Schimbarea mesajului, scopului sau furnizorului necesită o nouă alegere.
+
+Dacă în viitor conectăm analiza, scopul, furnizorul, datele, tehnologiile și termenele trebuie descrise mai întâi în setări și în această politică, împreună cu un proces separat de confirmare a consimțământului. Analiza trebuie să rămână oprită până o permiți voluntar. Tăcerea, derularea, navigarea, deschiderea politicii și închiderea setărilor nu oferă consimțământ. Folosește **Setări cookie** din subsol, oprește analiza și apasă **Salvează alegerea** pentru a retrage consimțământul. Astfel oprim colectarea nouă, anulăm trimiterile în așteptare acceptate de furnizor și ștergem cookies/stocarea de analiză cunoscută și accesibilă. Nu putem retrage cererile deja trimise, șterge datele deținute de furnizor sau cookies terțe inaccesibile ori HttpOnly. Nu ai nevoie de consimțământ pentru analiză ca să citești site-ul, să folosești linkurile sau să trimiți formularul de contact. FormBold primește datele formularului doar la trimitere; această prelucrare pentru asistență este separată de consimțământul pentru analiză.
+
+Fără JavaScript, site-ul static și formularul nativ de contact rămân disponibile, analiza nu pornește și nicio înregistrare de consimțământ nu este scrisă. Pentru întrebări sau cereri despre aceste tehnologii, contactează **BOOKME HUB, SRL** la [support@bookme.md](mailto:support@bookme.md).
+
 ## Permisiunile dispozitivului și opțiunile tale
 
 O permisiune controlează accesul la o funcție a dispozitivului. Ea nu stabilește, singură, temeiul legal pentru toate utilizările ulterioare ale datelor, inclusiv datele de contact ale altei persoane. Poți refuza permisiunile sau le poți modifica în setările sistemului; alternativele de mai jos rămân disponibile.

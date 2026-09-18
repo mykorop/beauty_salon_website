@@ -1,12 +1,18 @@
 import { defineConfig, devices } from '@playwright/test';
 
+const consentTest = process.env.BOOKME_CONSENT_TEST === '1';
+const incomplete = process.env.BOOKME_CONSENT_TEST === 'incomplete';
+const suite = incomplete ? 'consent-incomplete' : consentTest ? 'consent-provider' : 'site';
+
 export default defineConfig({
   testDir: './tests',
+  ...(incomplete ? { testMatch: /cookie-incomplete\.spec\.ts/ } : consentTest ? { testMatch: /(?:analytics-consent|cookie-accessibility)\.spec\.ts/ } : { testIgnore: /(?:analytics-consent|cookie-incomplete)\.spec\.ts/ }),
+  outputDir: `test-results/${suite}`,
   fullyParallel: true,
   forbidOnly: Boolean(process.env.CI),
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 2 : 4,
-  reporter: [['list'], ['html', { open: 'never' }], ['json', { outputFile: 'reports/playwright.json' }]],
+  reporter: [['list'], ['html', { open: 'never', outputFolder: `playwright-report/${suite}` }], ['json', { outputFile: `reports/playwright-${suite}.json` }]],
   use: {
     baseURL: 'http://127.0.0.1:4329',
     trace: 'retain-on-failure',

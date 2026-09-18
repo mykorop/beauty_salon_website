@@ -37,6 +37,9 @@ for (const path of paths) {
     expect(failedRequests, 'Blocked or failed resources must not silently escape the budget').toEqual([]);
     expect(javascript).toBeLessThanOrEqual(20_000);
     expect(css).toBeLessThanOrEqual(40_000);
-    if (path !== '/' && path !== '/en/') expect(javascript, 'Pages without demos must not load the playback script').toBe(0);
+    if (path !== '/' && path !== '/en/') {
+      expect(size(inline.scripts), 'Legal pages have no inline executable scripts').toBe(0);
+      expect(assets.filter(({ kind }) => kind === 'script').every(({ url }) => /CookieConsent\..*\.js$/.test(url)), 'Only consent JavaScript belongs on pages without demos').toBe(true);
+    }
   });
 }

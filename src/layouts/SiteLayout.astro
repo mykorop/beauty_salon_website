@@ -10,6 +10,7 @@ import '@fontsource/instrument-serif/latin-ext-400.css';
 import '../styles/global.css';
 import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
+import CookieConsent from '../components/CookieConsent.astro';
 import StructuredData from '../components/StructuredData.astro';
 import { absolutePageUrl, labels, languageAlternates, type Locale, type Page } from '../i18n';
 
@@ -65,6 +66,7 @@ const socialImageAlt = locale === 'ro'
   <body>
     <a class="skip-link" href="#main-content">{labels[locale].skip}</a>
     <Navigation locale={locale} page={page} />
+    <CookieConsent locale={locale} />
     <main id="main-content" tabindex="-1"><slot /></main>
     <Footer locale={locale} />
   </body>

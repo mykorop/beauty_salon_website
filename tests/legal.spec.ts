@@ -91,7 +91,8 @@ for (const locale of ['ro', 'en']) {
         await expect(target).toBeInViewport();
         await expect(target).toHaveText((await link.textContent())!);
       }
-      await expect(page.getByRole('main')).toContainText(locale === 'ro' ? '17 septembrie 2026' : 'September 17, 2026');
+      const day = document === 'privacy' ? 18 : 17;
+      await expect(page.getByRole('main')).toContainText(locale === 'ro' ? `${day} septembrie 2026` : `September ${day}, 2026`);
     });
   }
 }

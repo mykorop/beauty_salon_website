@@ -36,6 +36,18 @@ Technical diagnostics can include errors, request identifiers, application versi
 
 The website contact form sends your name, email and message to **FormBold** to handle your enquiry. Name and email are required; the message is optional. You can instead email support directly. Support correspondence is separate from your app profile and is not automatically erased by the in-app deletion button.
 
+## Cookies and similar technologies
+
+The public website currently has **no analytics provider connected**. Its cookie settings use **localStorage**, which is browser storage, not a cookie. BOOKME HUB, SRL stores one necessary record, `bookme.cookie-consent`, to remember that you acknowledged the notice or made an explicit analytics choice. It contains the schema and notice/purpose/provider versions, the acknowledgement or choice, the time of your action and its expiry. It contains no visitor identifier, IP address, email or browsing history and is not a complete server-side proof of consent.
+
+The record is valid for **180 days from your explicit action**. This is a product decision, not a statutory retention requirement. Reading the record does not renew it. localStorage does not automatically delete it while you are away; we remove expired records on the next check. Clearing browser data resets the choice. If storage is unavailable, we show an error and keep analytics off on the current page; dismissing that message does not promise a saved choice for your next page.
+
+The choice applies only to the **current origin in this browser**, shared by Romanian and English pages. It does not carry over to subdomains, the web app, mobile apps or your account. Necessary choice storage is separate from optional analytics. Acknowledging a notice when no provider is connected never authorises a future provider. A changed notice, purpose or provider requires a new choice.
+
+If analytics is connected in future, its purpose, provider, data, technologies and retention must first be disclosed in settings and this policy, with a separate process for confirming consent. Analytics must stay off until you voluntarily allow it. Silence, scrolling, navigation, opening this policy and closing settings do not give consent. Use **Cookie settings** in the footer, turn analytics off and **Save choice** to withdraw. This stops new collection, cancels supported pending sends and clears known, accessible analytics cookies/storage. It cannot recall requests already sent, erase data held by a provider, or delete inaccessible third-party or HttpOnly cookies. No analytics consent is required to read the site, use links or send the contact form. FormBold receives form data only when you submit the form; this support processing is separate from analytics consent.
+
+Without JavaScript, the static site and native contact form remain available, analytics does not start and no consent record is written. For questions or requests about these technologies, contact **BOOKME HUB, SRL** at [support@bookme.md](mailto:support@bookme.md).
+
 ## Device permissions and your choices
 
 A device permission controls access to a device feature. It does not, on its own, establish the legal basis for every later use of the data, including another person's contact details. You can refuse permissions or change them in system settings; the alternatives below remain available.

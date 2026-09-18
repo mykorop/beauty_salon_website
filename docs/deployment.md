@@ -12,6 +12,11 @@ and Search Console registration are separate operator actions. Ticket 05's
 content approval and the manual accessibility record must be completed before
 declaring the whole website approved for release.
 
+Before publishing the cookie notice, complete the [consent hosting and manual
+acceptance checks](cookie-consent.md#hosting-boundary-and-publication-condition).
+Local build checks cannot verify host-injected analytics. Publish only `dist/`;
+`dist-consent-test/` contains browser-test fixtures and is never a release artifact.
+
 ## Hosting settings to verify
 
 - HTTPS: valid certificate for the public host, no mixed content, HTTP redirected

@@ -8,12 +8,15 @@ npx playwright install --with-deps chromium firefox webkit
 npm run check
 npm run build
 npm test
+npm run test:consent
+npm run test:consent-incomplete
 npm run test:lighthouse
 npm run package:site
 ```
 
-Both browser tools use the completed `dist/` build. Rebuild after any source
-change. Ports 4329 (Playwright) and 4330 (Lighthouse) must be free. Run the two
+The normal browser suite and Lighthouse use the completed `dist/` build; consent
+provider tests build and serve the isolated `dist-consent-test/` directory.
+Rebuild after any source change. Ports 4329 (Playwright) and 4330 (Lighthouse) must be free. Run the two
 suites sequentially, without competing builds or browser jobs during Lighthouse.
 The eight indexable RO/EN pages are required; legacy homepage aliases and the
 404 document receive additional functional checks. The browser tests never use
@@ -33,6 +36,12 @@ Axe 4.13.0 scans all pages at 320/768/1440px and the expanded FAQ and idle,
 invalid, pending, success and failure form states. Contact tests use a 320px
 viewport in every engine. JavaScript-dependent checks
 are explicitly skipped in no-JavaScript projects; behavior tests still run.
+Consent tests cover all eight pages, localStorage/network inventory, acknowledgement,
+corrupt/expired choices and storage failures. A separate static test build exercises
+the real controller with an intercepted provider, including withdrawal, delayed
+initialization, expiry in an open document and cross-tab/history restoration. An
+incomplete-provider build verifies that missing disclosures block opt-in.
+Both modes receive RO/EN keyboard, axe, print, no-JavaScript and 320/768/1440px checks.
 Additional checks cover 44×44 CSS px targets, keyboard focus outlines and
 obstruction at 320px, reflow, and reduced motion.
 
@@ -41,7 +50,7 @@ normal motion explicitly, reduced motion from load and during playback, static
 no-JavaScript examples, independent playback controls, offscreen/hidden-tab pauses,
 and every frame's accessibility and text bounds. The Business suite also checks
 text obstruction inside the phone and navigation/FAQ/mocked contact use during
-playback. Pages without demos are required to load zero executable JavaScript.
+playback. Pages without demos load only the shared consent script.
 The [combined visual and acceptance report](../design/calendar-demo/README.md)
 records comparison screenshots and remaining manual checks.
 
@@ -53,9 +62,10 @@ The obstruction check samples the visible part of the focused control: Firefox
 may leave a wrapped link partly beyond the viewport edge. Tests do not scroll
 the target on the user's behalf or suppress a failed focus assertion.
 
-`reports/playwright.json` and `playwright-report/` contain the results;
+`reports/playwright-{site,consent-provider,consent-incomplete}.json` and the matching
+subdirectories of `playwright-report/` contain the results;
 `test-results/` includes failure screenshots, traces and test attachments.
-Open the report with `npx playwright show-report`. To run a focused check:
+Open the report with `npx playwright show-report playwright-report/site`. To run a focused check:
 
 ```sh
 npm test -- tests/quality.spec.ts --project=firefox

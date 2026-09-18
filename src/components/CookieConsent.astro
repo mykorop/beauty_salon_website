@@ -1,0 +1,69 @@
+---
+import { pageUrl, type Locale } from '../i18n';
+import { consentText, policySection } from '../consent/text';
+import { provider } from '../consent/config';
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const text = consentText[locale];
+const policy = `${pageUrl(locale, 'privacy')}#${policySection[locale]}`;
+const disclosure = provider?.disclosure[locale];
+---
+<section id="cookie-notice" class="cookie-notice" aria-labelledby="cookie-title" data-locale={locale}>
+  <div>
+    <h2 id="cookie-title">{text.title}</h2>
+    <p>{provider ? text.enabledIntro : text.intro}</p>
+    <noscript><p>{text.noJs}</p><style>.cookie-actions { display: none !important; }</style></noscript>
+    <p class="cookie-error" data-consent-error hidden aria-live="polite">{text.error}</p>
+  </div>
+  <div class="cookie-actions">
+    {provider ? <>
+      <button type="button" data-choice="allowed">{text.allow}</button>
+      <button type="button" data-choice="denied">{text.deny}</button>
+    </> : <button type="button" data-choice="acknowledged">{text.understood}</button>}
+    <button type="button" data-cookie-open>{provider ? text.configure : text.details}</button>
+    <button type="button" data-cookie-dismiss hidden>{text.dismiss}</button>
+  </div>
+  <a href={policy}>{text.policy}</a>
+</section>
+<dialog id="cookie-settings" class="cookie-dialog" aria-labelledby="cookie-settings-title">
+  <h2 id="cookie-settings-title" tabindex="-1" autofocus>{text.settings}</h2>
+  <p>{text.current} <strong data-cookie-state></strong></p>
+  <h3>{text.necessary}</h3>
+  <p>{text.necessaryDescription}</p>
+  <h3>{text.analytics}</h3>
+  {disclosure ? <>
+    <p><strong>{text.provider}:</strong> {disclosure.name}</p>
+    <p><strong>{text.purpose}:</strong> {disclosure.purpose}</p>
+    <p><strong>{text.data}:</strong> {disclosure.data}</p>
+    <p><strong>{text.retention}:</strong> {disclosure.retention}</p>
+    <p>{text.withdrawal}</p>
+  </> : <p>{text.disconnected}</p>}
+  <label class="cookie-toggle"><input type="checkbox" name="analytics" disabled={!provider} /> {text.analytics}</label>
+  <p>{text.scope}</p>
+  <a href={policy}>{text.policy}</a>
+  <p class="cookie-error" data-consent-error hidden aria-live="polite">{text.error}</p>
+  <div class="cookie-actions">
+    <button type="button" data-cookie-save>{text.save}</button>
+    <button type="button" data-cookie-close>{text.close}</button>
+  </div>
+</dialog>
+<script>
+  import '../consent/controller';
+</script>
+<style is:global>
+  .cookie-notice { margin: 1rem auto; padding: 1rem; width: min(72rem, calc(100% - 2rem)); border: 1px solid var(--border); border-top: 2px solid var(--accent); border-radius: 0.75rem; background: var(--bg-elevated); }
+  .cookie-notice h2, .cookie-dialog h2 { font-size: 1.25rem; }
+  .cookie-notice p { max-width: 75ch; }
+  .cookie-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 0.75rem; }
+  .cookie-actions button { min-width: 44px; min-height: 44px; padding: 0.5rem 1rem; border: 1px solid var(--accent); border-radius: 0.5rem; background: var(--bg); color: var(--text); font: inherit; cursor: pointer; scroll-margin-block: 0.75rem; }
+  .cookie-actions button:hover { background: var(--bg-elevated); }
+  .cookie-dialog { margin: auto; width: min(38rem, calc(100% - 2rem)); max-height: calc(100dvh - 2rem); padding: 1.5rem; border: 1px solid var(--accent); border-radius: 0.75rem; background: var(--bg); color: var(--text); overflow-y: auto; overscroll-behavior: contain; }
+  .cookie-dialog::backdrop { background: rgb(0 0 0 / 70%); }
+  .cookie-dialog h3, .cookie-dialog p { margin-top: 0.75rem; }
+  .cookie-dialog h3 { font-size: 1rem; }
+  .cookie-toggle { display: flex; align-items: center; gap: 0.75rem; margin-top: 0.5rem; }
+  .cookie-toggle input { width: 44px; height: 44px; flex: 0 0 44px; accent-color: var(--accent); }
+  .cookie-error { color: var(--text); border-left: 3px solid var(--accent); padding-left: 0.75rem; }
+  .cookie-notice [hidden], .cookie-dialog [hidden], .cookie-notice[hidden] { display: none; }
+  @media print { .cookie-notice, .cookie-dialog, .cookie-dialog::backdrop { display: none !important; } }
+</style>

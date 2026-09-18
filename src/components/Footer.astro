@@ -1,5 +1,6 @@
 ---
 import { labels, pageUrl, type Locale } from '../i18n';
+import { consentText, policySection } from '../consent/text';
 interface Props { locale: Locale }
 const { locale } = Astro.props;
 const text = labels[locale];
@@ -10,5 +11,6 @@ const text = labels[locale];
     <a href={pageUrl(locale, 'privacy')}>{text.privacyTitle}</a>
     <a href={pageUrl(locale, 'terms')}>{text.termsTitle}</a>
     <a href={pageUrl(locale, 'delete-account')}>{text.deletion}</a>
+    <a href={`${pageUrl(locale, 'privacy')}#${policySection[locale]}`} data-cookie-footer>{consentText[locale].settings}</a>
   </div>
 </footer>
