@@ -1,0 +1,16 @@
+- region "Demonstrație de calendar Business":
+  - figure "Studio Luma · 15 octombrie 2026 · ora Chișinăului Date fictive pentru un salon sau un specialist independent. Telefoanele arată același exemplu, fără sincronizare în timp real.":
+    - 'img "Exemplu ilustrativ BookMe Business cu date fictive. Calendarul arată o programare astăzi, două în săptămână și trei în lună. Căutarea Ana Demo găsește Manichiură cu Mara Luca, pe 15 octombrie 2026 la 14:30, ora Chișinăului: o oră, 300 MDL, Confirmată. După ștergerea căutării reapar toate cele trei programări."'
+    - paragraph: Studio Luma · 15 octombrie 2026 · ora Chișinăului
+    - paragraph: Date fictive pentru un salon sau un specialist independent. Telefoanele arată același exemplu, fără sincronizare în timp real.
+  - button "Pasul următor" [disabled]
+  - button "Repetă"
+  - group:
+    - text: Toți pașii, pe scurt
+    - list:
+      - listitem: "Astăzi, 15 octombrie 2026: programarea Anei Demo la 14:30."
+      - listitem: "Treci la Săptămână: apare și Daria Demo, pe 16 octombrie."
+      - listitem: "Treci la Lună: apare și Irina Demo, pe 22 octombrie."
+      - listitem: "Caută Ana Demo: rămâne doar programarea ei."
+      - listitem: "Verifică pe card: Manichiură, Mara Luca, 14:30, o oră, 300 MDL, Confirmată."
+      - listitem: "Șterge căutarea: toate cele trei programări ale lunii reapar."

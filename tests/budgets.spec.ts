@@ -37,5 +37,6 @@ for (const path of paths) {
     expect(failedRequests, 'Blocked or failed resources must not silently escape the budget').toEqual([]);
     expect(javascript).toBeLessThanOrEqual(20_000);
     expect(css).toBeLessThanOrEqual(40_000);
+    if (path !== '/' && path !== '/en/') expect(javascript, 'Pages without demos must not load the playback script').toBe(0);
   });
 }

@@ -75,6 +75,7 @@ The production origin is `siteOrigin` in `src/i18n.ts`, also used by `site` in
 - `src/content/apps.ts`: app identities and store links shared by downloads and JSON-LD.
 - `src/content/home.ts`: localized homepage copy.
 - `src/content/booking-demo.ts`: fixed fictional booking data, RO/EN demo copy and frame timing.
+- `src/content/calendar-demo.ts`: Business period/search fixtures, RO/EN copy and frame timing.
 - `src/content/legal/{ro,en}/`: legal document bodies; shared metadata lives in
   `src/content/legal.ts`.
 - `src/layouts/`: shared document shell and legal layout.
@@ -103,7 +104,11 @@ booking inside the reusable `PhoneDemo.astro`. Its small local playback controll
 handles pause, replay, visibility and reduced motion; a confirmed card and full
 step description are available without JavaScript. App comparison screenshots,
 capture commands and acceptance evidence are in [design/booking-demo](design/booking-demo/README.md).
-`AppPreview.astro` continues to render the labeled business calendar illustration.
+`BusinessCalendarDemo.astro` reuses that phone and controller for a six-step
+calendar scenario: Today, Week, Month, client search, card details and clearing
+search. Its fixed appointment agrees with the client example, with no live sync.
+The [combined phone report](design/calendar-demo/README.md) contains final-build
+screenshots, app comparisons, quality results and pending manual acceptance.
 All homepage content is rendered in static HTML, with no app framework runtime,
 personal data or image downloads required by the illustrations.
 

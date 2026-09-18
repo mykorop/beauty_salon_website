@@ -29,26 +29,6 @@ interface HomeContent {
   featuresIntro: string;
   client: AudienceContent;
   business: AudienceContent;
-  preview: {
-    searchLabel: string;
-    searchCaption: string;
-    searchTitle: string;
-    searchPlaceholder: string;
-    location: string;
-    services: [string, string, string];
-    exampleSalon: string;
-    exampleProfessional: string;
-    salonType: string;
-    professionalType: string;
-    availability: string;
-    calendarLabel: string;
-    calendarCaption: string;
-    calendarTitle: string;
-    day: string;
-    team: [string, string];
-    appointment: string;
-    available: string;
-  };
   downloads: {
     title: string;
     intro: string;
@@ -123,26 +103,6 @@ export const homeContent: Record<Locale, HomeContent> = {
         { title: 'În echipă sau independent', body: 'Gestionează specialiștii și programul echipei. Lucrezi pe cont propriu? Folosește aplicația pentru propria agendă și propriile servicii.' },
       ],
       download: 'Descarcă BookMe Business',
-    },
-    preview: {
-      searchLabel: 'Exemplu ilustrativ de căutare în BookMe: servicii, un salon și un specialist independent fictivi.',
-      searchCaption: 'Machetă ilustrativă · Exemple fictive, fără date personale.',
-      searchTitle: 'Ce îți rezervi astăzi?',
-      searchPlaceholder: 'Caută un serviciu sau un salon',
-      location: 'Moldova',
-      services: ['Tunsoare', 'Manichiură', 'Îngrijire'],
-      exampleSalon: 'Salon demonstrativ',
-      exampleProfessional: 'Specialist demonstrativ',
-      salonType: 'Salon de înfrumusețare',
-      professionalType: 'Specialist independent',
-      availability: 'Exemplu de ore disponibile',
-      calendarLabel: 'Exemplu ilustrativ de calendar BookMe Business: două coloane de specialiști, programări și ore libere fictive.',
-      calendarCaption: 'Calendar ilustrativ · Programări și specialiști fictivi.',
-      calendarTitle: 'O privire asupra zilei',
-      day: 'Luni · Zi demonstrativă',
-      team: ['Specialist A', 'Specialist B'],
-      appointment: 'Programare',
-      available: 'Timp disponibil',
     },
     downloads: {
       title: 'Următorul pas începe aici.',
@@ -223,26 +183,6 @@ export const homeContent: Record<Locale, HomeContent> = {
         { title: 'With a team or on your own', body: 'Manage professionals and team schedules. Working independently? Use the app for your own calendar and services.' },
       ],
       download: 'Download BookMe Business',
-    },
-    preview: {
-      searchLabel: 'Illustrative BookMe search preview with services, a fictional salon and an independent professional.',
-      searchCaption: 'Interface illustration · Fictional examples, no personal data.',
-      searchTitle: 'What will you book today?',
-      searchPlaceholder: 'Search for a service or salon',
-      location: 'Moldova',
-      services: ['Haircut', 'Manicure', 'Beauty care'],
-      exampleSalon: 'Example salon',
-      exampleProfessional: 'Example professional',
-      salonType: 'Beauty salon',
-      professionalType: 'Independent professional',
-      availability: 'Example available times',
-      calendarLabel: 'Illustrative BookMe Business calendar with two professional columns, fictional appointments and available times.',
-      calendarCaption: 'Calendar illustration · Fictional appointments and professionals.',
-      calendarTitle: 'Your day at a glance',
-      day: 'Monday · Example day',
-      team: ['Professional A', 'Professional B'],
-      appointment: 'Appointment',
-      available: 'Available time',
     },
     downloads: {
       title: 'Your next step starts here.',

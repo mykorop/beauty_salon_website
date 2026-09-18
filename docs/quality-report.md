@@ -1,6 +1,11 @@
 # Ticket 09 acceptance report
 
-The automated checks pass on the current production build, measured on
+For the final build with the web-app links and both phone demos, see the
+[ticket 12 combined report](../design/calendar-demo/README.md). The measurements
+below are the historical ticket 09 baseline; its pending human/content acceptance
+items remain open.
+
+The automated checks passed on the ticket 09 production build, measured on
 **18 September 2026 (Europe/Kyiv)**. The local host is macOS 26.6.2 / Apple M4 Max
 (arm64), Node 24.20.0 and npm 11.19.0. These are local results; the committed
 GitHub Actions workflow has not been run remotely in this task.

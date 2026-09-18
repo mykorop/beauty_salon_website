@@ -1,5 +1,5 @@
 ---
-interface Props { name: 'search' | 'person' | 'calendar' | 'time' | 'pin' | 'chevron' | 'check' | 'back' }
+interface Props { name: 'search' | 'person' | 'calendar' | 'time' | 'pin' | 'chevron' | 'check' | 'back' | 'bell' | 'options' | 'services' | 'close' | 'people' | 'settings' }
 const { name } = Astro.props;
 ---
 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -11,4 +11,10 @@ const { name } = Astro.props;
   {name === 'chevron' && <path d="m8 9 4-4 4 4m-8 6 4 4 4-4" />}
   {name === 'check' && <path d="m5 12 5 5L20 7" />}
   {name === 'back' && <path d="m11 5-7 7 7 7M4 12h16" />}
+  {name === 'bell' && <path d="M5 17h14l-2-3V9A5 5 0 0 0 7 9v5l-2 3Zm5 3h4M12 2v2" />}
+  {name === 'options' && <><path d="M3 6h4m4 0h10M3 12h10m4 0h4M3 18h4m4 0h10" /><circle cx="9" cy="6" r="2" /><circle cx="15" cy="12" r="2" /><circle cx="9" cy="18" r="2" /></>}
+  {name === 'services' && <><path d="m8 8 12 12M8 16 20 4" /><circle cx="5" cy="6" r="3" /><circle cx="5" cy="18" r="3" /></>}
+  {name === 'close' && <path d="m6 6 12 12M6 18 18 6" />}
+  {name === 'people' && <><circle cx="8" cy="7" r="3" /><circle cx="18" cy="8" r="2.5" /><path d="M2 20v-2a6 6 0 0 1 12 0v2H2Zm14-6a5 5 0 0 1 6 5h-5" /></>}
+  {name === 'settings' && <><path d="m9 3-1 3-3 1-2 3 2 2v3l2 3 3-1 2 2 3-1v-3l3-1 1-3-3-2V6l-3-2-2 1-2-2Z" /><circle cx="11" cy="11" r="3" /></>}
 </svg>

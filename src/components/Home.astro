@@ -2,7 +2,7 @@
 import SiteLayout from '../layouts/SiteLayout.astro';
 import ContactForm from './ContactForm.astro';
 import DownloadApps from './DownloadApps.astro';
-import AppPreview from './AppPreview.astro';
+import BusinessCalendarDemo from './BusinessCalendarDemo.astro';
 import ClientBookingDemo from './ClientBookingDemo.astro';
 import Faq from './Faq.astro';
 import { homeContent } from '../content/home';
@@ -80,7 +80,7 @@ const text = homeContent[locale];
           </ul>
           <a href="#download-business" class="text-link">{text.business.download}<span aria-hidden="true"> ↗</span></a>
         </div>
-        <AppPreview locale={locale} kind="calendar" />
+        <BusinessCalendarDemo locale={locale} />
       </section>
     </div>
   </section>

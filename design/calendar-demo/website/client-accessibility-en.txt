@@ -1,0 +1,18 @@
+- region "Booking demo":
+  - figure "Ana Demo · already signed in Fictional demo data. This example creates no booking and shows no real availability.":
+    - 'img "Illustrative BookMe example with fictional data. Ana Demo is already signed in: she finds a manicure at Studio Luma, selects the service and specialist Mara Luca, then 15 October 2026 at 14:30, Chișinău time. She confirms a one-hour appointment for 300 MDL and sees it in her upcoming bookings."'
+    - paragraph: Ana Demo · already signed in
+    - paragraph: Fictional demo data. This example creates no booking and shows no real availability.
+  - button "Next step" [disabled]
+  - button "Replay"
+  - group:
+    - text: Read all the steps
+    - list:
+      - listitem: Search for a manicure and find Studio Luma in Chișinău.
+      - listitem: Open the booking form from the search result.
+      - listitem: "Choose Manicure: one hour, 300 MDL."
+      - listitem: Select specialist Mara Luca.
+      - listitem: Choose 15 October 2026 in the calendar.
+      - listitem: Pick 14:30, Chișinău time, from the demonstration times.
+      - listitem: Check the service, specialist, date and time, then confirm.
+      - listitem: Booking confirmed. The card appears in upcoming bookings.

@@ -36,6 +36,15 @@ are explicitly skipped in no-JavaScript projects; behavior tests still run.
 Additional checks cover 44×44 CSS px targets, keyboard focus outlines and
 obstruction at 320px, reflow, and reduced motion.
 
+The two phone suites (`booking-demo.spec.ts` and `business-demo.spec.ts`) exercise
+normal motion explicitly, reduced motion from load and during playback, static
+no-JavaScript examples, independent playback controls, offscreen/hidden-tab pauses,
+and every frame's accessibility and text bounds. The Business suite also checks
+text obstruction inside the phone and navigation/FAQ/mocked contact use during
+playback. Pages without demos are required to load zero executable JavaScript.
+The [combined visual and acceptance report](../design/calendar-demo/README.md)
+records comparison screenshots and remaining manual checks.
+
 On macOS, WebKit tests use Option-Tab to include links under the default keyboard
 navigation preference; other engines and Linux CI use Tab. This is a native
 keyboard path, not programmatic focus or a changed OS setting (see the

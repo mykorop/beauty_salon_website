@@ -4,15 +4,18 @@
 import { chromium, expect } from '@playwright/test';
 import { mkdir } from 'node:fs/promises';
 
-const out = 'design/booking-demo/references';
+const business = process.argv.includes('--business');
+const out = business ? 'design/calendar-demo/references' : 'design/booking-demo/references';
 await mkdir(out, { recursive: true });
 const service = { serviceId: 'demo-service', name: 'Manicure', description: '', category: 'manicure', durationMinutes: 60, price: 300, currency: 'MDL', priceUnit: 'fixed', isActive: true };
 const master = { masterId: 'demo-master', masterName: 'Mara Luca', masterAvatar: '', specialization: 'manicure', specializationName: 'Manicure', rating: 0, reviewCount: 0, bookingForwardDays: 60, isIndependent: false, joinedAt: '2026-01-01', status: 'ACTIVE', services: [service] };
 const salon = { salonId: 'demo-salon', name: 'Studio Luma', description: 'Fictional demonstration salon', addressStreet: 'Strada Exemplu', addressHouseNumber: '15', addressCity: 'Chișinău', addressCityCode: 'chisinau', addressZipCode: 'MD-2000', email: 'salon@example.test', phone: '+37360000000', imagesUrls: [], rating: 0, reviewCount: 0, minPrice: 300, maxPrice: 300, currency: 'MDL', isActive: true, createdAt: '2026-01-01', bookingForwardDays: 60, bufferMinutes: 0, services: [service], serviceMasters: [{ masterId: master.masterId, services: [service] }], masters: [master], salonHours: [], scheduleMasters: [], categories: [], currencies: ['MDL'], specializations: [] };
 const appointment = { appointmentId: 'demo-booking', salonId: salon.salonId, salonName: salon.name, masterId: master.masterId, masterName: master.masterName, status: 'CONFIRMED', startTime: '2026-10-15T11:30:00.000Z', endTime: '2026-10-15T12:30:00.000Z', totalDurationMinutes: 60, services: [service], totalPrice: 300, currency: 'MDL', timezone: 'Europe/Chisinau', address: 'Strada Exemplu 15, Chișinău', createdAt: '2026-09-18T08:00:00Z', clientId: 'demo-client', clientName: 'Ana Demo', clientPhone: '+37360000000' };
+const weekAppointment = { ...appointment, appointmentId: 'demo-week', clientId: 'demo-daria', clientName: 'Daria Demo', startTime: '2026-10-16T07:00:00.000Z', endTime: '2026-10-16T07:30:00.000Z', totalDurationMinutes: 30, totalPrice: 200, services: [{ ...service, name: 'Haircut', durationMinutes: 30, price: 200 }] };
+const monthAppointment = { ...appointment, appointmentId: 'demo-month', clientId: 'demo-irina', clientName: 'Irina Demo', startTime: '2026-10-22T08:00:00.000Z', endTime: '2026-10-22T08:45:00.000Z', totalDurationMinutes: 45, totalPrice: 250, services: [{ ...service, name: 'Pedicure', durationMinutes: 45, price: 250 }] };
 const browser = await chromium.launch();
 try {
-  for (const role of process.argv.includes('--salon') ? ['salon'] : ['client', 'salon']) {
+  for (const role of business || process.argv.includes('--salon') ? ['salon'] : ['client', 'salon']) {
     const base = `http://127.0.0.1:${role === 'client' ? 4200 : 4201}`;
     const context = await browser.newContext({ viewport: { width: 390, height: 915 }, timezoneId: 'Europe/Chisinau' });
     await context.addInitScript(() => {
@@ -20,6 +23,7 @@ try {
       localStorage.setItem('bookme.onboarding', JSON.stringify({ completed: true, version: 1 }));
     });
     const page = await context.newPage();
+    if (business) await page.clock.setFixedTime(new Date('2026-10-15T08:00:00Z'));
     page.setDefaultTimeout(12000);
     const shot = async name => { await page.evaluate(async () => { await Promise.all(document.getAnimations().filter(a => a.effect?.getComputedTiming().iterations !== Infinity).map(a => a.finished.catch(() => {}))); }); await page.screenshot({ path: `${out}/${name}.png` }); console.log(name); };
     page.on('pageerror', (error) => console.error(role, error.message));
@@ -36,7 +40,9 @@ try {
       else if (path.endsWith('/available-slots')) data = { timezone: 'Europe/Chisinau', slotOptions: ['14:30', '16:00', '17:30'].map((localTime, i) => ({ date: '2026-10-15', localTime, startAtUtc: ['2026-10-15T11:30:00.000Z', '2026-10-15T13:00:00.000Z', '2026-10-15T14:30:00.000Z'][i], utcOffset: '+03:00' })) };
       else if (path.includes('/services/') && path.endsWith('/masters')) data = { masters: [master] };
       else if (path.endsWith('/client/appointments')) data = route.request().method() === 'POST' ? appointment : { upcoming: { appointments: [appointment], nextCursor: null }, past: { appointments: [], nextCursor: null } };
-      else if (path.endsWith('/appointments/dashboard')) data = { timezone: 'Europe/Chisinau', calendarDate: '2026-09-18', today: { appointments: [], nextCursor: null }, week: { appointments: [], nextCursor: null }, month: { appointments: [appointment], nextCursor: null }, summary: { todayCount: 0, weekCount: 0, monthCount: 1 } };
+      else if (path.endsWith('/appointments/dashboard')) data = business
+        ? { timezone: 'Europe/Chisinau', calendarDate: '2026-10-15', today: { appointments: [appointment], nextCursor: null }, week: { appointments: [appointment, weekAppointment], nextCursor: null }, month: { appointments: [appointment, weekAppointment, monthAppointment], nextCursor: null }, summary: { todayCount: 1, weekCount: 2, monthCount: 3 } }
+        : { timezone: 'Europe/Chisinau', calendarDate: '2026-09-18', today: { appointments: [], nextCursor: null }, week: { appointments: [], nextCursor: null }, month: { appointments: [appointment], nextCursor: null }, summary: { todayCount: 0, weekCount: 0, monthCount: 1 } };
       else if (path.endsWith('/salon/appointments')) data = [appointment];
       else if (path.endsWith('/currencies')) data = ['MDL'];
       else if (path.endsWith('/exchange-rates')) data = { baseCurrency: 'MDL', rates: { MDL: 1 }, updatedAt: '2026-09-18', nextSyncAt: '2026-09-19' };
@@ -60,6 +66,26 @@ try {
     }, role);
     if (role === 'salon') {
       await expect(page.locator('app-admin-calendar')).toBeVisible();
+      if (business) {
+        const cards = page.locator('app-appointment-card');
+        await expect(cards).toHaveCount(1);
+        await shot('business-today');
+        await page.locator('ion-segment-button[value="week"]').click();
+        await expect(cards).toHaveCount(2);
+        await shot('business-week');
+        await page.locator('ion-segment-button[value="month"]').click();
+        await expect(cards).toHaveCount(3);
+        await shot('business-month');
+        await page.locator('ion-searchbar input').fill('Ana Demo');
+        await expect(cards).toHaveCount(1);
+        await shot('business-search');
+        await cards.screenshot({ path: `${out}/business-card.png` });
+        await page.locator('ion-searchbar input').fill('');
+        await expect(cards).toHaveCount(3);
+        await shot('business-cleared');
+        await context.close();
+        continue;
+      }
       await page.locator('ion-segment-button[value="month"]').click();
       await expect(page.locator('app-admin-calendar')).toContainText('Mara Luca');
       await shot('salon-calendar');

@@ -1,0 +1,78 @@
+---
+import PhoneDemo from './PhoneDemo.astro';
+import Icon from './DemoIcon.astro';
+import { calendarAppointments, calendarDemoContent, calendarFrames } from '../content/calendar-demo';
+import type { Locale } from '../i18n';
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const text = calendarDemoContent[locale];
+---
+<PhoneDemo id="business-demo" {...text}>
+  {calendarFrames.map((frame, index) => <div class:list={['calendar-frame', frame.name]} data-frame data-duration={frame.duration} data-caption={text.steps[index]} hidden={frame.name !== 'cleared'}>
+    <div class="calendar-toolbar"><Icon name="calendar" /><strong>{text.titles[frame.period]}</strong><Icon name="bell" /></div>
+    <div class="calendar-body">
+      <div class="periods">{Object.entries(text.periods).map(([period, label]) => <span class:list={{ selected: period === frame.period }}>{label}{period === frame.name && period !== 'today' && <i class="tap"></i>}</span>)}</div>
+      <div class="search-row"><div class:list={['search-field', { searching: Boolean(frame.search) }]}><Icon name="search" /><span>{frame.search || text.search}</span>{frame.search && <span class="clear"><Icon name="close" />{frame.name === 'details' && <i class="tap"></i>}</span>}{frame.name === 'search' && <i class="tap"></i>}</div><span class="filter"><Icon name="options" /></span></div>
+      <div class="appointments">
+        {calendarAppointments.filter(appointment =>
+          (frame.period === 'month' || appointment.period === 'today' || (frame.period === 'week' && appointment.period === 'week')) &&
+          appointment.client.toLowerCase().includes(frame.search.toLowerCase())
+        ).map(appointment => <div class="date-group">
+          <strong class="date-label">{text.dates[appointment.day]}</strong>
+          <div class="appointment-card">
+            <div class="card-header"><span class="avatar"><Icon name="person" /></span><div class="client"><strong>{appointment.client}</strong><small>{text.services[appointment.service]}</small></div><span class="status">{text.confirmed}</span></div>
+            <div class="master"><Icon name="person" /><span>{appointment.master}</span></div>
+            <div class="card-footer"><span><Icon name="time" />{appointment.time} ({appointment.duration})</span><strong>{appointment.price}</strong></div>
+          </div>
+        </div>)}
+      </div>
+    </div>
+    <div class="app-navigation"><span class="active"><Icon name="calendar" />{text.calendar}</span><span><Icon name="people" />{text.masters}</span><span><Icon name="services" />{text.servicesLabel}</span><span><Icon name="settings" />{text.settings}</span></div>
+  </div>)}
+</PhoneDemo>
+
+<style>
+  .calendar-frame { position: absolute; inset: 0; display: flex; flex-direction: column; background: #f6f6f7; animation: screen-enter 280ms ease-out; }
+  .calendar-frame[hidden] { display: none; }
+  .calendar-frame.cleared { animation: none; }
+  .calendar-toolbar { display: flex; align-items: center; justify-content: space-between; padding: 7px 13px; background: #fff; }
+  .calendar-toolbar strong { font-size: 17px; }
+  .calendar-body { padding: 8px 10px 0; flex: 1; min-height: 0; }
+  .periods { display: flex; padding: 3px; background: #eeeef1; border-radius: 24px; }
+  .periods span { position: relative; flex: 1; text-align: center; padding: 5px 1px; border-radius: 22px; font-size: 12px; font-weight: 600; }
+  .periods .selected { background: #fff; box-shadow: 0 2px 6px rgb(0 0 0 / 8%); }
+  .search-row { display: flex; align-items: center; gap: 7px; margin-block: 9px; }
+  .search-field { position: relative; display: flex; align-items: center; gap: 5px; border-radius: 24px; background: #fff; color: #64646b; padding: 9px; flex: 1; min-width: 0; font-size: 10px; box-shadow: 0 2px 8px rgb(0 0 0 / 5%); }
+  .searching { color: #18181b; }
+  .clear { position: relative; display: flex; margin-left: auto; }
+  .search-field :global(svg) { width: 15px; height: 15px; flex-shrink: 0; }
+  .filter { display: grid; place-items: center; border-radius: 50%; background: #fff; width: 33px; height: 33px; }
+  .date-group { margin-bottom: 7px; }
+  .date-label { display: block; font-size: 11px; margin: 0 3px 4px; }
+  .appointment-card { padding: 8px 9px; border-radius: 19px; background: #fff; box-shadow: 0 4px 10px rgb(42 42 48 / 7%); }
+  .card-header { display: flex; align-items: flex-start; gap: 6px; }
+  .avatar { display: grid; place-items: center; width: 27px; height: 27px; border-radius: 50%; background: #eeeef1; color: #64646b; flex-shrink: 0; }
+  .avatar :global(svg) { width: 17px; height: 17px; }
+  .client { flex: 1; min-width: 0; }
+  .client strong { display: block; font-size: 12px; }
+  .client small { display: block; color: #64646b; font-size: 10px; }
+  .status { color: #5c5c61; background: #ededee; padding: 3px 5px; border-radius: 12px; font-size: 9px; font-weight: 600; }
+  .master { display: flex; align-items: center; gap: 5px; margin-block: 5px; font-size: 11px; }
+  .master :global(svg), .card-footer :global(svg) { width: 14px; height: 14px; flex-shrink: 0; }
+  .master :global(svg) { color: #64646b; }
+  .card-footer { display: flex; align-items: center; justify-content: space-between; gap: 4px; padding-top: 5px; border-top: 1px solid #e6e6ea; font-size: 11px; font-weight: 600; }
+  .card-footer > span { display: flex; align-items: center; gap: 5px; }
+  .card-footer strong { font-size: 12px; white-space: nowrap; }
+  .app-navigation { display: flex; justify-content: space-around; background: #fff; padding: 7px 3px; margin-inline: 7px; border-radius: 26px; color: #64646b; box-shadow: 0 2px 8px rgb(0 0 0 / 8%); }
+  .app-navigation span { display: flex; align-items: center; flex-direction: column; gap: 2px; font-size: 9px; }
+  .app-navigation .active { color: #18181b; font-weight: 700; }
+  .app-navigation :global(svg) { width: 19px; height: 19px; }
+  .details .appointment-card { outline: 2px solid #6c6c72; outline-offset: 2px; }
+  .tap { position: absolute; width: 26px; height: 26px; right: 18%; top: calc(50% - 13px); border: 2px solid #6f8c79; border-radius: 50%; background: rgb(111 140 121 / 16%); opacity: 0; animation: tap 1800ms ease-out both; pointer-events: none; }
+  .clear .tap { right: calc(50% - 13px); animation-delay: 1500ms; }
+  :global(phone-playback[data-playing='false']) .calendar-frame,
+  :global(phone-playback[data-playing='false']) .tap { animation-play-state: paused; }
+  @keyframes screen-enter { from { transform: translateY(8px); } to { transform: translateY(0); } }
+  @keyframes tap { 0%, 60% { opacity: 0; transform: scale(0.8); } 72% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(1.6); } }
+  @media (prefers-reduced-motion: reduce) { .calendar-frame, .tap { animation: none; } }
+</style>

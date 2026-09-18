@@ -1,0 +1,16 @@
+- region "Business calendar demo":
+  - figure "Studio Luma · 15 October 2026 · Chișinău time Fictional data for a salon or an independent specialist. The phones show the same example; they are not live-synced.":
+    - 'img "Illustrative BookMe Business example with fictional data. The calendar shows one appointment today, two this week and three this month. Searching for Ana Demo finds Manicure with Mara Luca on 15 October 2026 at 14:30, Chișinău time: one hour, 300 MDL, Confirmed. Clearing search restores all three appointments."'
+    - paragraph: Studio Luma · 15 October 2026 · Chișinău time
+    - paragraph: Fictional data for a salon or an independent specialist. The phones show the same example; they are not live-synced.
+  - button "Next step" [disabled]
+  - button "Replay"
+  - group:
+    - text: Read all the steps
+    - list:
+      - listitem: "Today, 15 October 2026: Ana Demo’s appointment at 14:30."
+      - listitem: "Switch to Week: Daria Demo on 16 October joins the list."
+      - listitem: "Switch to Month: Irina Demo on 22 October joins the list."
+      - listitem: "Search for Ana Demo: only her appointment remains."
+      - listitem: "Read the card: Manicure, Mara Luca, 14:30, one hour, 300 MDL, Confirmed."
+      - listitem: "Clear search: all three appointments for the month return."
