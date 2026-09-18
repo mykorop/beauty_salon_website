@@ -74,6 +74,7 @@ The production origin is `siteOrigin` in `src/i18n.ts`, also used by `site` in
 - `src/i18n.ts`: shared labels, production origin and the canonical public page map.
 - `src/content/apps.ts`: app identities and store links shared by downloads and JSON-LD.
 - `src/content/home.ts`: localized homepage copy.
+- `src/content/booking-demo.ts`: fixed fictional booking data, RO/EN demo copy and frame timing.
 - `src/content/legal/{ro,en}/`: legal document bodies; shared metadata lives in
   `src/content/legal.ts`.
 - `src/layouts/`: shared document shell and legal layout.
@@ -97,10 +98,14 @@ axe runs in the JavaScript-enabled projects. No deletion email is sent by tests.
 The homepage describes the free BookMe platform for Moldova, with separate paths
 for clients and for salons or independent professionals. `DownloadApps.astro`
 contains the exact client/business store URLs and explains the BookMe Salon name
-on the App Store. `AppPreview.astro` renders labeled fictional search/calendar
-illustrations as responsive HTML/CSS, with localized accessible descriptions and
-no personal data or image downloads. All homepage content is rendered in the
-static HTML; it does not depend on JavaScript or an entrance animation.
+on the App Store. The hero's `ClientBookingDemo.astro` shows an eight-step fictional
+booking inside the reusable `PhoneDemo.astro`. Its small local playback controller
+handles pause, replay, visibility and reduced motion; a confirmed card and full
+step description are available without JavaScript. App comparison screenshots,
+capture commands and acceptance evidence are in [design/booking-demo](design/booking-demo/README.md).
+`AppPreview.astro` continues to render the labeled business calendar illustration.
+All homepage content is rendered in static HTML, with no app framework runtime,
+personal data or image downloads required by the illustrations.
 
 DM Sans and Instrument Serif are bundled locally from the pinned Fontsource
 packages with Latin and Latin Extended subsets, including Romanian diacritics.

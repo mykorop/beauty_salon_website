@@ -20,7 +20,9 @@ for (const path of paths) {
   test(`keyboard focus stays visible and unobscured on ${path}`, async ({ page, tabKey }) => {
     await page.setViewportSize({ width: 320, height: 800 });
     await page.goto(path);
-    const targets = await page.locator('a, button, input, textarea, summary').count();
+    // Hidden and disabled playback controls are outside the native tab order.
+    // Count reachable controls so the walk ends before focus enters browser chrome.
+    const targets = await page.locator('a:visible, button:visible:enabled, input:visible:enabled, textarea:visible:enabled, summary:visible').count();
     for (let index = 0; index < targets; index += 1) {
       await page.keyboard.press(tabKey);
       const focused = page.locator(':focus');

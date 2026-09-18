@@ -1,0 +1,18 @@
+- region "Demonstrație de programare":
+  - figure "Ana Demo · deja conectată Date fictive. Acest exemplu nu creează o programare și nu arată disponibilitatea reală.":
+    - 'img "Exemplu ilustrativ BookMe cu date fictive. Ana Demo este deja conectată: caută o manichiură la Studio Luma, alege serviciul și specialista Mara Luca, apoi 15 octombrie 2026 la 14:30, ora Chișinăului. Confirmă o programare de o oră, la 300 MDL, și o vede în programările viitoare."'
+    - paragraph: Ana Demo · deja conectată
+    - paragraph: Date fictive. Acest exemplu nu creează o programare și nu arată disponibilitatea reală.
+  - button "Pasul următor" [disabled]
+  - button "Repetă"
+  - group:
+    - text: Toți pașii, pe scurt
+    - list:
+      - listitem: Caută o manichiură și găsește Studio Luma în Chișinău.
+      - listitem: Deschide formularul de programare din rezultatul căutării.
+      - listitem: "Alege Manichiură: o oră, 300 MDL."
+      - listitem: Alege specialista Mara Luca.
+      - listitem: Alege 15 octombrie 2026 în calendar.
+      - listitem: Alege ora 14:30, ora Chișinăului, dintre orele demonstrative.
+      - listitem: Verifică serviciul, specialista, data și ora, apoi confirmă.
+      - listitem: Programare confirmată. Cardul apare în programările viitoare.

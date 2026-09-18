@@ -3,6 +3,7 @@ import SiteLayout from '../layouts/SiteLayout.astro';
 import ContactForm from './ContactForm.astro';
 import DownloadApps from './DownloadApps.astro';
 import AppPreview from './AppPreview.astro';
+import ClientBookingDemo from './ClientBookingDemo.astro';
 import Faq from './Faq.astro';
 import { homeContent } from '../content/home';
 import { webAppUrl } from '../content/apps';
@@ -27,7 +28,7 @@ const text = homeContent[locale];
           <a class="how-link" href="#how-it-works">{text.howLink}<span aria-hidden="true"> ↓</span></a>
         </div>
       </div>
-      <div class="hero-preview"><AppPreview locale={locale} kind="search" /></div>
+      <div class="hero-preview"><ClientBookingDemo locale={locale} /></div>
     </div>
   </section>
 
@@ -139,7 +140,7 @@ const text = homeContent[locale];
   }
   @media (max-width: 600px) {
     .hero { padding: 3rem 1.25rem; }
-    .hero-preview { padding: 0.75rem; }
+    .hero-preview { padding: 0.65rem; }
     .hero-ctas { flex-direction: column; }
     .hero-ctas a { justify-content: center; }
   }

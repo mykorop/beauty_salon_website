@@ -1,0 +1,155 @@
+---
+import PhoneDemo from './PhoneDemo.astro';
+import Icon from './DemoIcon.astro';
+import { bookingDemoContent, bookingExample as example, bookingFrames } from '../content/booking-demo';
+import type { Locale } from '../i18n';
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const text = bookingDemoContent[locale];
+const calendarDays = [...Array.from({ length: 3 }, () => null), ...Array.from({ length: 31 }, (_, i) => i + 1)];
+---
+<PhoneDemo id="client-demo" {...text}>
+  {bookingFrames.map(({ name, duration }, index) => (
+    <div class:list={['booking-frame', name]} data-frame data-duration={duration} data-caption={text.steps[index]} hidden={name !== 'success'}>
+      {name === 'search' ? (
+        <>
+          <div class="search-header"><Icon name="back" /><div class="search-input"><Icon name="search" /><span>{text.service}</span><small>{example.city}</small></div></div>
+          <div class="search-card">
+            <div class="salon-placeholder"><small class="no-reviews">{text.noReviews}</small><span class="monogram">S</span><small class="photo-pending">{text.awaitingPhoto}</small><span class="price-tag">{example.price}</span></div>
+            <div class="search-card-content"><strong>{example.salon}</strong><p class="muted">{example.address}</p><div class="app-button outline tap-target">{text.book}<i class="tap"></i></div></div>
+          </div>
+        </>
+      ) : name === 'success' ? (
+        <>
+          <div class="bookings-heading">{text.bookings}</div>
+          <div class="app-tabs"><span class="selected">{text.upcoming}</span><span>{text.history}</span></div>
+          <div class="success-toast"><Icon name="check" /><strong>{text.success}</strong></div>
+          <div class="upcoming-card">
+            <div class="card-heading"><div><strong>{example.salon}</strong><p class="muted">{text.service}</p></div><span class="price-tag">{example.price}</span></div>
+            <div class="booking-details">
+              <p><Icon name="calendar" /><span><span>{text.date}</span><small>{example.timezone}</small></span></p>
+              <p><Icon name="time" /><span>{example.time} ({example.duration})</span></p>
+              <p><Icon name="person" /><span>{example.master}</span></p>
+              <p><Icon name="pin" /><span>{example.address}</span></p>
+            </div>
+            <div class="card-actions"><span>{text.reschedule}</span><span>{text.cancel}</span></div>
+          </div>
+          <div class="app-navigation"><span><Icon name="search" />{text.search}</span><span class="active"><Icon name="calendar" />{text.bookings}</span><span><Icon name="person" />{text.profile}</span></div>
+        </>
+      ) : (
+        <>
+          <div class:list={['booking-form', { dimmed: ['service', 'master', 'calendar', 'time'].includes(name) }]} inert={['service', 'master', 'calendar', 'time'].includes(name)}>
+            <div class="form-toolbar">{text.cancel}</div>
+            <div class="form-fields">
+              <div class="form-field"><strong>{text.selectService}</strong><p><span>{text.service}</span><Icon name="chevron" /></p></div>
+              <div class="form-field"><strong>{text.selectMaster}</strong><p><span>{index >= 4 ? example.master : text.chooseMaster}</span><Icon name="chevron" /></p></div>
+              {index >= 4 && <div class="form-field"><strong>{text.selectDateTime}</strong><p><span>{name === 'confirm' ? `${text.date} · ${example.time}` : text.chooseDate}</span><Icon name="chevron" /></p>{name === 'confirm' && <small>{example.timezone}</small>}</div>}
+            </div>
+            <div class:list={['app-button', 'book-button', { disabled: name !== 'confirm', 'tap-target': name === 'confirm' }]}>{text.book}{name === 'confirm' ? ` · ${example.price}` : ''}{name === 'confirm' && <i class="tap"></i>}</div>
+          </div>
+          {name === 'service' && <div class="service-sheet"><div class="service-option tap-target"><span>{text.service} · {example.price}</span><i class="tap"></i><small>{example.duration}</small></div><div class="service-cancel">{text.cancel}</div></div>}
+          {name === 'master' && <div class="picker-sheet"><div class="sheet-handle"></div><div class="sheet-toolbar"><strong>{text.selectMaster}</strong><span>{text.cancel}</span></div><div class="master-option tap-target"><span class="avatar"><Icon name="person" /></span><div><strong>{example.master}</strong><small>{text.service}</small></div><strong>{example.price}</strong><i class="tap"></i></div></div>}
+          {(name === 'calendar' || name === 'time') && <div class="picker-sheet calendar-sheet">
+            <div class="sheet-handle"></div><div class="sheet-toolbar"><strong>{text.selectDate}</strong><span>{text.cancel}</span></div>
+            <div class="calendar-panel"><div class="calendar-month"><strong>{text.month}</strong><span>‹　›</span></div><div class="calendar-grid">{text.weekdays.map(day => <small>{day}</small>)}{calendarDays.map(day => <span class:list={{ available: day === 15, chosen: day === 15 && name === 'time', 'tap-target': day === 15 && name === 'calendar' }}>{day}{day === 15 && name === 'calendar' && <i class="tap"></i>}</span>)}</div></div>
+            <strong class="time-label">{text.selectTime}</strong><div class="time-options">{example.slots.map((time, slot) => <span class:list={{ chosen: slot === 0 && name === 'time', 'tap-target': slot === 0 && name === 'time' }}>{time}{slot === 0 && name === 'time' && <i class="tap"></i>}</span>)}</div>
+            <small class="venue-timezone">{example.timezone}</small>
+          </div>}
+        </>
+      )}
+    </div>
+  ))}
+</PhoneDemo>
+
+<style>
+  /* App colors follow the local mobile tokens; website gold stays outside the screen. */
+  .booking-frame { position: absolute; inset: 0; overflow: hidden; background: #f6f6f7; animation: screen-enter 280ms ease-out; }
+  .booking-frame[hidden] { display: none; }
+  .booking-frame.success { animation: none; }
+  strong { font-weight: 700; }
+  small { font-size: 11px; }
+  .muted, .form-field small { color: #64646b; }
+  .search-header { display: flex; align-items: center; gap: 8px; background: #2a2a30; color: white; padding: 12px 10px 16px; border-radius: 0 0 24px 24px; }
+  .search-header > :global(svg) { flex-shrink: 0; }
+  .search-input { display: flex; align-items: center; gap: 5px; min-width: 0; flex: 1; padding: 9px; background: white; color: #2a2a30; border-radius: 28px; }
+  .search-input :global(svg) { width: 15px; flex-shrink: 0; }
+  .search-input small { font-size: 10px; margin-left: auto; padding-left: 5px; border-left: 1px solid #e6e6ea; }
+  .search-card { margin: 24px 10px; border: 1px solid #e6e6ea; border-radius: 22px; overflow: hidden; box-shadow: 0 12px 24px rgb(42 42 48 / 10%); background: white; }
+  .salon-placeholder { height: 145px; position: relative; display: grid; place-items: center; background: repeating-linear-gradient(135deg, #e6e6ea 0, #e6e6ea 1px, #f6f6f7 1px, #f6f6f7 14px); }
+  .monogram { display: grid; place-items: center; width: 58px; height: 58px; border-radius: 17px; background: white; color: #6f8c79; font: bold 36px Georgia, serif; box-shadow: 0 8px 14px rgb(0 0 0 / 8%); }
+  .no-reviews, .photo-pending { position: absolute; color: #64646b; background: white; border-radius: 12px; padding: 3px 7px; font-size: 9px; }
+  .no-reviews { top: 12px; left: 9px; }
+  .photo-pending { bottom: 9px; right: 9px; }
+  .price-tag { font-size: 12px; font-weight: 700; white-space: nowrap; padding: 6px 8px; border-radius: 15px; background: #f6f6f7; }
+  .salon-placeholder .price-tag { position: absolute; top: 10px; right: 9px; background: white; font-size: 10px; }
+  .search-card-content { padding: 14px; }
+  .search-card-content > strong { font-size: 17px; }
+  .search-card-content p { font-size: 11px; margin-top: 4px; }
+  .app-button { border-radius: 30px; text-align: center; padding: 12px 8px; background: #18181b; color: white; font-weight: 600; }
+  .outline { border: 1px solid #2a2a30; background: white; color: #2a2a30; margin-top: 12px; }
+  .booking-form { display: flex; flex-direction: column; height: 100%; background: #fafafa; }
+  .form-toolbar { text-align: right; padding: 12px 16px; font-weight: 600; }
+  .form-fields { padding: 6px 15px; }
+  .form-field { margin: 12px 0 24px; }
+  .form-field strong { display: block; margin-bottom: 12px; }
+  .form-field p { display: flex; align-items: center; justify-content: space-between; gap: 4px; padding: 10px 0; border-bottom: 2px solid #18181b; min-height: 42px; }
+  .form-field :global(svg) { width: 15px; flex-shrink: 0; }
+  .book-button { margin: auto 9px 5px; }
+  .disabled { background: #6c6c72; }
+  .dimmed { filter: blur(2px); opacity: 0.42; background: #d4d4d6; }
+  .service, .master, .calendar, .time { background: #bababc; }
+  .service-sheet { position: absolute; inset: auto 8px 8px; text-align: center; font-size: 16px; font-weight: 700; }
+  .service-option, .service-cancel { border-radius: 13px; padding: 16px 7px; background: #eeeef1; }
+  .service-option small { display: block; font-weight: 400; margin-top: 3px; }
+  .service-cancel { background: #fff; margin-top: 7px; }
+  .picker-sheet { position: absolute; inset: 22% 0 0; border-radius: 18px 18px 0 0; background: #f6f6f7; }
+  .sheet-handle { width: 30px; height: 4px; background: #b8b8bc; border-radius: 4px; margin: 6px auto; }
+  .sheet-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 4px; padding: 7px 13px 17px; }
+  .master-option { display: flex; align-items: center; gap: 8px; border: 1px solid #2a2a30; border-radius: 40px; padding: 10px; margin: 10px; font-size: 12px; }
+  .master-option > div { flex: 1; }
+  .master-option small { display: block; }
+  .master-option > strong { font-size: 11px; }
+  .avatar { width: 34px; height: 34px; border-radius: 50%; background: #e6e6ea; display: grid; place-items: center; flex-shrink: 0; }
+  .calendar-sheet { inset-block-start: 5%; }
+  .calendar-panel { margin: 0 10px; padding: 14px 10px; border-radius: 16px; background: #fff; }
+  .calendar-month { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .calendar-month > span { font-size: 22px; color: #64646b; line-height: 1; }
+  .calendar-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); text-align: center; row-gap: 6px; }
+  .calendar-grid small { font-size: 10px; color: #64646b; }
+  .calendar-grid > span { display: grid; place-items: center; height: 32px; border-radius: 50%; color: #6c6c72; }
+  .calendar-grid .available { color: #18181b; font-weight: 700; }
+  .calendar-grid .chosen { background: #d4d4d8; }
+  .time-label { display: block; margin: 18px 13px 10px; }
+  .time-options { display: flex; justify-content: space-between; gap: 5px; padding-inline: 12px; }
+  .time-options > span { border: 1px solid #2a2a30; border-radius: 24px; padding: 9px 12px; font-size: 12px; }
+  .time-options .chosen { color: white; background: #2a2a30; }
+  .venue-timezone { display: block; margin: 12px; color: #64646b; }
+  .bookings-heading { font-size: 23px; font-weight: 700; padding: 14px 16px 10px; }
+  .app-tabs { display: flex; margin: 0 13px 13px; padding: 3px; background: #eeeef1; border-radius: 24px; text-align: center; }
+  .app-tabs span { padding: 6px; flex: 1; border-radius: 22px; font-size: 12px; }
+  .app-tabs .selected { background: #fff; font-weight: 700; box-shadow: 0 2px 6px rgb(0 0 0 / 8%); }
+  .success-toast { display: flex; align-items: center; gap: 7px; margin: 0 10px 12px; padding: 12px 10px; background: #167e47; color: #fff; border-radius: 15px; font-size: 12px; }
+  .success-toast :global(svg) { flex-shrink: 0; }
+  .upcoming-card { background: #fff; border: 1px solid #e6e6ea; border-radius: 22px; margin: 0 10px; padding: 16px 13px; box-shadow: 0 4px 12px rgb(0 0 0 / 7%); }
+  .card-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 5px; }
+  .card-heading p { font-size: 12px; margin-top: 3px; }
+  .card-heading .price-tag { font-size: 11px; }
+  .booking-details { display: grid; gap: 13px; margin-top: 20px; font-size: 12px; font-weight: 600; }
+  .booking-details p { display: flex; align-items: center; gap: 8px; }
+  .booking-details :global(svg) { width: 18px; height: 18px; flex-shrink: 0; }
+  .booking-details small { display: block; color: #64646b; font-weight: 400; font-size: 10px; }
+  .card-actions { display: flex; gap: 5px; border-top: 1px solid #e6e6ea; padding-top: 12px; margin-top: 14px; font-size: 10px; }
+  .card-actions span { flex: 1; padding: 7px 2px; border: 1px solid #2a2a30; border-radius: 20px; text-align: center; }
+  .card-actions span:last-child { color: #c5000f; border-color: #c5000f; }
+  .app-navigation { position: absolute; inset: auto 0 0; display: flex; justify-content: space-around; padding-top: 10px; background: #f6f6f7; color: #64646b; }
+  .app-navigation span { display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: 10px; }
+  .app-navigation .active { color: #18181b; font-weight: 700; }
+  .tap-target { position: relative; }
+  .tap { position: absolute; width: 28px; height: 28px; right: 18%; top: calc(50% - 14px); border: 2px solid #6f8c79; border-radius: 50%; background: rgb(111 140 121 / 16%); opacity: 0; animation: tap 1800ms ease-out both; pointer-events: none; }
+  .calendar-grid .tap { right: calc(50% - 14px); }
+  :global(phone-playback[data-playing='false']) .booking-frame,
+  :global(phone-playback[data-playing='false']) .tap { animation-play-state: paused; }
+  @keyframes screen-enter { from { transform: translateY(8px); } to { transform: translateY(0); } }
+  @keyframes tap { 0%, 60% { opacity: 0; transform: scale(0.8); } 72% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(1.6); } }
+  @media (prefers-reduced-motion: reduce) { .booking-frame, .tap { animation: none; } }
+</style>

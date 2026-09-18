@@ -1,0 +1,73 @@
+---
+interface Props {
+  id: string;
+  label: string;
+  description: string;
+  caption: string;
+  account: string;
+  stepsTitle: string;
+  steps: readonly string[];
+  controls: { pause: string; resume: string; replay: string; next: string; finished: string };
+}
+const { id, label, description, caption, account, stepsTitle, steps, controls } = Astro.props;
+---
+<section class="phone-demo" aria-label={label}>
+  <phone-playback data-pause={controls.pause} data-resume={controls.resume} data-finished={controls.finished}>
+    <figure>
+      <div class="phone" role="img" aria-label={description} aria-describedby={`${id}-steps`} data-phone>
+        <div class="phone-screen" aria-hidden="true">
+          <div class="phone-status"><span>9:41</span><span class="camera"></span><span>▮▮▮ <span class="battery"></span></span></div>
+          <div class="phone-frames"><slot /></div>
+          <div class="home-indicator"></div>
+        </div>
+      </div>
+      <figcaption>
+        <p class="demo-account">{account}</p>
+        <p>{caption}</p>
+      </figcaption>
+    </figure>
+    <div class="playback-controls" data-controls hidden>
+      <button type="button" data-toggle>{controls.pause}</button>
+      <button type="button" data-next hidden>{controls.next}</button>
+      <button type="button" data-replay>{controls.replay}</button>
+    </div>
+    <p class="playback-step" aria-hidden="true"><span data-step-count>{steps.length} / {steps.length}</span><span data-step-caption>{steps.at(-1)}</span></p>
+    <details class="demo-description" id={`${id}-steps`}>
+      <summary>{stepsTitle}</summary>
+      <ol>{steps.map(step => <li>{step}</li>)}</ol>
+    </details>
+  </phone-playback>
+</section>
+
+<script>
+  import '../scripts/phone-playback';
+</script>
+
+<style>
+  .phone-demo { width: 100%; max-width: 370px; margin-inline: auto; }
+  phone-playback { display: block; }
+  .phone { width: min(100%, 318px); height: 610px; padding: 7px; margin-inline: auto; background: #17181b; border: 1px solid #74736e; border-radius: 44px; box-shadow: inset 0 0 0 2px #383a3e, 0 30px 65px rgb(0 0 0 / 30%); }
+  .phone-screen { height: 100%; position: relative; display: flex; flex-direction: column; border-radius: 36px; overflow: hidden; background: #f6f6f7; color: #18181b; color-scheme: light; font-family: Arial, sans-serif; font-size: 14px; line-height: 1.4; }
+  .phone-status { display: flex; height: 39px; flex-shrink: 0; justify-content: space-between; align-items: center; padding: 0 18px; font-size: 11px; font-weight: 700; background: #fff; }
+  .camera { width: 70px; height: 19px; background: #17181b; border-radius: 20px; }
+  .camera::after { content: ''; display: block; width: 7px; height: 7px; border-radius: 50%; background: #303642; margin: 6px 9px 0 auto; }
+  .battery { display: inline-block; width: 15px; height: 8px; border: 1px solid currentColor; border-radius: 2px; margin-left: 3px; }
+  .phone-frames { position: relative; flex: 1; min-height: 0; }
+  .home-indicator { width: 88px; height: 4px; background: #18181b; border-radius: 10px; margin: 10px auto; flex-shrink: 0; }
+  figcaption { text-align: center; font-size: 0.75rem; color: var(--text-muted); margin-top: 1.4rem; }
+  .demo-account { color: var(--accent); margin-bottom: 0.25rem; }
+  .playback-controls { display: flex; justify-content: center; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.85rem; }
+  [hidden] { display: none !important; }
+  button { min-height: 44px; min-width: 44px; padding: 0.6rem 1rem; border: 1px solid var(--border); border-radius: 2rem; color: var(--text); background: var(--bg); font: inherit; font-size: 0.8rem; cursor: pointer; }
+  button:hover { border-color: var(--accent); }
+  .playback-step { display: flex; align-items: baseline; gap: 0.75rem; margin-top: 1rem; font-size: 0.78rem; min-height: 3.2em; color: var(--text-muted); }
+  [data-step-count] { white-space: nowrap; color: var(--accent); font-variant-numeric: tabular-nums; }
+  .demo-description { margin-top: 0.25rem; font-size: 0.8rem; color: var(--text-muted); }
+  summary { min-height: 44px; padding-block: 0.6rem; cursor: pointer; color: var(--accent); }
+  ol { padding-left: 1.25rem; }
+  li { padding: 0.25rem 0; }
+  @media (max-width: 380px) {
+    .phone { height: 590px; border-radius: 38px; }
+    .phone-screen { border-radius: 30px; font-size: 13px; }
+  }
+</style>
