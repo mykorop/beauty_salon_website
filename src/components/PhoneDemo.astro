@@ -59,7 +59,8 @@ const { id, label, description, caption, account, stepsTitle, steps, controls } 
   .playback-controls { display: flex; justify-content: center; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.85rem; }
   [hidden] { display: none !important; }
   button { min-height: 44px; min-width: 44px; padding: 0.6rem 1rem; border: 1px solid var(--border); border-radius: 2rem; color: var(--text); background: var(--bg); font: inherit; font-size: 0.8rem; cursor: pointer; }
-  button:hover { border-color: var(--accent); }
+  button:enabled:hover { border-color: var(--accent-hover); text-decoration: underline; }
+  button:enabled:active { border-color: var(--accent-active); text-decoration: underline; transform: translateY(1px); }
   .playback-step { display: flex; align-items: baseline; gap: 0.75rem; margin-top: 1rem; font-size: 0.78rem; min-height: 3.2em; color: var(--text-muted); }
   [data-step-count] { white-space: nowrap; color: var(--accent); font-variant-numeric: tabular-nums; }
   .demo-description { margin-top: 0.25rem; font-size: 0.8rem; color: var(--text-muted); }

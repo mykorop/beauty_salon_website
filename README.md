@@ -80,7 +80,7 @@ The production origin is `siteOrigin` in `src/i18n.ts`, also used by `site` in
   `src/content/legal.ts`.
 - `src/layouts/`: shared document shell and legal layout.
 - `src/components/`: shared navigation, footer, language links, homepage, and form.
-- `src/styles/global.css`: graphite/gold palette, responsive layout, and focus styles.
+- `src/styles/global.css`: graphite/orange palette, responsive layout, and focus styles.
 
 Privacy and account-deletion wording in both languages follows the
 [data audit](.scratch/bookme-website-refresh/audit/README.md). The

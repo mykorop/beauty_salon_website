@@ -1,0 +1,188 @@
+{
+  "browser": "153.0.8010.12",
+  "screenshots": [
+    "ro-1440-cta.png",
+    "ro-1440-downloads.png",
+    "ro-393-cta.png",
+    "ro-393-downloads.png",
+    "en-1440-cta.png",
+    "en-1440-downloads.png",
+    "en-393-cta.png",
+    "en-393-downloads.png",
+    "en-1440-focus.png",
+    "en-1440-hover.png",
+    "en-1440-active.png",
+    "en-1440-contact-active.png",
+    "en-1440-playback-active.png"
+  ],
+  "pages": [
+    {
+      "path": "/",
+      "palette": {
+        "--accent": "#f59e0c",
+        "--accent-hover": "#ffb52e",
+        "--accent-active": "#dc8908",
+        "--bg": "#181a1d",
+        "--bg-alt": "#1e2024",
+        "--bg-elevated": "#25282d"
+      }
+    },
+    {
+      "path": "/privacy.html",
+      "palette": {
+        "--accent": "#f59e0c",
+        "--accent-hover": "#ffb52e",
+        "--accent-active": "#dc8908",
+        "--bg": "#181a1d",
+        "--bg-alt": "#1e2024",
+        "--bg-elevated": "#25282d"
+      }
+    },
+    {
+      "path": "/terms.html",
+      "palette": {
+        "--accent": "#f59e0c",
+        "--accent-hover": "#ffb52e",
+        "--accent-active": "#dc8908",
+        "--bg": "#181a1d",
+        "--bg-alt": "#1e2024",
+        "--bg-elevated": "#25282d"
+      }
+    },
+    {
+      "path": "/delete-account.html",
+      "palette": {
+        "--accent": "#f59e0c",
+        "--accent-hover": "#ffb52e",
+        "--accent-active": "#dc8908",
+        "--bg": "#181a1d",
+        "--bg-alt": "#1e2024",
+        "--bg-elevated": "#25282d"
+      }
+    },
+    {
+      "path": "/en/",
+      "palette": {
+        "--accent": "#f59e0c",
+        "--accent-hover": "#ffb52e",
+        "--accent-active": "#dc8908",
+        "--bg": "#181a1d",
+        "--bg-alt": "#1e2024",
+        "--bg-elevated": "#25282d"
+      }
+    },
+    {
+      "path": "/en/privacy.html",
+      "palette": {
+        "--accent": "#f59e0c",
+        "--accent-hover": "#ffb52e",
+        "--accent-active": "#dc8908",
+        "--bg": "#181a1d",
+        "--bg-alt": "#1e2024",
+        "--bg-elevated": "#25282d"
+      }
+    },
+    {
+      "path": "/en/terms.html",
+      "palette": {
+        "--accent": "#f59e0c",
+        "--accent-hover": "#ffb52e",
+        "--accent-active": "#dc8908",
+        "--bg": "#181a1d",
+        "--bg-alt": "#1e2024",
+        "--bg-elevated": "#25282d"
+      }
+    },
+    {
+      "path": "/en/delete-account.html",
+      "palette": {
+        "--accent": "#f59e0c",
+        "--accent-hover": "#ffb52e",
+        "--accent-active": "#dc8908",
+        "--bg": "#181a1d",
+        "--bg-alt": "#1e2024",
+        "--bg-elevated": "#25282d"
+      }
+    }
+  ],
+  "states": {
+    "default": {
+      "color": "rgb(24, 26, 29)",
+      "background": "rgb(245, 158, 12)",
+      "outline": "rgb(24, 26, 29) none 3px",
+      "outlineOffset": "0px",
+      "transform": "none",
+      "textDecoration": "none"
+    },
+    "focus": {
+      "color": "rgb(24, 26, 29)",
+      "background": "rgb(245, 158, 12)",
+      "outline": "rgb(245, 158, 12) solid 3px",
+      "outlineOffset": "4px",
+      "transform": "none",
+      "textDecoration": "none"
+    },
+    "hover": {
+      "color": "rgb(24, 26, 29)",
+      "background": "rgb(255, 181, 46)",
+      "outline": "rgb(245, 158, 12) solid 3px",
+      "outlineOffset": "4px",
+      "transform": "matrix(1, 0, 0, 1, 0, -1)",
+      "textDecoration": "none"
+    },
+    "active": {
+      "color": "rgb(24, 26, 29)",
+      "background": "rgb(220, 137, 8)",
+      "outline": "rgb(245, 158, 12) solid 3px",
+      "outlineOffset": "4px",
+      "transform": "matrix(1, 0, 0, 1, 0, 1)",
+      "textDecoration": "none"
+    },
+    "contact": {
+      "hover": {
+        "color": "rgb(24, 26, 29)",
+        "background": "rgb(255, 181, 46)",
+        "outline": "rgb(24, 26, 29) none 3px",
+        "outlineOffset": "0px",
+        "transform": "matrix(1, 0, 0, 1, 0, -1)",
+        "textDecoration": "none"
+      },
+      "active": {
+        "color": "rgb(24, 26, 29)",
+        "background": "rgb(220, 137, 8)",
+        "outline": "rgb(24, 26, 29) none 3px",
+        "outlineOffset": "0px",
+        "transform": "matrix(0.98, 0, 0, 0.98, 0, 0)",
+        "textDecoration": "none"
+      }
+    },
+    "playback": {
+      "hover": {
+        "color": "rgb(245, 242, 235)",
+        "background": "rgb(24, 26, 29)",
+        "outline": "rgb(245, 242, 235) none 3px",
+        "outlineOffset": "0px",
+        "transform": "none",
+        "textDecoration": "underline"
+      },
+      "active": {
+        "color": "rgb(245, 242, 235)",
+        "background": "rgb(24, 26, 29)",
+        "outline": "rgb(245, 242, 235) none 3px",
+        "outlineOffset": "0px",
+        "transform": "matrix(1, 0, 0, 1, 0, 1)",
+        "textDecoration": "underline"
+      }
+    }
+  },
+  "phoneScreensUnchanged": [
+    "ro/1440/phone-0",
+    "ro/1440/phone-1",
+    "ro/393/phone-0",
+    "ro/393/phone-1",
+    "en/1440/phone-0",
+    "en/1440/phone-1",
+    "en/393/phone-0",
+    "en/393/phone-1"
+  ]
+}
