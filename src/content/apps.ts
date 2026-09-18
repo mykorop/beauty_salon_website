@@ -1,6 +1,8 @@
 import { homeContent } from './home';
 import type { Locale } from '../i18n';
 
+export const webAppUrl = 'https://app.bookme.md/';
+
 // Shared by the visible downloads and structured data; product evidence is in docs/seo.md.
 export function getApps(locale: Locale) {
   const text = homeContent[locale].downloads;

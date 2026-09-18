@@ -5,7 +5,8 @@ import DownloadApps from './DownloadApps.astro';
 import AppPreview from './AppPreview.astro';
 import Faq from './Faq.astro';
 import { homeContent } from '../content/home';
-import type { Locale } from '../i18n';
+import { webAppUrl } from '../content/apps';
+import { labels, type Locale } from '../i18n';
 interface Props { locale: Locale }
 const { locale } = Astro.props;
 const text = homeContent[locale];
@@ -21,7 +22,10 @@ const text = homeContent[locale];
           <a href="#clients" class="btn-primary">{text.clientLink}<span aria-hidden="true">↗</span></a>
           <a href="#business" class="btn-secondary">{text.businessLink}</a>
         </div>
-        <a class="how-link" href="#how-it-works">{text.howLink}<span aria-hidden="true"> ↓</span></a>
+        <div class="hero-links">
+          <a href={webAppUrl}>{labels[locale].webApp}</a>
+          <a class="how-link" href="#how-it-works">{text.howLink}<span aria-hidden="true"> ↓</span></a>
+        </div>
       </div>
       <div class="hero-preview"><AppPreview locale={locale} kind="search" /></div>
     </div>
@@ -100,7 +104,8 @@ const text = homeContent[locale];
   .hero-intro { max-width: 34rem; color: var(--text-muted); font-size: 1.05rem; }
   .hero-ctas { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2rem; }
   .hero-ctas a { justify-content: space-between; }
-  .how-link { display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 1.25rem; min-height: 44px; font-size: 0.85rem; color: var(--text-muted); }
+  .hero-links { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1.5rem; margin-top: 1.25rem; }
+  .how-link { gap: 0.5rem; font-size: 0.85rem; color: var(--text-muted); }
   .hero-preview { min-width: 0; padding: 1.5rem; border: 1px solid rgb(223 191 122 / 25%); border-radius: 12rem 12rem 1.5rem 1.5rem; background: rgb(223 191 122 / 3%); }
   .steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2.5rem; list-style: none; }
   .step { border-top: 1px solid var(--border); padding-top: 1.5rem; }
@@ -124,7 +129,7 @@ const text = homeContent[locale];
     .hero-inner { grid-template-columns: 1fr; max-width: 640px; }
     .hero-content { text-align: center; }
     .hero-intro { margin-inline: auto; }
-    .hero-ctas { justify-content: center; }
+    .hero-ctas, .hero-links { justify-content: center; }
     .hero-preview { width: 100%; max-width: 470px; margin: 1rem auto 0; }
   }
   @media (max-width: 768px) {

@@ -30,6 +30,7 @@ export function languageAlternates(page: Page) {
 export const labels = {
   ro: {
     navigation: 'Navigare principală',
+    webApp: 'Deschide aplicația web',
     language: 'Limba paginii',
     skip: 'Sari la conținut',
     how: 'Cum funcționează',
@@ -44,6 +45,7 @@ export const labels = {
   },
   en: {
     navigation: 'Main navigation',
+    webApp: 'Open web app',
     language: 'Page language',
     skip: 'Skip to content',
     how: 'How it works',

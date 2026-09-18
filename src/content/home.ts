@@ -52,6 +52,7 @@ interface HomeContent {
   downloads: {
     title: string;
     intro: string;
+    browserDescription: string;
     clientAudience: string;
     clientDescription: string;
     businessAudience: string;
@@ -146,6 +147,7 @@ export const homeContent: Record<Locale, HomeContent> = {
     downloads: {
       title: 'Următorul pas începe aici.',
       intro: 'Două aplicații. O platformă gratuită pentru programări la servicii de înfrumusețare în Moldova.',
+      browserDescription: 'Folosește BookMe direct în browser, pe telefon sau computer. Pentru instalare, alege mai jos aplicația potrivită.',
       clientAudience: 'Pentru clienți',
       clientDescription: 'Găsește un salon sau un specialist independent și gestionează-ți programările în aplicația BookMe pentru clienți.',
       businessAudience: 'Pentru saloane și specialiști independenți',
@@ -245,6 +247,7 @@ export const homeContent: Record<Locale, HomeContent> = {
     downloads: {
       title: 'Your next step starts here.',
       intro: 'Two apps. One free platform for beauty appointments in Moldova.',
+      browserDescription: 'Use BookMe directly in your browser, on your phone or computer. To install an app, choose the one that fits you below.',
       clientAudience: 'For clients',
       clientDescription: 'Find a salon or an independent beauty professional and manage your appointments in the BookMe client app.',
       businessAudience: 'For salons & independent professionals',

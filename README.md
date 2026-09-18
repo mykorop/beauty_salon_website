@@ -40,6 +40,9 @@ artifacts. See [quality gates and manual acceptance](docs/quality-gates.md),
 `tests/home.spec.ts` checks both audience journeys and the four exact store links,
 plus visible content and overflow at 320, 768, and 1440 CSS pixels. It also scans
 both homepages with axe at those widths in the JavaScript-enabled browser projects.
+`tests/web-app.spec.ts` checks the shared web-app entry points in navigation,
+the homepage introduction and downloads, including keyboard activation, responsive
+layout and no-JavaScript access. External navigation is intercepted locally.
 
 To inspect the build manually, run `npm run preview`. Deploy the **contents of
 `dist/`** at the domain root on a static host that serves directory `index.html`
