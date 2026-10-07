@@ -1,7 +1,7 @@
 ---
 import { homeContent } from '../content/home';
-import { getApps, webAppUrl } from '../content/apps';
-import { labels, type Locale } from '../i18n';
+import { getApps } from '../content/apps';
+import type { Locale } from '../i18n';
 
 interface Props { locale: Locale }
 const { locale } = Astro.props;
@@ -12,10 +12,22 @@ const apps = getApps(locale);
   <div class="section-inner">
     <h2 id="download-title">{text.title}</h2>
     <p class="section-subtitle">{text.intro}</p>
-    <div class="web-access">
-      <p>{text.browserDescription}</p>
-      <a href={webAppUrl} class="btn-primary">{labels[locale].webApp}</a>
-    </div>
+    <section class="web-access" aria-labelledby="web-access-title">
+      <div>
+        <h3 id="web-access-title">{text.browserTitle}</h3>
+        <p>{text.browserDescription}</p>
+      </div>
+      <ul class="web-apps">
+        {apps.map((app) => (
+          <li>
+            <a href={app.webUrl} class="web-app-option">
+              <span class="web-app-audience">{app.audience}</span>{' '}
+              <span class="web-app-address">{new URL(app.webUrl).host}<span aria-hidden="true"> ↗</span></span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
     <div class="download-grid">
       {apps.map((app) => (
         <section id={`download-${app.id}`} class="download-card" aria-labelledby={`download-${app.id}-title`}>
@@ -25,6 +37,9 @@ const apps = getApps(locale);
           <div class="store-links">
             <a href={app.android} class="btn-primary" aria-label={`${app.name} — ${text.googlePlay}`}>{text.googlePlay}</a>
             <a href={app.ios} class="btn-secondary" aria-label={`${app.id === 'business' ? 'BookMe Business / BookMe Salon' : app.name} — ${text.appStore}`}>{text.appStore}</a>
+            {app.id === 'business' && (
+              <a href={app.webUrl} class="btn-secondary" aria-label={`${app.name} — ${text.openInBrowser}`}>{text.openInBrowser}</a>
+            )}
           </div>
         </section>
       ))}
@@ -33,12 +48,20 @@ const apps = getApps(locale);
 </section>
 
 <style>
-  .web-access { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.25rem; padding: clamp(1.25rem, 3vw, 2.5rem); margin-bottom: 1.5rem; border: 1px solid var(--accent); border-radius: 1rem; }
-  .web-access p { flex: 1 1 24rem; color: var(--text-muted); }
+  .web-access { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: center; gap: 1.25rem clamp(1.25rem, 4vw, 3rem); padding: clamp(1.25rem, 3vw, 2.5rem); margin-bottom: 1.5rem; border: 1px solid var(--accent); border-radius: 1rem; }
+  .web-access h3 { font-size: 1.05rem; font-weight: 500; margin-bottom: 0.5rem; }
+  .web-access p { color: var(--text-muted); }
+  .web-apps { list-style: none; display: grid; gap: 0.75rem; }
+  .web-app-option { display: flex; flex-direction: column; align-items: flex-start; gap: 0.15rem; width: 100%; padding: 0.75rem 1.25rem; border: 1px solid var(--border); border-radius: 0.5rem; background: var(--bg); color: var(--text); text-decoration: none; transition: border-color 0.2s; }
+  .web-app-option:hover { border-color: var(--accent); }
+  .web-app-option:active { border-color: var(--accent-active); }
+  .web-app-option:hover .web-app-address, .web-app-option:active .web-app-address { text-decoration: underline; }
+  .web-app-audience { color: var(--text-muted); font-size: 0.85rem; }
+  .web-app-address { color: var(--accent); font-weight: 600; overflow-wrap: anywhere; }
   .download-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; }
   .download-card { padding: clamp(1.25rem, 3vw, 2.5rem); border: 1px solid var(--border); border-radius: 1rem; background: var(--bg); display: flex; flex-direction: column; align-items: flex-start; }
   .download-card h3 { font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 2.25rem; margin: 1rem 0 0.5rem; }
   .download-card p { color: var(--text-muted); margin-bottom: 2rem; }
   .store-links { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: auto; }
-  @media (max-width: 768px) { .download-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 768px) { .web-access, .download-grid { grid-template-columns: 1fr; } }
 </style>

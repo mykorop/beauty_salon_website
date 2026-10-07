@@ -1,6 +1,6 @@
 ---
 import LanguageSwitcher from './LanguageSwitcher.astro';
-import { webAppUrl } from '../content/apps';
+import { webAppUrls } from '../content/apps';
 import { labels, pageUrl, type Locale, type Page } from '../i18n';
 interface Props { locale: Locale; page?: Page }
 const { locale, page } = Astro.props;
@@ -16,7 +16,7 @@ const home = pageUrl(locale, 'home');
       <a href={`${home}#contact`}>{text.contact}</a>
       <a href={pageUrl(locale, 'privacy')} aria-current={page === 'privacy' ? 'page' : undefined}>{text.privacy}</a>
       <a href={pageUrl(locale, 'terms')} aria-current={page === 'terms' ? 'page' : undefined}>{text.terms}</a>
-      <a href={webAppUrl} class="web-app-link">{text.webApp}</a>
+      <a href={webAppUrls.client} class="web-app-link">{text.webApp}</a>
     </nav>
     <LanguageSwitcher locale={locale} page={page} />
   </div>

@@ -13,6 +13,10 @@ interface AudienceContent {
   download: string;
 }
 
+interface BusinessContent extends AudienceContent {
+  webLink: string;
+}
+
 interface HomeContent {
   title: string;
   description: string;
@@ -28,10 +32,11 @@ interface HomeContent {
   featuresTitle: string;
   featuresIntro: string;
   client: AudienceContent;
-  business: AudienceContent;
+  business: BusinessContent;
   downloads: {
     title: string;
     intro: string;
+    browserTitle: string;
     browserDescription: string;
     clientAudience: string;
     clientDescription: string;
@@ -39,6 +44,7 @@ interface HomeContent {
     businessDescription: string;
     googlePlay: string;
     appStore: string;
+    openInBrowser: string;
   };
   faq: {
     title: string;
@@ -103,23 +109,26 @@ export const homeContent: Record<Locale, HomeContent> = {
         { title: 'În echipă sau independent', body: 'Gestionează specialiștii și programul echipei. Lucrezi pe cont propriu? Folosește aplicația pentru propria agendă și propriile servicii.' },
       ],
       download: 'Descarcă BookMe Business',
+      webLink: 'Deschide BookMe Business în browser',
     },
     downloads: {
       title: 'Următorul pas începe aici.',
       intro: 'Două aplicații. O platformă gratuită pentru programări la servicii de înfrumusețare în Moldova.',
-      browserDescription: 'Folosește BookMe direct în browser, pe telefon sau computer. Pentru instalare, alege mai jos aplicația potrivită.',
+      browserTitle: 'Folosește BookMe în browser',
+      browserDescription: 'Ambele aplicații funcționează și în browser, pe telefon sau computer. Deschide versiunea pentru contul tău: contul de afaceri funcționează în BookMe Business, nu în aplicația pentru clienți. Pentru instalare, alege mai jos aplicația potrivită.',
       clientAudience: 'Pentru clienți',
       clientDescription: 'Găsește un salon sau un specialist independent și gestionează-ți programările în aplicația BookMe pentru clienți.',
       businessAudience: 'Pentru saloane și specialiști independenți',
       businessDescription: 'Gestionează calendarul, serviciile și echipa cu BookMe Business. În App Store, aceeași aplicație pentru afaceri se numește BookMe Salon.',
       googlePlay: 'Descarcă din Google Play',
       appStore: 'Descarcă din App Store',
+      openInBrowser: 'Deschide în browser',
     },
     faq: {
       title: 'Întrebări frecvente',
       intro: 'Despre aplicații, programări și contul tău.',
       items: [
-        { question: 'Ce aplicație să aleg?', answer: 'Alege BookMe pentru a găsi servicii și a face programări. Dacă ai un salon sau lucrezi independent, folosește BookMe Business pentru calendar, servicii și echipă. În App Store, aplicația pentru afaceri se numește BookMe Salon.' },
+        { question: 'Ce aplicație să aleg?', answer: 'Alege BookMe pentru a găsi servicii și a face programări. Dacă ai un salon sau lucrezi independent, folosește BookMe Business pentru calendar, servicii și echipă. Poți instala aplicația sau o poți deschide în browser, la business.bookme.md. Contul de afaceri funcționează în BookMe Business, nu în aplicația pentru clienți. În App Store, aplicația pentru afaceri se numește BookMe Salon.' },
         { question: 'Unde pot folosi BookMe?', answer: 'BookMe este o platformă pentru Moldova. În aplicație poți explora saloanele, specialiștii și serviciile disponibile, apoi alege o oră pentru programare.' },
         { question: 'BookMe este gratuit?', answer: 'Da. Platforma BookMe este gratuită pentru clienți, saloane și specialiști independenți. Serviciile rezervate se plătesc separat, direct prestatorului.' },
         { question: 'Cum plătesc serviciile rezervate?', answer: 'Plătești serviciile direct salonului sau specialistului care le oferă. Verifică prețul și modalitatea de plată cu prestatorul. BookMe este platforma de programări; serviciul este oferit de salon sau specialist.' },
@@ -183,23 +192,26 @@ export const homeContent: Record<Locale, HomeContent> = {
         { title: 'With a team or on your own', body: 'Manage professionals and team schedules. Working independently? Use the app for your own calendar and services.' },
       ],
       download: 'Download BookMe Business',
+      webLink: 'Open BookMe Business in your browser',
     },
     downloads: {
       title: 'Your next step starts here.',
       intro: 'Two apps. One free platform for beauty appointments in Moldova.',
-      browserDescription: 'Use BookMe directly in your browser, on your phone or computer. To install an app, choose the one that fits you below.',
+      browserTitle: 'Use BookMe in your browser',
+      browserDescription: 'Both apps also work in your browser, on your phone or computer. Open the one for your account: business accounts work in BookMe Business, not in the client app. To install an app, choose the one that fits you below.',
       clientAudience: 'For clients',
       clientDescription: 'Find a salon or an independent beauty professional and manage your appointments in the BookMe client app.',
       businessAudience: 'For salons & independent professionals',
       businessDescription: 'Manage your calendar, services and team with BookMe Business. On the App Store, the same business app is called BookMe Salon.',
       googlePlay: 'Get it on Google Play',
       appStore: 'Download on the App Store',
+      openInBrowser: 'Open in browser',
     },
     faq: {
       title: 'Frequently asked questions',
       intro: 'About the apps, appointments and your account.',
       items: [
-        { question: 'Which app should I choose?', answer: 'Choose BookMe to find services and book appointments. If you run a salon or work independently, use BookMe Business for your calendar, services and team. On the App Store, the business app is called BookMe Salon.' },
+        { question: 'Which app should I choose?', answer: 'Choose BookMe to find services and book appointments. If you run a salon or work independently, use BookMe Business for your calendar, services and team. You can install it or open it in your browser at business.bookme.md. Your business account works in BookMe Business, not in the client app. On the App Store, the business app is called BookMe Salon.' },
         { question: 'Where can I use BookMe?', answer: 'BookMe is a platform for Moldova. Explore available salons, professionals and services in the app, then choose a time for your appointment.' },
         { question: 'Is BookMe free?', answer: 'Yes. The BookMe platform is free for clients, salons and independent professionals. Booked services are paid for separately, directly to the provider.' },
         { question: 'How do I pay for booked services?', answer: 'Pay for services directly to the salon or professional providing them. Check the price and payment method with your provider. BookMe is the booking platform; the salon or professional provides the service.' },

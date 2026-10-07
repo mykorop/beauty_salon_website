@@ -36,6 +36,7 @@ embedding it in HTML.
 | Organization name, legal name, URL and support email | BookMe; BOOKME HUB, SRL; `https://bookme.md/`; `support@bookme.md`, as stated in the [published terms source](../src/content/legal/en/terms.md) and [operator evidence record](../.scratch/bookme-website-refresh/audit/terms-publication.md). |
 | WebSite languages; WebPage URL, language, name and description | Public page map and the same localized title/description used by the HTML head. |
 | App names, business alternate name and install URLs | The four existing downloads confirmed in [ticket 03](../.scratch/bookme-website-refresh/issues/03-client-business-homepage.md), now shared in `src/content/apps.ts`. BookMe Business is called BookMe Salon in the App Store. |
+| App URLs | Each app's web version from `webAppUrls` in `src/content/apps.ts`, the same addresses the visible links use: `https://app.bookme.md/` for BookMe and `https://business.bookme.md/` for BookMe Business. |
 | App descriptions | The visible localized download descriptions in `src/content/home.ts`; no separate SEO copy. |
 | Android/iOS, lifestyle/business categories | The linked Google Play/App Store distributions and the client booking/business management functions described on the homepage. No OS version requirement is asserted. |
 | `isAccessibleForFree: true` | The confirmed free-platform wording in the homepage FAQ and terms; booked salon/professional services are paid separately. |

@@ -42,9 +42,11 @@ artifacts. See [quality gates and manual acceptance](docs/quality-gates.md),
 `tests/home.spec.ts` checks both audience journeys and the four exact store links,
 plus visible content and overflow at 320, 768, and 1440 CSS pixels. It also scans
 both homepages with axe at those widths in the JavaScript-enabled browser projects.
-`tests/web-app.spec.ts` checks the shared web-app entry points in navigation,
-the homepage introduction and downloads, including keyboard activation, responsive
-layout and no-JavaScript access. External navigation is intercepted locally.
+`tests/web-app.spec.ts` checks the exact client web-app links in navigation, the
+homepage introduction and the browser-access block, and the BookMe Business web-app
+links in the business section, its download card and that block. It covers mouse and
+keyboard activation, responsive layout and no-JavaScript access. External navigation
+is intercepted locally.
 
 To inspect the build manually, run `npm run preview`. Deploy the **contents of
 `dist/`** at the domain root on a static host that serves directory `index.html`
@@ -75,7 +77,9 @@ The production origin is `siteOrigin` in `src/i18n.ts`, also used by `site` in
 
 - `src/i18n.ts`: the locale list, language names, shared labels, production origin and the
   canonical public page map.
-- `src/content/apps.ts`: app identities and store links shared by downloads and JSON-LD.
+- `src/content/apps.ts`: app identities, store links and the two web addresses shared by
+  navigation, downloads and JSON-LD: the client app at `https://app.bookme.md/` and
+  BookMe Business at `https://business.bookme.md/`.
 - `src/content/home.ts`: localized homepage copy.
 - `src/content/booking-demo.ts`: fixed fictional booking data, RO/EN demo copy and frame timing.
 - `src/content/calendar-demo.ts`: Business period/search fixtures, RO/EN copy and frame timing.
@@ -102,8 +106,14 @@ axe runs in the JavaScript-enabled projects. No deletion email is sent by tests.
 The homepage describes the free BookMe platform for Moldova, with separate paths
 for clients and for salons or independent professionals. `DownloadApps.astro`
 contains the exact client/business store URLs and explains the BookMe Salon name
-on the App Store. The hero's `ClientBookingDemo.astro` shows an eight-step fictional
-booking inside the reusable `PhoneDemo.astro`. Its small local playback controller
+on the App Store. Its browser-access block separates the two web versions by
+audience: clients at `https://app.bookme.md/`, salons and professionals at
+`https://business.bookme.md/`, because a business account does not work in the
+client app. The business section and the BookMe Business card also open
+`https://business.bookme.md/`; the navigation and introduction keep the client
+web-app link. All are plain same-tab links without language parameters.
+The hero's `ClientBookingDemo.astro` shows an eight-step fictional booking inside
+the reusable `PhoneDemo.astro`. Its small local playback controller
 handles pause, replay, visibility and reduced motion; a confirmed card and full
 step description are available without JavaScript. App comparison screenshots,
 capture commands and acceptance evidence are in [design/booking-demo](design/booking-demo/README.md).

@@ -13,7 +13,7 @@ const apps = page === 'home' ? getApps(locale).map((app) => ({
   name: app.name,
   alternateName: app.id === 'business' ? app.alternateName : undefined,
   description: app.description,
-  url: `${canonical}#download-${app.id}`,
+  url: app.webUrl,
   applicationCategory: app.applicationCategory,
   operatingSystem: ['Android', 'iOS'],
   isAccessibleForFree: true,

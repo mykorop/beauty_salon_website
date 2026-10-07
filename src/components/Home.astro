@@ -6,7 +6,7 @@ import BusinessCalendarDemo from './BusinessCalendarDemo.astro';
 import ClientBookingDemo from './ClientBookingDemo.astro';
 import Faq from './Faq.astro';
 import { homeContent } from '../content/home';
-import { webAppUrl } from '../content/apps';
+import { webAppUrls } from '../content/apps';
 import { labels, type Locale } from '../i18n';
 interface Props { locale: Locale }
 const { locale } = Astro.props;
@@ -24,7 +24,7 @@ const text = homeContent[locale];
           <a href="#business" class="btn-secondary">{text.businessLink}</a>
         </div>
         <div class="hero-links">
-          <a href={webAppUrl}>{labels[locale].webApp}</a>
+          <a href={webAppUrls.client}>{labels[locale].webApp}</a>
           <a class="how-link" href="#how-it-works">{text.howLink}<span aria-hidden="true"> ↓</span></a>
         </div>
       </div>
@@ -78,7 +78,10 @@ const text = homeContent[locale];
               <li><h4>{feature.title}</h4><p>{feature.body}</p></li>
             ))}
           </ul>
-          <a href="#download-business" class="text-link">{text.business.download}<span aria-hidden="true"> ↗</span></a>
+          <div class="business-actions">
+            <a href={webAppUrls.business} class="btn-primary">{text.business.webLink}</a>
+            <a href="#download-business" class="text-link">{text.business.download}<span aria-hidden="true"> ↗</span></a>
+          </div>
         </div>
         <BusinessCalendarDemo locale={locale} />
       </section>
@@ -125,6 +128,8 @@ const text = homeContent[locale];
   .text-link { display: inline-flex; align-items: center; gap: 0.5rem; min-height: 44px; margin-top: 1.5rem; font-size: 0.9rem; }
   .business-audience { border-top: 1px solid var(--border); margin-top: 2rem; padding-top: 5rem; }
   .business-features { margin-top: 1.5rem; }
+  .business-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.5rem; margin-top: 2rem; }
+  .business-actions .text-link { margin-top: 0; }
   .business-features li { margin-top: 1.25rem; padding-left: 1rem; border-left: 1px solid var(--accent); }
   .business-features p { font-size: 0.85rem; }
   @media (min-width: 901px) {

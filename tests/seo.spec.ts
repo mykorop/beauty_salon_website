@@ -120,7 +120,7 @@ test('unknown URLs return a styled noindex 404 with working Romanian and English
   }
 });
 
-test('JSON-LD identifies BookMe, each translated page and the two real apps without invented ratings', async ({ page }) => {
+test('JSON-LD identifies BookMe, each translated page and the two real apps with their web addresses, without invented ratings', async ({ page }) => {
   for (const pair of translations) {
     for (const locale of locales) {
       await page.goto(pair[locale]);
@@ -154,13 +154,13 @@ test('JSON-LD identifies BookMe, each translated page and the two real apps with
       expect(webpage?.about).toEqual([
         { '@id': origin + '/#client-app' }, { '@id': origin + '/#business-app' },
       ]);
-      for (const [id, name, category, android, ios] of [
-        ['client', 'BookMe', 'LifestyleApplication', 'https://play.google.com/store/apps/details?id=md.bookme.client', 'https://apps.apple.com/us/app/bookme/id6779576243'],
-        ['business', 'BookMe Business', 'BusinessApplication', 'https://play.google.com/store/apps/details?id=md.bookme.business', 'https://apps.apple.com/ua/app/bookme-salon/id6779576340?l=uk'],
+      for (const [id, name, category, web, android, ios] of [
+        ['client', 'BookMe', 'LifestyleApplication', 'https://app.bookme.md/', 'https://play.google.com/store/apps/details?id=md.bookme.client', 'https://apps.apple.com/us/app/bookme/id6779576243'],
+        ['business', 'BookMe Business', 'BusinessApplication', 'https://business.bookme.md/', 'https://play.google.com/store/apps/details?id=md.bookme.business', 'https://apps.apple.com/ua/app/bookme-salon/id6779576340?l=uk'],
       ]) {
         const app = apps.find((node) => node.name === name);
         expect(app).toMatchObject({
-          '@id': origin + `/#${id}-app`, url: origin + pair[locale] + `#download-${id}`,
+          '@id': origin + `/#${id}-app`, url: web,
           applicationCategory: category, operatingSystem: ['Android', 'iOS'],
           isAccessibleForFree: true, installUrl: [android, ios], publisher: { '@id': origin + '/#organization' },
         });
@@ -168,6 +168,7 @@ test('JSON-LD identifies BookMe, each translated page and the two real apps with
         await expect(page.locator(`#download-${id}`)).toContainText(app?.description as string);
         await expect(page.locator(`#download-${id} a[href="${android}"]`)).toHaveCount(1);
         await expect(page.locator(`#download-${id} a[href="${ios}"]`)).toHaveCount(1);
+        await expect(page.locator(`#download a[href="${web}"]`)).not.toHaveCount(0);
       }
     }
   }

@@ -6,7 +6,7 @@ const faqs = {
   ro: {
     title: 'Întrebări frecvente', deletion: 'Vezi pașii pentru ștergerea contului',
     questions: [
-      { question: 'Ce aplicație să aleg?', answer: /BookMe Business.*BookMe Salon/ },
+      { question: 'Ce aplicație să aleg?', answer: /BookMe Business.*deschide în browser, la business\.bookme\.md\. Contul de afaceri funcționează în BookMe Business, nu în aplicația pentru clienți\..*BookMe Salon/ },
       { question: 'Unde pot folosi BookMe?', answer: /Moldova/ },
       { question: 'BookMe este gratuit?', answer: /gratuită pentru clienți, saloane și specialiști independenți/ },
       { question: 'Cum plătesc serviciile rezervate?', answer: /direct salonului sau specialistului/ },
@@ -17,7 +17,7 @@ const faqs = {
   en: {
     title: 'Frequently asked questions', deletion: 'See the account deletion steps',
     questions: [
-      { question: 'Which app should I choose?', answer: /BookMe Business.*BookMe Salon/ },
+      { question: 'Which app should I choose?', answer: /BookMe Business.*open it in your browser at business\.bookme\.md\. Your business account works in BookMe Business, not in the client app\..*BookMe Salon/ },
       { question: 'Where can I use BookMe?', answer: /Moldova/ },
       { question: 'Is BookMe free?', answer: /free for clients, salons and independent professionals/ },
       { question: 'How do I pay for booked services?', answer: /directly to the salon or professional/ },
