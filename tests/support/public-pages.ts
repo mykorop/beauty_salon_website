@@ -15,7 +15,7 @@ export const legalPages = pages.filter((page): page is LegalPageName => page !==
 // A language lists only the pages it has published; the default language publishes every page.
 const canonicalPaths = {
   ro: { home: '/', privacy: '/privacy.html', terms: '/terms.html', 'delete-account': '/delete-account.html' },
-  ru: { home: '/ru/', privacy: '/ru/privacy.html' },
+  ru: { home: '/ru/', privacy: '/ru/privacy.html', terms: '/ru/terms.html' },
   en: { home: '/en/', privacy: '/en/privacy.html', terms: '/en/terms.html', 'delete-account': '/en/delete-account.html' },
 } as const satisfies Record<Locale, Partial<Record<PageName, string>>>;
 type Published = { [L in Locale]: keyof (typeof canonicalPaths)[L] };
@@ -31,9 +31,7 @@ export function publishedValue<T>(table: PublishedPageTable<T>, locale: Locale, 
 
 // Languages that have published the page (every one of the pages, for a union).
 export type PublishedLocale<Page extends PageName> = { [L in Locale]: [Page] extends [Published[L]] ? L : never }[Locale];
-// Languages with all three legal documents.
-export type LegalLocale = PublishedLocale<LegalPageName>;
-// Languages with at least one of them.
+// Languages with at least one of the legal documents.
 export type AnyLegalLocale = { [Page in LegalPageName]: PublishedLocale<Page> }[LegalPageName];
 
 export function hasPage<Page extends PageName>(locale: Locale, page: Page): locale is PublishedLocale<Page> {
@@ -43,8 +41,6 @@ export function hasPage<Page extends PageName>(locale: Locale, page: Page): loca
 export function pageLocales<Page extends PageName>(page: Page): PublishedLocale<Page>[] {
   return locales.filter((locale): locale is PublishedLocale<Page> => hasPage(locale, page));
 }
-
-export const legalLocales: LegalLocale[] = locales.filter((locale): locale is LegalLocale => legalPages.every((page) => hasPage(locale, page)));
 
 export function pagePath<Page extends PageName>(locale: PublishedLocale<Page>, page: Page): string {
   const path = publishedPath(locale, page);

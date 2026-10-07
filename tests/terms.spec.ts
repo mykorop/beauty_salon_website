@@ -1,5 +1,5 @@
 import { expect, test } from './fixtures';
-import { homePath, legalLocales, type LegalLocale } from './support/public-pages';
+import { homePath, linkLocale, linkPath, pageLocales, type PublishedLocale } from './support/public-pages';
 
 const terms = {
   ro: {
@@ -12,6 +12,16 @@ const terms = {
     privacy: 'Politica de confidențialitate', deletion: 'Instrucțiuni de ștergere a contului', support: 'Contactează asistența',
     webVersions: 'Aceste condiții se aplică și acestor versiuni web.',
   },
+  ru: {
+    free: 'Платформа BookMe бесплатна для клиентов, салонов и независимых мастеров.',
+    payment: 'Забронированные услуги оплачиваются напрямую салону или мастеру',
+    provider: 'Исполнитель отвечает за оказываемую услугу',
+    law: 'законодательством Республики Молдова',
+    clientAge: 'не младше 16 лет', businessAge: 'не младше 18 лет', ageCheck: 'технически не проверяют возраст',
+    consent: 'не является согласием клиента', liability: 'Мы не исключаем и не ограничиваем ответственность', review: 'можете запросить пересмотр',
+    privacy: 'Политика конфиденциальности', deletion: 'Инструкции по удалению аккаунта', support: 'Связаться с поддержкой',
+    webVersions: 'Условия распространяются и на эти веб-версии.',
+  },
   en: {
     free: 'The BookMe platform is free for clients, salons and independent professionals.',
     payment: 'Booked services are paid for directly to the salon or professional',
@@ -22,15 +32,14 @@ const terms = {
     privacy: 'Privacy Policy', deletion: 'Account deletion instructions', support: 'Contact support',
     webVersions: 'These terms apply to these web versions too.',
   },
-} satisfies Record<LegalLocale, Record<string, string>>;
+} satisfies Record<PublishedLocale<'terms'>, Record<string, string>>;
 
-// Languages that have published the legal documents.
-for (const locale of legalLocales) {
-  const prefix = homePath(locale);
+for (const locale of pageLocales('terms')) {
+  const path = linkPath(locale, 'terms');
   const text = terms[locale];
 
   test(`terms reader can identify the operator, provider and cost in ${locale}`, async ({ page }) => {
-    await page.goto(`${prefix}terms.html`);
+    await page.goto(path);
     const main = page.getByRole('main');
     await expect(main).toContainText('BOOKME HUB, SRL');
     await expect(main).toContainText('str. Glinka 4, ap./of. 10, Bălți, Moldova');
@@ -45,7 +54,7 @@ for (const locale of legalLocales) {
   });
 
   test(`terms reader can find eligibility and protected rights in ${locale}`, async ({ page }) => {
-    await page.goto(`${prefix}terms.html`);
+    await page.goto(path);
     const main = page.getByRole('main');
     await expect(main).toContainText(text.clientAge);
     await expect(main).toContainText(text.businessAge);
@@ -56,18 +65,19 @@ for (const locale of legalLocales) {
   });
 
   test(`terms reader can reach privacy, deletion and support in ${locale}`, async ({ page }) => {
+    // Privacy and deletion open in this language once it has published them, in the default language until then.
     for (const destination of [
-      { name: text.privacy, path: 'privacy.html' },
-      { name: text.deletion, path: 'delete-account.html' },
-      { name: text.support, path: '#contact' },
+      { name: text.privacy, path: linkPath(locale, 'privacy'), locale: linkLocale(locale, 'privacy') },
+      { name: text.deletion, path: linkPath(locale, 'delete-account'), locale: linkLocale(locale, 'delete-account') },
+      { name: text.support, path: `${homePath(locale)}#contact`, locale },
     ]) {
-      await page.goto(`${prefix}terms.html`);
+      await page.goto(path);
       const link = page.getByRole('main').getByRole('link', { name: destination.name, exact: true });
       await expect(link).toBeVisible();
       await link.click();
-      await expect(page).toHaveURL(`${prefix}${destination.path}`);
-      await expect(page.locator('html')).toHaveAttribute('lang', locale);
-      if (destination.path === '#contact') await expect(page.locator('#contact')).toBeInViewport();
+      await expect(page).toHaveURL(destination.path);
+      await expect(page.locator('html')).toHaveAttribute('lang', destination.locale);
+      if (destination.path.endsWith('#contact')) await expect(page.locator('#contact')).toBeInViewport();
       else await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
     }
   });

@@ -33,7 +33,7 @@ export const pageNames = Object.keys(publicPages) as Page[];
 // language has not published yet is linked in the default language until it is added here.
 const publishedPages = {
   ro: pageNames,
-  ru: ['home', 'privacy'],
+  ru: ['home', 'privacy', 'terms'],
   en: pageNames,
 } as const satisfies Record<Locale, readonly Page[]>;
 export type PublishedPage<L extends Locale> = (typeof publishedPages)[L][number];

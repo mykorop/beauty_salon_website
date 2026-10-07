@@ -18,8 +18,8 @@ The normal browser suite and Lighthouse use the completed `dist/` build; consent
 provider tests build and serve the isolated `dist-consent-test/` directory.
 Rebuild after any source change. Ports 4329 (Playwright) and 4330 (Lighthouse) must be free. Run the two
 suites sequentially, without competing builds or browser jobs during Lighthouse.
-The ten indexable pages (Romanian and English homepage and legal pages, and the
-Russian homepage and privacy policy) are required; legacy homepage aliases and the
+The eleven indexable pages (Romanian and English homepage and legal pages, and the
+Russian homepage, privacy policy and terms) are required; legacy homepage aliases and the
 404 document receive additional functional checks. The browser tests never use
 production accounts or real personal data, and a shared fixture blocks all
 non-local browser requests. Contact tests override that boundary with synthetic replies,
@@ -105,8 +105,8 @@ with Playwright, not a system Chrome that updates independently. CI uses
 
 `lighthouserc.cjs` uses Lighthouse's pinned standard simulated mobile profile and
 desktop preset. `scripts/lighthouse.mjs` runs both sequentially, three cold runs
-for each of the ten URLs listed in `tests/support/public-pages.ts`:
-**60 reports**. Every audit remains enabled.
+for each of the eleven URLs listed in `tests/support/public-pages.ts`:
+**66 reports**. Every audit remains enabled.
 Assertions follow [Lighthouse CI's aggregation rules](https://github.com/GoogleChrome/lighthouse-ci/blob/main/docs/configuration.md#aggregation-methods):
 
 | Measure | Aggregation | Gate |
@@ -127,7 +127,7 @@ server or temporary public report storage. CI keeps reports even on failure.
 
 Automation does not certify WCAG conformance. Record tester, date, OS/browser,
 build commit and result for each item below in the final report. Use all three languages
-and all ten pages; any remaining item must remain explicitly pending.
+and all eleven pages; any remaining item must remain explicitly pending.
 
 - Keyboard only: skip link, every navigation/language/legal link, all FAQ
   disclosures and form states; logical order, visible and unobscured focus.

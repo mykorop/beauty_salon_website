@@ -1,9 +1,9 @@
 # BookMe indexing and production verification
 
-The build contains ten indexable pages in three languages and one shared,
+The build contains eleven indexable pages in three languages and one shared,
 multilingual `404.html`: the Romanian and English homepage, privacy policy, terms
-and account-deletion page, and the Russian homepage and privacy policy. The Russian
-terms and account-deletion page are not published yet. All copy, metadata and
+and account-deletion page, and the Russian homepage, privacy policy and terms. The
+Russian account-deletion page is not published yet. All copy, metadata and
 JSON-LD are present in the static HTML.
 
 ## URLs and languages
@@ -17,14 +17,14 @@ other locale are generated from that list by the two templates in
 served `/index.html`, `/ru/index.html` and `/en/index.html` identify those same
 canonical URLs. Every page has reciprocal alternatives for each language that has
 published it, plus `x-default`, which points to its Romanian counterpart: the
-homepages and privacy policies carry `ro`, `ru`, `en` and `x-default`, the terms and
+homepages, privacy policies and terms carry `ro`, `ru`, `en` and `x-default`, the
 account-deletion pages `ro`, `en` and `x-default`. A page a language has not
 published yet is never named in its switcher, alternatives or sitemap; that
 language's pages link to the Romanian version instead. Open Graph uses `ro_MD`, `ru_MD` and `en_US`, with `og:locale:alternate` for
 the page's other published languages. Existing legal Markdown links use canonical
 paths and are covered by the link crawler.
 
-`/sitemap.xml` contains exactly the ten canonical URLs, each with its language
+`/sitemap.xml` contains exactly the eleven canonical URLs, each with its language
 alternatives. `/robots.txt` allows all crawling, including assets and
 favicon, and names the absolute sitemap URL. The 404 page has `noindex, follow`,
 no canonical or language-alternate metadata, and no JSON-LD or sitemap entry.
@@ -97,7 +97,7 @@ configure hosting or connect external accounts.
    domain's DNS and one-hop permanent redirects from HTTP and any `www` alias to
    `https://bookme.md`, preserving paths and queries. Verify no preview hostname
    appears in canonical, social, sitemap or JSON-LD URLs.
-2. **Statuses and error documents:** request all ten canonical URLs directly;
+2. **Statuses and error documents:** request all eleven canonical URLs directly;
    expect 200 HTML without login requirements. Check the three `index.html` aliases
    retain their matching canonical, or permanently redirect to it. Configure the
    host to serve `404.html` with HTTP **404** at unknown paths, including nested
@@ -105,11 +105,11 @@ configure hosting or connect external accounts.
    that error-page assets load.
 3. **Indexability:** inspect the actual response HTML and headers for every
    language pair. Verify self-canonical, all reciprocal alternatives, full text,
-   and absence of `noindex` in meta tags or `X-Robots-Tag` on the ten pages.
+   and absence of `noindex` in meta tags or `X-Robots-Tag` on the eleven pages.
    Keep the error document noindex; ensure no hosting-level robots rule overrides
    the built files. Confirm favicon and page assets return 200 and are crawlable.
 4. **Sitemap:** fetch `/robots.txt` and `/sitemap.xml` over HTTPS. Check content
-   types, ten canonical entries, valid XML namespaces, language alternatives,
+   types, eleven canonical entries, valid XML namespaces, language alternatives,
    no `index.html` aliases and no 404 URLs.
 5. **Search Console:** an authorized owner should verify the property, submit
    `https://bookme.md/sitemap.xml`, and use URL Inspection on RO/RU/EN homepage and

@@ -35,7 +35,7 @@ demo captures, independently of `src/i18n.ts` and `src/content/apps.ts`.
 Run `npm run test:seo` to rebuild and check SEO on the production HTML, including
 metadata, language alternatives, sitemap, JSON-LD, links and HTTP 404 behavior.
 CI runs type checking, the static build, Chromium/Firefox/WebKit tests (including
-mobile viewports without JavaScript), axe, per-page gzip budgets and 60 Lighthouse
+mobile viewports without JavaScript), axe, per-page gzip budgets and 66 Lighthouse
 runs. Tests block non-local traffic and never submit a real contact message.
 Reports, failure screenshots/traces and the static archive are retained as CI
 artifacts. See [quality gates and manual acceptance](docs/quality-gates.md),
@@ -59,11 +59,11 @@ in production. See the [SEO guide and future production checks](docs/seo.md).
 | --- | --- | --- | --- |
 | Home | `/` or `/index.html` | `/ru/` or `/ru/index.html` | `/en/` or `/en/index.html` |
 | Privacy | `/privacy.html` | `/ru/privacy.html` | `/en/privacy.html` |
-| Terms | `/terms.html` | not yet published | `/en/terms.html` |
+| Terms | `/terms.html` | `/ru/terms.html` | `/en/terms.html` |
 | Account deletion | `/delete-account.html` | not yet published | `/en/delete-account.html` |
 
 Astro's [`build.format: 'preserve'`](https://docs.astro.build/en/reference/configuration-reference/#buildformat)
-produces ten indexable HTML pages plus `404.html` while retaining existing public URLs. There is
+produces eleven indexable HTML pages plus `404.html` while retaining existing public URLs. There is
 no browser-language detection or automatic language redirect. Romanian is the default language
 and `x-default`. A page another language has not published yet is linked from that
 language's pages in Romanian; its language switcher, `hreflang` and sitemap name only the
@@ -92,7 +92,7 @@ The production origin is `siteOrigin` in `src/i18n.ts`, also used by `site` in
 - `src/content/booking-demo.ts`: fixed fictional booking data, RO/RU/EN demo copy and frame timing.
 - `src/content/calendar-demo.ts`: Business period/search fixtures, RO/RU/EN copy and frame timing.
   The Russian screen labels come from the BookMe app's Russian dictionary.
-- `src/content/legal/{ro,ru,en}/`: legal document bodies (Russian has the privacy policy so far);
+- `src/content/legal/{ro,ru,en}/`: legal document bodies (Russian has the privacy policy and terms so far);
   shared metadata lives in `src/content/legal.ts`.
 - `src/layouts/`: shared document shell and legal layout.
 - `src/components/`: shared navigation, footer, language links, homepage, and form.
@@ -107,11 +107,13 @@ The Russian privacy policy translates the current Romanian/English text section 
 section; the same record compares it claim by claim and tracks its pending proofreading.
 The terms follow the confirmed free-platform/provider model, client/business age
 rules and mandatory user protections. Their [evidence record](.scratch/bookme-website-refresh/audit/terms-publication.md)
-maps both translations to product decisions and official legal guidance, including
-the limits of the source check. `tests/terms.spec.ts` covers the operator, provider,
+maps the Romanian and English text to product decisions and official legal guidance,
+including the limits of the source check. The Russian terms translate the current
+Romanian/English text section by section; the same record compares them claim by claim
+and tracks their pending proofreading. `tests/terms.spec.ts` covers the operator, provider,
 pricing, eligibility, protected rights and localized privacy/deletion/support links.
 The legal layout generates section navigation from Markdown headings and includes
-print styles. `tests/legal.spec.ts` covers all seven legal URLs, rights
+print styles. `tests/legal.spec.ts` covers all eight legal URLs, rights
 and email-request links, local links in the page's language (or Romanian until that
 language publishes the target), keyboard section navigation, print output, 320/768/1440px
 layouts, and axe checks. Content and navigation also run without JavaScript;
