@@ -1,11 +1,12 @@
 ---
 import PhoneDemo from './PhoneDemo.astro';
 import Icon from './DemoIcon.astro';
-import { bookingDemoContent, bookingExample as example, bookingFrames } from '../content/booking-demo';
+import { bookingDemoContent, bookingExample as example, bookingFrames, formatDuration } from '../content/booking-demo';
 import type { Locale } from '../i18n';
 interface Props { locale: Locale }
 const { locale } = Astro.props;
 const text = bookingDemoContent[locale];
+const appointmentDuration = formatDuration(example.durationMinutes, text.units);
 const calendarDays = [...Array.from({ length: 3 }, () => null), ...Array.from({ length: 31 }, (_, i) => i + 1)];
 ---
 <PhoneDemo id="client-demo" {...text} size="compact">
@@ -28,7 +29,7 @@ const calendarDays = [...Array.from({ length: 3 }, () => null), ...Array.from({ 
             <div class="card-heading"><div><strong>{example.salon}</strong><p class="muted">{text.service}</p></div><span class="price-tag">{example.price}</span></div>
             <div class="booking-details">
               <p><Icon name="calendar" /><span><span>{text.date}</span><small>{example.timezone}</small></span></p>
-              <p><Icon name="time" /><span>{example.time} ({example.duration})</span></p>
+              <p><Icon name="time" /><span>{example.time} ({appointmentDuration})</span></p>
               <p><Icon name="person" /><span>{example.master}</span></p>
               <p><Icon name="pin" /><span>{example.address}</span></p>
             </div>
@@ -47,7 +48,7 @@ const calendarDays = [...Array.from({ length: 3 }, () => null), ...Array.from({ 
             </div>
             <div class:list={['app-button', 'book-button', { disabled: name !== 'confirm', 'tap-target': name === 'confirm' }]}>{text.book}{name === 'confirm' ? ` · ${example.price}` : ''}{name === 'confirm' && <i class="tap"></i>}</div>
           </div>
-          {name === 'service' && <div class="service-sheet"><div class="service-option tap-target"><span>{text.service} · {example.price}</span><i class="tap"></i><small>{example.duration}</small></div><div class="service-cancel">{text.cancel}</div></div>}
+          {name === 'service' && <div class="service-sheet"><div class="service-option tap-target"><span>{text.service} · {example.price}</span><i class="tap"></i><small>{appointmentDuration}</small></div><div class="service-cancel">{text.cancel}</div></div>}
           {name === 'master' && <div class="picker-sheet"><div class="sheet-handle"></div><div class="sheet-toolbar"><strong>{text.selectMaster}</strong><span>{text.cancel}</span></div><div class="master-option tap-target"><span class="avatar"><Icon name="person" /></span><div><strong>{example.master}</strong><small>{text.service}</small></div><strong>{example.price}</strong><i class="tap"></i></div></div>}
           {(name === 'calendar' || name === 'time') && <div class="picker-sheet calendar-sheet">
             <div class="sheet-handle"></div><div class="sheet-toolbar"><strong>{text.selectDate}</strong><span>{text.cancel}</span></div>

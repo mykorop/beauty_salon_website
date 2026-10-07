@@ -2,7 +2,7 @@ import { expect, test, waitForFonts } from './fixtures';
 import AxeBuilder from '@axe-core/playwright';
 import { homePath, locales, type Locale } from './support/public-pages';
 
-const illustrations = { ro: /ilustrativ/, en: /Illustrative/ } satisfies Record<Locale, RegExp>;
+const illustrations = { ro: /ilustrativ/, ru: /Иллюстративный/, en: /Illustrative/ } satisfies Record<Locale, RegExp>;
 
 for (const path of locales.map(homePath)) {
   test(`visitors can download the correct client and business apps from ${path}`, async ({ page }) => {
@@ -58,6 +58,13 @@ const journeys = {
     clientFeatures: ['Caută în Moldova', 'Alege ce ți se potrivește', 'Gestionează-ți programările'],
     businessFeatures: ['Calendarul de lucru', 'Serviciile tale', 'În echipă sau independent'],
     clientDownload: 'Descarcă BookMe pentru clienți', businessDownload: 'Descarcă BookMe Business',
+  },
+  ru: {
+    clientLink: 'Хочу записаться', businessLink: 'Управлять своим бизнесом',
+    clientTitle: 'Ваш уход за собой — всегда под рукой.', businessTitle: 'Ваш календарь. Ваша команда. В одном месте.',
+    clientFeatures: ['Поиск по Молдове', 'Выбирайте то, что подходит', 'Управляйте записями'],
+    businessFeatures: ['Рабочий календарь', 'Ваши услуги', 'В команде или самостоятельно'],
+    clientDownload: 'Скачать BookMe для клиентов', businessDownload: 'Скачать BookMe Business',
   },
   en: {
     clientLink: 'Find my next appointment', businessLink: 'Organize my business',

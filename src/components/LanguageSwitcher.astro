@@ -1,5 +1,5 @@
 ---
-import { labels, languages, locales, pageUrl, type Locale, type Page } from '../i18n';
+import { labels, languages, locales, switchUrl, type Locale, type Page } from '../i18n';
 interface Props { locale: Locale; page?: Page }
 const { locale, page } = Astro.props;
 ---
@@ -7,7 +7,7 @@ const { locale, page } = Astro.props;
   {locales.map((language, index) => (
     <>
       {index > 0 && <span aria-hidden="true">/</span>}
-      <a href={pageUrl(language, page ?? 'home')} lang={language} hreflang={language} aria-label={languages[language].name} aria-current={page && locale === language ? 'page' : undefined}>{language.toUpperCase()}</a>
+      <a href={switchUrl(language, page)} lang={language} hreflang={language} aria-label={languages[language].name} aria-current={page && locale === language ? 'page' : undefined}>{language.toUpperCase()}</a>
     </>
   ))}
 </nav>

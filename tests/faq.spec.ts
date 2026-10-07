@@ -1,6 +1,6 @@
 import { expect, test } from './fixtures';
 import AxeBuilder from '@axe-core/playwright';
-import { homePath, locales, pagePath, type Locale } from './support/public-pages';
+import { homePath, linkPath, locales, type Locale } from './support/public-pages';
 
 const faqs = {
   ro: {
@@ -12,6 +12,17 @@ const faqs = {
       { question: 'Cum plătesc serviciile rezervate?', answer: /direct salonului sau specialistului/ },
       { question: 'Am nevoie de un cont?', answer: /cont.*programările/ },
       { question: 'Cum îmi șterg contul și datele?', answer: /ștergerea din aplicație.*support@bookme.md/ },
+    ],
+  },
+  ru: {
+    title: 'Частые вопросы', deletion: 'Посмотреть шаги удаления аккаунта',
+    questions: [
+      { question: 'Какое приложение выбрать?', answer: /BookMe Business.*открыть в браузере по адресу business\.bookme\.md\. Бизнес-аккаунт работает в BookMe Business, а не в клиентском приложении\..*BookMe Salon/ },
+      { question: 'Где можно пользоваться BookMe?', answer: /Молдовы/ },
+      { question: 'BookMe бесплатный?', answer: /бесплатна для клиентов, салонов и независимых мастеров/ },
+      { question: 'Как оплатить забронированные услуги?', answer: /напрямую салону или мастеру/ },
+      { question: 'Нужен ли аккаунт?', answer: /Аккаунт.*записями/ },
+      { question: 'Как удалить аккаунт и данные?', answer: /Удаление можно запросить в приложении.*support@bookme.md/ },
     ],
   },
   en: {
@@ -47,7 +58,7 @@ for (const locale of locales) {
       await expect(content).toBeHidden();
       await page.keyboard.press('Enter');
     }
-    await expect(faq.getByRole('link', { name: language.deletion })).toHaveAttribute('href', pagePath(locale, 'delete-account'));
+    await expect(faq.getByRole('link', { name: language.deletion })).toHaveAttribute('href', linkPath(locale, 'delete-account'));
     if (javaScriptEnabled) {
       const results = await new AxeBuilder({ page }).include('#faq').analyze();
       expect(results.violations).toEqual([]);

@@ -4,13 +4,14 @@ import { defaultLocale, locales, pageUrl, prefixedLocales, type Locale } from '.
 
 const text = {
   ro: { title: 'Pagină negăsită', heading: 'Pagina nu a fost găsită', body: 'Adresa poate fi greșită sau pagina nu mai este disponibilă.', back: 'Înapoi la pagina principală' },
+  ru: { title: 'Страница не найдена', heading: 'Страница не найдена.', body: 'Адрес может быть неверным, или страница больше недоступна.', back: 'Вернуться на русскоязычную главную страницу' },
   en: { title: 'Page not found', heading: 'Page not found.', body: 'The address may be incorrect or the page may no longer be available.', back: 'Back to the English homepage' },
 } satisfies Record<Locale, { title: string; heading: string; body: string; back: string }>;
 // One unlocalized URL serves every language: the default language leads, the others follow in their own language.
 const primary = text[defaultLocale];
 const title = `${locales.map((locale) => text[locale].title).join(' / ')} — BookMe`;
 // The Romanian description names every site language; update it with the locale list.
-const description = 'Pagina căutată nu există. Revino la BookMe în română sau engleză.';
+const description = 'Pagina căutată nu există. Revino la BookMe în română, rusă sau engleză.';
 ---
 <SiteLayout locale={defaultLocale} title={title} description={description}>
   <section class="not-found" aria-labelledby="not-found-title">
@@ -29,8 +30,8 @@ const description = 'Pagina căutată nu există. Revino la BookMe în română 
 
 <style>
   .not-found { max-width: 48rem; margin: 0 auto; padding: clamp(3rem, 8vw, 6rem) 1.25rem; text-align: center; }
-  .error-code { font-family: 'Instrument Serif', serif; font-size: clamp(5rem, 15vw, 9rem); line-height: 1; color: var(--accent); }
-  h1 { font-family: 'Instrument Serif', serif; font-weight: 400; font-size: clamp(2.25rem, 5vw, 3.5rem); line-height: 1.15; margin: 1rem 0; text-wrap: balance; }
+  .error-code { font-family: var(--font-serif); font-size: clamp(5rem, 15vw, 9rem); line-height: 1; color: var(--accent); }
+  h1 { font-family: var(--font-serif); font-weight: 400; font-size: clamp(2.25rem, 5vw, 3.5rem); line-height: 1.15; margin: 1rem 0; text-wrap: balance; }
   p:not(.error-code) { color: var(--text-muted); margin-bottom: 1.5rem; }
   .language-return { margin-top: 2.5rem; padding-top: 2.5rem; border-top: 1px solid var(--border); }
   a { justify-content: center; }

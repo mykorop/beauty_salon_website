@@ -1,12 +1,11 @@
 ---
 import SiteLayout from './SiteLayout.astro';
-import { legalContent, legalLabels, type LegalPage } from '../content/legal';
+import { legalDocument, type LegalPage } from '../content/legal';
 import type { Locale } from '../i18n';
 interface Props { locale: Locale; page: LegalPage }
 const { locale, page } = Astro.props;
-const { Content, getHeadings, title, description, updated } = legalContent[locale][page];
+const { Content, getHeadings, title, description, updated, labels } = legalDocument(locale, page);
 const headings = getHeadings().filter(({ depth }) => depth === 2);
-const labels = legalLabels[locale];
 ---
 <SiteLayout locale={locale} page={page} title={`${title} — BookMe`} description={description}>
   <article class="legal-page">

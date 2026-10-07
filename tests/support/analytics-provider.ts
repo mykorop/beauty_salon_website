@@ -6,6 +6,7 @@ export const analyticsProvider: AnalyticsProvider = {
   disclosure: {
     en: { name: 'Controlled test analytics', purpose: 'Verify consent in browser tests.', data: 'Synthetic page events; test SDK resource; localStorage bookme.test-analytics, sessionStorage bookme.test-session and cookie bookme_test_analytics (host-only, Path=/, SameSite=Lax). No visitor ID.', retention: 'Local data: 180 days at most, cleared on withdrawal. Intercepted events: not retained by a server.' },
     ro: { name: 'Analiză controlată de test', purpose: 'Verificarea consimțământului în teste de browser.', data: 'Evenimente sintetice; resursă SDK de test; localStorage bookme.test-analytics, sessionStorage bookme.test-session și cookie bookme_test_analytics (doar gazda curentă, Path=/, SameSite=Lax). Fără ID de vizitator.', retention: 'Date locale: cel mult 180 de zile, șterse la retragere. Evenimente interceptate: fără păstrare pe server.' },
+    ru: { name: 'Контролируемая тестовая аналитика', purpose: 'Проверка согласия в браузерных тестах.', data: 'Синтетические события; тестовый ресурс SDK; localStorage bookme.test-analytics, sessionStorage bookme.test-session и cookie bookme_test_analytics (только текущий хост, Path=/, SameSite=Lax). Без ID посетителя.', retention: 'Локальные данные: не более 180 дней, удаляются при отзыве. Перехваченные события: сервер не хранит.' },
   },
   createAdapter() {
     let timer: ReturnType<typeof setInterval> | undefined;

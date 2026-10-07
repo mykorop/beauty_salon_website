@@ -1,6 +1,6 @@
 import type { Locator, Page } from '@playwright/test';
 import { expect, test, waitForFonts } from './fixtures';
-import { homePath, locales, pagePath, pages, webApps, type Locale } from './support/public-pages';
+import { homePath, indexablePages, locales, webApps, type Locale } from './support/public-pages';
 
 const { client: clientWebApp, business: businessWebApp } = webApps;
 
@@ -13,6 +13,15 @@ const webApp = {
     clientOption: 'Pentru clienți app.bookme.md', businessOption: 'Pentru saloane și specialiști independenți business.bookme.md',
     business: 'Agenda ta. Echipa ta. În același loc.', businessLabel: 'Deschide BookMe Business în browser',
     cardLabel: 'BookMe Business — Deschide în browser',
+  },
+  ru: {
+    label: 'Открыть веб-приложение',
+    hero: 'Запись в\u00a0салон\u00a0— в\u00a0вашем ритме.', downloads: 'Следующий шаг начинается здесь.',
+    browser: 'Пользуйтесь BookMe в браузере',
+    browserDescription: 'Оба приложения работают и в браузере, на телефоне или компьютере. Откройте версию для своего аккаунта: бизнес-аккаунт работает в BookMe Business, а не в клиентском приложении. Чтобы установить приложение, выберите подходящее ниже.',
+    clientOption: 'Для клиентов app.bookme.md', businessOption: 'Для салонов и независимых мастеров business.bookme.md',
+    business: 'Ваш календарь. Ваша команда. В одном месте.', businessLabel: 'Открыть BookMe Business в браузере',
+    cardLabel: 'BookMe Business — Открыть в браузере',
   },
   en: {
     label: 'Open web app',
@@ -158,7 +167,7 @@ for (const locale of locales) {
     ]);
   });
 
-  for (const path of pages.map((name) => pagePath(locale, name))) {
+  for (const { path } of indexablePages.filter((entry) => entry.locale === locale)) {
     test(`client web app is visible in navigation on ${path}`, async ({ page }) => {
       await page.goto(path);
       const header = page.getByRole('banner');

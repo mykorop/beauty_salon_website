@@ -10,6 +10,9 @@
     --accent-active: #dc8908;
     --border: #474b53;
     --input-border: #858992;
+    /* Cyrillic characters fall back to the bundled Manrope and Noto Serif Display faces. */
+    --font-sans: 'DM Sans', 'Manrope', sans-serif;
+    --font-serif: 'Instrument Serif', 'Noto Serif Display', serif;
 }
 
 * {
@@ -57,7 +60,7 @@ a {
 }
 
 body {
-    font-family: 'DM Sans', sans-serif;
+    font-family: var(--font-sans);
     background: var(--bg);
     color: var(--text);
     min-height: 100vh;
@@ -82,7 +85,7 @@ body {
 }
 
 .logo {
-    font-family: 'Instrument Serif', serif;
+    font-family: var(--font-serif);
     font-size: 2rem;
     color: var(--text);
     text-decoration: none;
@@ -242,7 +245,7 @@ section[id] {
 
 .section-inner > h2,
 .contact-section > h2 {
-    font-family: 'Instrument Serif', serif;
+    font-family: var(--font-serif);
     font-size: clamp(2rem, 4vw, 3.25rem);
     line-height: 1.15;
     text-wrap: balance;
@@ -398,7 +401,7 @@ section[id] {
 }
 
 .legal-page h1 {
-    font-family: 'Instrument Serif', serif;
+    font-family: var(--font-serif);
     font-size: 2.5rem;
     font-weight: 400;
     margin-bottom: 0.5rem;
@@ -411,7 +414,7 @@ section[id] {
 }
 
 .legal-page h2 {
-    font-family: 'Instrument Serif', serif;
+    font-family: var(--font-serif);
     font-weight: 400;
     font-size: 1.4rem;
     margin: 2rem 0 1rem;

@@ -1,8 +1,8 @@
 import type { APIRoute } from 'astro';
-import { absolutePageUrl, languageAlternates, locales, pageNames } from '../i18n';
+import { absolutePageUrl, languageAlternates, pageLocales, pageNames } from '../i18n';
 
 export const GET: APIRoute = () => {
-  const urls = pageNames.flatMap((page) => locales.map((locale) => `
+  const urls = pageNames.flatMap((page) => pageLocales(page).map((locale) => `
   <url>
     <loc>${absolutePageUrl(locale, page)}</loc>
     ${languageAlternates(page).map(({ language, href }) => `<xhtml:link rel="alternate" hreflang="${language}" href="${href}" />`).join('\n    ')}

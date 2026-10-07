@@ -4,6 +4,7 @@ import { homePath, locales, type Locale } from './support/public-pages';
 
 const demos = {
   ro: { label: 'Demonstrație de programare', pause: 'Pauză', resume: 'Continuă', replay: 'Repetă', next: 'Pasul următor', steps: 'Toți pașii, pe scurt', success: 'Programare confirmată cu succes!', account: 'Ana Demo · deja conectată' },
+  ru: { label: 'Демонстрация записи', pause: 'Пауза', resume: 'Продолжить', replay: 'Повторить', next: 'Следующий шаг', steps: 'Все шаги кратко', success: 'Запись подтверждена!', account: 'Ana Demo · вход выполнен' },
   en: { label: 'Booking demo', pause: 'Pause', resume: 'Resume', replay: 'Replay', next: 'Next step', steps: 'Read all the steps', success: 'Booking confirmed successfully!', account: 'Ana Demo · already signed in' },
 } satisfies Record<Locale, Record<string, string>>;
 const languages = locales.map((locale) => ({ path: homePath(locale), ...demos[locale] }));

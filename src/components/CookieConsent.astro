@@ -1,11 +1,11 @@
 ---
-import { pageUrl, type Locale } from '../i18n';
-import { consentText, policySection } from '../consent/text';
+import type { Locale } from '../i18n';
+import { consentText, cookiePolicyUrl } from '../consent/text';
 import { provider } from '../consent/config';
 interface Props { locale: Locale }
 const { locale } = Astro.props;
 const text = consentText[locale];
-const policy = `${pageUrl(locale, 'privacy')}#${policySection[locale]}`;
+const policy = cookiePolicyUrl(locale);
 const disclosure = provider?.disclosure[locale];
 ---
 <section id="cookie-notice" class="cookie-notice" aria-labelledby="cookie-title" data-locale={locale}>

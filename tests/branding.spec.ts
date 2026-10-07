@@ -1,5 +1,5 @@
 import { expect, test } from './fixtures';
-import { filePath, locales, indexablePages, type Locale, type PageName } from './support/public-pages';
+import { locales, indexablePages, pageLocales, publishedValue, type Locale, type PublishedPageTable } from './support/public-pages';
 
 const metadata = {
   ro: {
@@ -8,20 +8,24 @@ const metadata = {
     terms: { title: 'Condiții de utilizare — BookMe', description: /Condițiile de utilizare.*clienți/ },
     'delete-account': { title: 'Șterge contul tău BookMe — BookMe', description: /ștergi contul/ },
   },
+  ru: {
+    home: { title: 'BookMe — запись в салоны красоты в Молдове', description: /бесплатная платформа.*Молдове/ },
+  },
   en: {
     home: { title: 'BookMe — Beauty appointments in Moldova', description: /free.*Moldova/ },
     privacy: { title: 'Privacy Policy — BookMe', description: /personal data/ },
     terms: { title: 'Terms of Use — BookMe', description: /Terms of use.*clients/ },
     'delete-account': { title: 'Delete Your BookMe Account — BookMe', description: /delete your BookMe account/ },
   },
-} satisfies Record<Locale, Record<PageName, { title: string; description: RegExp }>>;
+} satisfies PublishedPageTable<{ title: string; description: RegExp }>;
 const social = {
   ro: { ogLocale: 'ro_MD', imageAlt: 'BookMe — Programări la salon, în ritmul tău. Clienți, saloane și specialiști din Moldova.' },
+  ru: { ogLocale: 'ru_MD', imageAlt: 'BookMe — Запись в салон в вашем ритме. Клиенты, салоны и мастера в Молдове.' },
   en: { ogLocale: 'en_US', imageAlt: 'BookMe — Beauty appointments, at your pace. Clients, salons and professionals in Moldova.' },
 } satisfies Record<Locale, { ogLocale: string; imageAlt: string }>;
 
-for (const { locale, page: name, path: canonicalPath } of indexablePages) {
-  const entry = { path: filePath(locale, name), url: canonicalPath, locale, ...metadata[locale][name] };
+for (const { locale, page: name, path: canonicalPath, file } of indexablePages) {
+  const entry = { path: file, url: canonicalPath, locale, ...publishedValue(metadata, locale, name) };
   test(`static branding and localized social cards are available at ${entry.path}`, async ({ page }) => {
     await page.goto(entry.path);
     const head = page.locator('head');
@@ -57,7 +61,8 @@ for (const { locale, page: name, path: canonicalPath } of indexablePages) {
       await expect(tag).toHaveCount(1);
       await expect(tag).toHaveAttribute('content', value);
     }
-    const alternates = locales.filter((other) => other !== locale);
+    // Only the languages that have published this page are its alternatives.
+    const alternates = pageLocales(name).filter((other) => other !== locale);
     await expect(head.locator('meta[property="og:locale:alternate"]')).toHaveCount(alternates.length);
     for (const other of alternates) {
       await expect(head.locator(`meta[property="og:locale:alternate"][content="${social[other].ogLocale}"]`)).toHaveCount(1);

@@ -1,4 +1,4 @@
-import type { Locale } from '../i18n';
+import { linkLocale, pageUrl, type Locale, type PageLocale } from '../i18n';
 
 export const consentText = {
   en: {
@@ -33,6 +33,28 @@ export const consentText = {
     allowed: 'Analiză permisă', denied: 'Doar necesare', current: 'Alegere salvată:',
     provider: 'Furnizor', purpose: 'Scop', data: 'Date și tehnologii', retention: 'Durată de păstrare',
   },
+  ru: {
+    title: 'Файлы cookie и ваша конфиденциальность', settings: 'Настройки cookie', details: 'Подробнее',
+    intro: 'Аналитика не подключена. Сайт хранит только ваше подтверждение: 180 дней в localStorage, а не в cookie.',
+    enabledIntro: 'Необязательная аналитика помогает нам понять, как используется этот сайт. Она остаётся выключенной, пока вы её не разрешите. Мы храним ваш выбор 180 дней.',
+    understood: 'Понятно', allow: 'Разрешить аналитику', deny: 'Только необходимые', configure: 'Настройки',
+    necessary: 'Необходимое хранилище', necessaryDescription: 'BookMe использует localStorage (bookme.cookie-consent), чтобы помнить ваше подтверждение или явный выбор в течение 180 дней с момента действия. Запись содержит версии, ваш выбор и даты, без идентификатора посетителя. Этот срок — решение продукта, а не требование закона. Чтение записи его не продлевает; просроченные записи удаляются при следующем посещении или проверке.',
+    analytics: 'Аналитика', disconnected: 'Аналитика не подключена. Подтверждение этого уведомления не даёт разрешения будущему поставщику.',
+    scope: 'Выбор действует в этом браузере и для источника (origin) этого сайта, во всех его языковых версиях. Он не передаётся мобильным приложениям, вашему аккаунту или другим поддоменам, включая веб-версии app.bookme.md и business.bookme.md. Очистка данных браузера сбрасывает его.',
+    withdrawal: 'Чтобы отозвать согласие, сохраните выбор с выключенной аналитикой. Так мы прекращаем новый сбор и удаляем известное и доступное хранилище аналитики. Мы не можем отозвать уже отправленные запросы, удалить данные, хранящиеся у поставщика, или недоступные сторонние либо HttpOnly cookie. Сайт и контактная форма остаются доступными.',
+    policy: 'Файлы cookie в политике конфиденциальности', save: 'Сохранить выбор', close: 'Закрыть без сохранения',
+    noJs: 'Без JavaScript аналитика остаётся выключенной, и выбор не сохраняется. Вы по-прежнему можете пользоваться сайтом и контактной формой.',
+    error: 'Не удалось сохранить или прочитать ваш выбор. Аналитика на этой странице выключена. После перехода на другую страницу может понадобиться выбрать снова.',
+    dismiss: 'Скрыть на этой странице', pending: 'Выбор не сохранён', acknowledged: 'Уведомление подтверждено',
+    allowed: 'Аналитика разрешена', denied: 'Только необходимые', current: 'Сохранённый выбор:',
+    provider: 'Поставщик', purpose: 'Цель', data: 'Данные и технологии', retention: 'Срок хранения',
+  },
 } satisfies Record<Locale, Record<string, string>>;
 
-export const policySection = { en: 'cookies-and-similar-technologies', ro: 'cookies-și-tehnologii-similare' } satisfies Record<Locale, string>;
+// The cookie section of each published privacy policy.
+const policySection = { en: 'cookies-and-similar-technologies', ro: 'cookies-și-tehnologii-similare' } satisfies Record<PageLocale<'privacy'>, string>;
+
+// The policy's cookie section that cookie links lead to from a page in this language, in the default language until the policy is translated.
+export function cookiePolicyUrl(locale: Locale): string {
+  return `${pageUrl(locale, 'privacy')}#${policySection[linkLocale(locale, 'privacy')]}`;
+}

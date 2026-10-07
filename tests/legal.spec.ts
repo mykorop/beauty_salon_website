@@ -1,6 +1,6 @@
 import { expect, test, waitForFonts } from './fixtures';
 import AxeBuilder from '@axe-core/playwright';
-import { homePath, legalPages, locales, webApps, type Locale } from './support/public-pages';
+import { homePath, legalLocales, legalPages, webApps, type LegalLocale } from './support/public-pages';
 
 const legal = {
   ro: {
@@ -41,9 +41,10 @@ const legal = {
     invitations: 'Invitations that have not been accepted do not block deletion and are revoked automatically',
     otherAccounts: "Removing a salon account does not delete other specialists' accounts",
   },
-} satisfies Record<Locale, Record<string, string>>;
+} satisfies Record<LegalLocale, Record<string, string>>;
 
-for (const locale of locales) {
+// Languages that have published the legal documents.
+for (const locale of legalLocales) {
   const prefix = homePath(locale);
   const text = legal[locale];
   test(`privacy reader can identify the operator and exercise rights in ${locale}`, async ({ page }) => {

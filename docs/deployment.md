@@ -1,7 +1,7 @@
 # Static artifact handoff
 
 The deliverable is `artifacts/bookme-website.tar.gz` (also the `bookme-static-site`
-CI artifact). Its root contains the contents of `dist/`: eight indexable pages,
+CI artifact). Its root contains the contents of `dist/`: nine indexable pages,
 `404.html`, local fonts/styles/scripts, branding, sitemap and robots.txt. Extract
 to an empty staging directory with `tar -xzf bookme-website.tar.gz -C <directory>`.
 Deploy those contents at the root of `https://bookme.md`, preserving filenames.
@@ -21,7 +21,7 @@ Local build checks cannot verify host-injected analytics. Publish only `dist/`;
 
 - HTTPS: valid certificate for the public host, no mixed content, HTTP redirected
   to HTTPS; the chosen canonical hostname must match `src/i18n.ts`.
-- Routing: directory `index.html`, direct `.html` URLs and `/en/` must work. Unknown
+- Routing: directory `index.html`, direct `.html` URLs, `/ru/` and `/en/` must work. Unknown
   paths must return the custom `404.html` **with status 404**, not a 200 SPA fallback.
 - Compression: enable gzip/Brotli for HTML, CSS, JavaScript, SVG, JSON and XML;
   vary responses by `Accept-Encoding`. Budget gzip is normalized; verify actual
@@ -40,6 +40,8 @@ Local build checks cannot verify host-injected analytics. Publish only `dist/`;
 curl -I http://bookme.md/
 curl -I https://bookme.md/
 curl -I https://bookme.md/index.html
+curl -I https://bookme.md/ru/
+curl -I https://bookme.md/ru/index.html
 curl -I https://bookme.md/en/
 curl -I https://bookme.md/en/index.html
 curl -I https://bookme.md/privacy.html
@@ -57,11 +59,11 @@ curl -I -H 'Accept-Encoding: gzip, br' https://bookme.md/
 Verify 200 for all real pages/assets, 404 for the missing path, the intended
 redirect only on HTTP/alternate hostnames, and correct compression/cache headers.
 Select an actual `/_astro/` URL from built HTML and check its long-lived cache
-header too. Open both languages in a browser, inspect the network/console and
+header too. Open all three languages in a browser, inspect the network/console and
 confirm navigation, fonts and assets load under HTTPS. Inspect the native form
 action without submitting a real support message.
 
-Run [PageSpeed Insights](https://pagespeed.web.dev/) for each of the eight public
+Run [PageSpeed Insights](https://pagespeed.web.dev/) for each of the nine public
 URLs in mobile and desktop after release, recording the tested URL, date and
 reports. Those measurements validate the host/network; localhost Lighthouse
 results cannot establish production HTTPS, caching or field CWV. See the

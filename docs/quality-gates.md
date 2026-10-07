@@ -18,7 +18,8 @@ The normal browser suite and Lighthouse use the completed `dist/` build; consent
 provider tests build and serve the isolated `dist-consent-test/` directory.
 Rebuild after any source change. Ports 4329 (Playwright) and 4330 (Lighthouse) must be free. Run the two
 suites sequentially, without competing builds or browser jobs during Lighthouse.
-The eight indexable RO/EN pages are required; legacy homepage aliases and the
+The nine indexable pages (Romanian and English homepage and legal pages, and the
+Russian homepage) are required; legacy homepage aliases and the
 404 document receive additional functional checks. The browser tests never use
 production accounts or real personal data, and a shared fixture blocks all
 non-local browser requests. Contact tests override that boundary with synthetic replies,
@@ -30,18 +31,22 @@ Playwright 1.63.0 pins the downloaded Chromium, Firefox and WebKit revisions.
 All three run the functional suite on desktop and at a mobile viewport with
 JavaScript disabled. Responsive tests also exercise 320px with JavaScript in
 each engine. Existing tests cover the always-visible mobile navigation (there
-is no collapsed menu state), both languages, old URLs, legal links, FAQ,
+is no collapsed menu state), all three languages and the RO / RU / EN switcher, Romanian
+links from Russian pages to legal pages not yet translated, old URLs, legal links, FAQ,
 mocked contact states, 404, complete HTML, and no-JavaScript navigation/forms.
 Axe 4.13.0 scans all pages at 320/768/1440px and the expanded FAQ and idle,
 invalid, pending, success and failure form states. Contact tests use a 320px
 viewport in every engine. JavaScript-dependent checks
 are explicitly skipped in no-JavaScript projects; behavior tests still run.
-Consent tests cover all eight pages, localStorage/network inventory, acknowledgement,
+Consent tests cover every indexable page, a choice carried across languages, localStorage/network inventory, acknowledgement,
 corrupt/expired choices and storage failures. A separate static test build exercises
 the real controller with an intercepted provider, including withdrawal, delayed
 initialization, expiry in an open document and cross-tab/history restoration. An
 incomplete-provider build verifies that missing disclosures block opt-in.
-Both modes receive RO/EN keyboard, axe, print, no-JavaScript and 320/768/1440px checks.
+Both modes receive RO/RU/EN keyboard, axe, print, no-JavaScript and 320/768/1440px checks.
+`fonts.spec.ts` checks through network requests and `document.fonts` that Russian text and
+headings render with the bundled Cyrillic fonts and that Romanian and English pages download
+no Cyrillic font file.
 Additional checks cover 44×44 CSS px targets, keyboard focus outlines and
 obstruction at 320px, reflow, and reduced motion.
 
@@ -100,8 +105,8 @@ with Playwright, not a system Chrome that updates independently. CI uses
 
 `lighthouserc.cjs` uses Lighthouse's pinned standard simulated mobile profile and
 desktop preset. `scripts/lighthouse.mjs` runs both sequentially, three cold runs
-for each of the eight URLs listed in `tests/support/public-pages.ts`:
-**48 reports**. Every audit remains enabled.
+for each of the nine URLs listed in `tests/support/public-pages.ts`:
+**54 reports**. Every audit remains enabled.
 Assertions follow [Lighthouse CI's aggregation rules](https://github.com/GoogleChrome/lighthouse-ci/blob/main/docs/configuration.md#aggregation-methods):
 
 | Measure | Aggregation | Gate |
@@ -121,8 +126,8 @@ server or temporary public report storage. CI keeps reports even on failure.
 ## Manual acceptance record
 
 Automation does not certify WCAG conformance. Record tester, date, OS/browser,
-build commit and result for each item below in the final report. Use both languages
-and all eight pages; any remaining item must remain explicitly pending.
+build commit and result for each item below in the final report. Use all three languages
+and all nine pages; any remaining item must remain explicitly pending.
 
 - Keyboard only: skip link, every navigation/language/legal link, all FAQ
   disclosures and form states; logical order, visible and unobscured focus.

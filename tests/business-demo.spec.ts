@@ -4,8 +4,9 @@ import { consentText } from './support/consent-text';
 import { homePath, locales, type Locale } from './support/public-pages';
 
 const demos = {
-  ro: { label: 'Demonstrație de calendar Business', clientLabel: 'Demonstrație de programare', pause: 'Pauză', resume: 'Continuă', replay: 'Repetă', next: 'Pasul următor', steps: 'Toți pașii, pe scurt', service: 'Manichiură', status: 'Confirmată' },
-  en: { label: 'Business calendar demo', clientLabel: 'Booking demo', pause: 'Pause', resume: 'Resume', replay: 'Replay', next: 'Next step', steps: 'Read all the steps', service: 'Manicure', status: 'Confirmed' },
+  ro: { label: 'Demonstrație de calendar Business', clientLabel: 'Demonstrație de programare', pause: 'Pauză', resume: 'Continuă', replay: 'Repetă', next: 'Pasul următor', steps: 'Toți pașii, pe scurt', service: 'Manichiură', duration: '14:30 (1 h)', status: 'Confirmată' },
+  ru: { label: 'Демонстрация календаря Business', clientLabel: 'Демонстрация записи', pause: 'Пауза', resume: 'Продолжить', replay: 'Повторить', next: 'Следующий шаг', steps: 'Все шаги кратко', service: 'Маникюр', duration: '14:30 (1 ч)', status: 'Подтверждено' },
+  en: { label: 'Business calendar demo', clientLabel: 'Booking demo', pause: 'Pause', resume: 'Resume', replay: 'Replay', next: 'Next step', steps: 'Read all the steps', service: 'Manicure', duration: '14:30 (1 h)', status: 'Confirmed' },
 } satisfies Record<Locale, Record<string, string>>;
 const languages = locales.map((locale) => ({ path: homePath(locale), understood: consentText[locale].understood, ...demos[locale] }));
 
@@ -173,7 +174,9 @@ test.describe('business calendar playback', () => {
       await page.keyboard.press(tabKey);
       await expect(demo.getByRole('button', { name: language.replay, exact: true })).toBeFocused();
       await page.keyboard.press('Enter');
+      // Focusing controls below a long section may have scrolled the phone away, which pauses playback.
       await demo.getByRole('img').scrollIntoViewIfNeeded();
+      await expect(demo.getByRole('img')).toBeInViewport({ ratio: 0.6 });
       await page.clock.runFor(15000);
       await expect(demo.getByText('6 / 6', { exact: true })).toBeVisible();
       expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
@@ -234,7 +237,7 @@ for (const language of languages) {
     const client = page.getByRole('region', { name: language.clientLabel, exact: true });
     const demo = page.getByRole('region', { name: language.label, exact: true });
     await demo.getByRole('button', { name: language.replay, exact: true }).click();
-    for (const value of [language.service, 'Mara Luca', '14:30 (1 h)', '300 MDL']) {
+    for (const value of [language.service, 'Mara Luca', language.duration, '300 MDL']) {
       await expect(client.getByText(value, { exact: true }).filter({ visible: true })).toBeVisible();
       await expect(demo.getByText(value, { exact: true }).filter({ visible: true })).toBeVisible();
     }

@@ -139,6 +139,12 @@ new ResizeObserver(() => {
   if (banner.offsetHeight) root.setProperty('--cookie-notice-height', `${banner.offsetHeight}px`);
   else root.removeProperty('--cookie-notice-height');
 }).observe(banner);
+// Browsers leave a partly visible control in place when the keyboard focuses it; move it clear of the shown
+// notice. Pointer focus is left alone so a click never scrolls away from under the pointer.
+document.addEventListener('focusin', ({ target }) => {
+  if (!banner.offsetHeight || !(target instanceof HTMLElement) || !target.matches(':focus-visible') || banner.contains(target) || dialog.contains(target)) return;
+  if (target.getBoundingClientRect().bottom > banner.getBoundingClientRect().top) target.scrollIntoView({ block: 'nearest', behavior: 'instant' });
+});
 window.addEventListener('storage', (event) => { if (event.key === storageKey || event.key === null) refresh(); });
 window.addEventListener('pageshow', () => { suspended = false; refresh(); });
 window.addEventListener('pagehide', () => { suspended = true; clearTimeout(timer); stop(false); });

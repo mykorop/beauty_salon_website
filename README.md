@@ -1,6 +1,6 @@
 # BookMe website
 
-Static Astro website in Romanian (default) and English (`/en/`). The mobile apps,
+Static Astro website in Romanian (default), Russian (`/ru/`) and English (`/en/`). The mobile apps,
 APIs, and backend are separate projects.
 
 ## Local development
@@ -29,20 +29,20 @@ npm run package:site
 `npm test` starts its own production preview server on `127.0.0.1:4329` and tests
 the existing `dist/` build. Rebuild after source changes; do not leave another
 server on that port. Run a single test file with `npm test -- tests/site.spec.ts`.
-`tests/support/public-pages.ts` lists the public languages, page URLs and both web-app
-addresses once for the test tables, Lighthouse and demo captures, independently of
-`src/i18n.ts` and `src/content/apps.ts`.
+`tests/support/public-pages.ts` lists the public languages, the pages each language has
+published, their URLs and both web-app addresses once for the test tables, Lighthouse and
+demo captures, independently of `src/i18n.ts` and `src/content/apps.ts`.
 Run `npm run test:seo` to rebuild and check SEO on the production HTML, including
 metadata, language alternatives, sitemap, JSON-LD, links and HTTP 404 behavior.
 CI runs type checking, the static build, Chromium/Firefox/WebKit tests (including
-mobile viewports without JavaScript), axe, per-page gzip budgets and 48 Lighthouse
+mobile viewports without JavaScript), axe, per-page gzip budgets and 54 Lighthouse
 runs. Tests block non-local traffic and never submit a real contact message.
 Reports, failure screenshots/traces and the static archive are retained as CI
 artifacts. See [quality gates and manual acceptance](docs/quality-gates.md),
 [recorded results](docs/quality-report.md), and the [deployment handoff](docs/deployment.md).
 `tests/home.spec.ts` checks both audience journeys and the four exact store links,
 plus visible content and overflow at 320, 768, and 1440 CSS pixels. It also scans
-both homepages with axe at those widths in the JavaScript-enabled browser projects.
+all three homepages with axe at those widths in the JavaScript-enabled browser projects.
 `tests/web-app.spec.ts` checks the exact client web-app links in navigation, the
 homepage introduction and the browser-access block, and the BookMe Business web-app
 links in the business section, its download card and that block. It covers mouse and
@@ -55,40 +55,46 @@ files and direct `.html` URLs. Configure the host's error document as `404.html`
 with HTTP status **404** for unknown URLs. No Node server or SPA fallback is needed
 in production. See the [SEO guide and future production checks](docs/seo.md).
 
-| Page | Romanian | English |
-| --- | --- | --- |
-| Home | `/` or `/index.html` | `/en/` or `/en/index.html` |
-| Privacy | `/privacy.html` | `/en/privacy.html` |
-| Terms | `/terms.html` | `/en/terms.html` |
-| Account deletion | `/delete-account.html` | `/en/delete-account.html` |
+| Page | Romanian | Russian | English |
+| --- | --- | --- | --- |
+| Home | `/` or `/index.html` | `/ru/` or `/ru/index.html` | `/en/` or `/en/index.html` |
+| Privacy | `/privacy.html` | not yet published | `/en/privacy.html` |
+| Terms | `/terms.html` | not yet published | `/en/terms.html` |
+| Account deletion | `/delete-account.html` | not yet published | `/en/delete-account.html` |
 
 Astro's [`build.format: 'preserve'`](https://docs.astro.build/en/reference/configuration-reference/#buildformat)
-produces eight indexable HTML pages plus `404.html` while retaining existing public URLs. There is
-no browser-language detection or automatic language redirect.
+produces nine indexable HTML pages plus `404.html` while retaining existing public URLs. There is
+no browser-language detection or automatic language redirect. Romanian is the default language
+and `x-default`. A page another language has not published yet is linked from that
+language's pages in Romanian; its language switcher, `hreflang` and sitemap name only the
+published versions, and the switcher leads to that language's homepage instead. Adding the
+page to the language's entry in `src/i18n.ts` publishes it and moves those links to it.
 
 ## Editing
 
 Favicon sources, imagegen prompts, export instructions, and visual review sheets
-are documented in [design/branding](design/branding/README.md). Icons and RO/EN
+are documented in [design/branding](design/branding/README.md). Icons and RO/RU/EN
 social cards are committed static files in `public/`; normal builds need no image
 service. `tests/branding.spec.ts` checks their production formats and dimensions,
-the web manifest, and localized Open Graph/Twitter metadata on all eight pages.
+the web manifest, and localized Open Graph/Twitter metadata on every indexable page.
 The production origin is `siteOrigin` in `src/i18n.ts`, also used by `site` in
 `astro.config.mjs`, canonical URLs, social URLs and the generated sitemap/robots files.
 
-- `src/i18n.ts`: the locale list, language names, shared labels, production origin and the
-  canonical public page map.
+- `src/i18n.ts`: the locale list, language names, shared labels, production origin, the
+  canonical public page map and the pages each language has published.
 - `src/content/apps.ts`: app identities, store links and the two web addresses shared by
   navigation, downloads and JSON-LD: the client app at `https://app.bookme.md/` and
   BookMe Business at `https://business.bookme.md/`.
 - `src/content/home.ts`: localized homepage copy.
-- `src/content/booking-demo.ts`: fixed fictional booking data, RO/EN demo copy and frame timing.
-- `src/content/calendar-demo.ts`: Business period/search fixtures, RO/EN copy and frame timing.
+- `src/content/booking-demo.ts`: fixed fictional booking data, RO/RU/EN demo copy and frame timing.
+- `src/content/calendar-demo.ts`: Business period/search fixtures, RO/RU/EN copy and frame timing.
+  The Russian screen labels come from the BookMe app's Russian dictionary.
 - `src/content/legal/{ro,en}/`: legal document bodies; shared metadata lives in
   `src/content/legal.ts`.
 - `src/layouts/`: shared document shell and legal layout.
 - `src/components/`: shared navigation, footer, language links, homepage, and form.
-- `src/styles/global.css`: graphite/orange palette, responsive layout, and focus styles.
+- `src/styles/global.css`: graphite/orange palette, font stacks, responsive layout, and focus styles.
+- `src/styles/cyrillic-fonts.css`: the Cyrillic-only faces of the bundled Cyrillic fonts.
 
 Privacy and account-deletion wording in both languages follows the
 [data audit](.scratch/bookme-website-refresh/audit/README.md). The
@@ -136,8 +142,14 @@ personal data or image downloads required by the illustrations.
 
 DM Sans and Instrument Serif are bundled locally from the pinned Fontsource
 packages with Latin and Latin Extended subsets, including Romanian diacritics.
-Their OFL license files are shipped in `public/licenses/`. No Google Fonts requests
-are made by the website.
+Neither has Cyrillic glyphs, so Russian text falls back to two bundled companions:
+Manrope (text, Cyrillic 400/500/600) and the variable Noto Serif Display (headings,
+Cyrillic, set to a condensed width close to Instrument Serif). Their faces cover only
+the Cyrillic range, so Romanian and English pages never download them.
+`tests/fonts.spec.ts` checks both through the network and `document.fonts`. The
+choice and RU/RO/EN screenshots are recorded in [design/typography](design/typography/README.md).
+All four OFL license files are shipped in `public/licenses/`. No Google Fonts or other
+font-service requests are made by the website.
 
 The contact form retains the FormBold endpoint `https://formbold.com/s/oD7mJ`,
 `POST`, and fields `name`, `email`, and `message`. With JavaScript it sends
@@ -151,9 +163,10 @@ are always available beside the form.
 
 `Faq.astro` renders six localized questions using native `details`/`summary`, so
 answers can be opened with the keyboard and without JavaScript. The FAQ links to
-the account deletion instructions in the current language.
+the account deletion instructions in the current language, or in Romanian until that
+language publishes them.
 
-`tests/faq.spec.ts` checks both languages and keyboard interaction with and without
+`tests/faq.spec.ts` checks all three languages and keyboard interaction with and without
 JavaScript. `tests/contact.spec.ts` intercepts FormBold to cover the exact POST
 contract, validation, delayed responses, duplicate prevention, success, server
 and network failures, retry, and sending another message. Axe scans cover the

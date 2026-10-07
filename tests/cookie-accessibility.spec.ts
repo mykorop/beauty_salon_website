@@ -1,9 +1,9 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test, waitForFonts } from './fixtures';
-import { consentText } from './support/consent-text';
-import { homePath, locales, type Locale } from './support/public-pages';
+import { consentText, policyHeading } from './support/consent-text';
+import { homePath, linkLocale, locales, type Locale } from './support/public-pages';
 
-const emailLabel = { ro: 'Adresa de e-mail', en: 'Email address' } satisfies Record<Locale, string>;
+const emailLabel = { ro: 'Adresa de e-mail', ru: 'Адрес электронной почты', en: 'Email address' } satisfies Record<Locale, string>;
 
 const hasProvider = process.env.BOOKME_CONSENT_TEST === '1';
 for (const locale of locales) {
@@ -23,7 +23,7 @@ for (const locale of locales) {
         await expect(banner.getByRole('button')).toHaveCount(0);
         expect(requests).toEqual([]);
         await page.getByRole('contentinfo').getByRole('link', { name: text.settings }).click();
-        await expect(page.getByRole('heading', { name: text.policyHeading, exact: true })).toBeInViewport();
+        await expect(page.getByRole('heading', { name: policyHeading[linkLocale(locale, 'privacy')], exact: true })).toBeInViewport();
         return;
       }
       expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);

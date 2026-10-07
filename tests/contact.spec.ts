@@ -1,6 +1,6 @@
 import { expect, test } from './fixtures';
 import AxeBuilder from '@axe-core/playwright';
-import { homePath, locales, pagePath, type Locale } from './support/public-pages';
+import { homePath, linkPath, locales, type Locale } from './support/public-pages';
 
 const endpoint = 'https://formbold.com/s/oD7mJ';
 
@@ -20,6 +20,15 @@ const forms = {
     privacy: 'Politica de confidențialitate',
     formNote: 'Numele, adresa de e-mail și mesajul sunt transmise prin FormBold echipei BookMe pentru a răspunde solicitării tale.',
   },
+  ru: {
+    name: 'Ваше имя', email: 'Адрес электронной почты', message: 'Чем мы можем помочь?', send: 'Отправить сообщение',
+    sending: 'Отправляем сообщение…', sent: 'Ваше сообщение отправлено. Спасибо, что написали нам!',
+    error: 'Не удалось подтвердить отправку сообщения. Введённые данные сохранены. Попробуйте ещё раз или напишите на support@bookme.md.',
+    invalid: 'Проверьте имя и адрес электронной почты перед отправкой.',
+    nameError: 'Введите ваше имя.', emailError: 'Введите действительный адрес электронной почты.',
+    privacy: 'Политика конфиденциальности',
+    formNote: 'Имя, адрес электронной почты и сообщение передаются через FormBold команде BookMe, чтобы ответить на ваш запрос.',
+  },
   en: {
     name: 'Your name', email: 'Email address', message: 'How can we help?', send: 'Send message',
     sending: 'Sending your message…', sent: 'Your message has been sent. Thank you for contacting BookMe!',
@@ -37,7 +46,7 @@ for (const locale of locales) {
     await page.goto(language.path);
     const contact = page.locator('#contact');
     await expect(contact.getByText(language.formNote, { exact: false })).toBeVisible();
-    await expect(contact.getByRole('link', { name: language.privacy })).toHaveAttribute('href', pagePath(locale, 'privacy'));
+    await expect(contact.getByRole('link', { name: language.privacy })).toHaveAttribute('href', linkPath(locale, 'privacy'));
     await expect(contact.getByRole('link', { name: 'support@bookme.md', exact: true })).toHaveAttribute('href', 'mailto:support@bookme.md');
     await expect(contact.getByRole('status')).toBeEmpty();
     if (javaScriptEnabled) {

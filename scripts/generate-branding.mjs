@@ -61,16 +61,20 @@ try {
   const serif = await dataUrl('node_modules/@fontsource/instrument-serif/files/instrument-serif-latin-ext-400-normal.woff2', 'font/woff2');
   const sansLatin = await dataUrl('node_modules/@fontsource/dm-sans/files/dm-sans-latin-500-normal.woff2', 'font/woff2');
   const serifLatin = await dataUrl('node_modules/@fontsource/instrument-serif/files/instrument-serif-latin-400-normal.woff2', 'font/woff2');
+  // The site's Cyrillic companion of DM Sans, for the same Cyrillic range.
+  const sansCyrillic = await dataUrl('node_modules/@fontsource/manrope/files/manrope-cyrillic-500-normal.woff2', 'font/woff2');
   await mkdir(new URL('social/', output), { recursive: true });
-  for (const [locale, audience, headline] of [
-    ['ro', 'CLIENȚI · SALOANE · SPECIALIȘTI', 'Programări la salon,<br>în ritmul tău.'],
-    ['en', 'CLIENTS · SALONS · PROFESSIONALS', 'Beauty appointments,<br>at your pace.'],
+  for (const [locale, audience, headline, location] of [
+    ['ro', 'CLIENȚI · SALOANE · SPECIALIȘTI', 'Programări la salon,<br>în ritmul tău.', 'MOLDOVA'],
+    ['ru', 'КЛИЕНТЫ · САЛОНЫ · МАСТЕРА', 'Запись в салон —<br>в вашем ритме.', 'МОЛДОВА'],
+    ['en', 'CLIENTS · SALONS · PROFESSIONALS', 'Beauty appointments,<br>at your pace.', 'MOLDOVA'],
   ]) {
     await page.setContent(`<!doctype html><html lang="${locale}"><head><meta charset="utf-8"><style>
       @font-face { font-family: Sans; src: url('${sansLatin}'); }
       @font-face { font-family: Sans; src: url('${sans}'); unicode-range: U+0100-02FF; }
       @font-face { font-family: Serif; src: url('${serifLatin}'); }
       @font-face { font-family: Serif; src: url('${serif}'); unicode-range: U+0100-02FF; }
+      @font-face { font-family: Sans; src: url('${sansCyrillic}'); unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
       * { box-sizing: border-box; } body { margin: 0; width: 1200px; height: 630px; padding: 62px 72px;
         background: #181a1d; color: #f5f2eb; border-top: 8px solid #dfbf7a; font-family: Sans; }
       .brand { font-size: 48px; letter-spacing: -2px; } .brand span { color: #dfbf7a; }
@@ -82,7 +86,7 @@ try {
         font-size: 22px; } .location { color: #b9b9c0; font-size: 17px; letter-spacing: 3px; }
     </style></head><body><div class="brand">BookMe<span>.</span></div>
       <p class="audience">${audience}</p><h1>${headline}</h1><img src="${master}" alt="">
-      <footer><span class="location">MOLDOVA</span><span>bookme.md</span></footer>
+      <footer><span class="location">${location}</span><span>bookme.md</span></footer>
     </body></html>`);
     await page.evaluate(() => document.fonts.ready);
     await page.locator('img').evaluate((image) => image.decode());
@@ -95,10 +99,11 @@ try {
   await page.evaluate(() => Promise.all([...document.images].map((image) => image.decode())));
   await page.screenshot({ path: fileURLToPath(new URL('favicon-size-check.png', source)) });
 
-  await page.setViewportSize({ width: 600, height: 630 });
+  await page.setViewportSize({ width: 600, height: 945 });
   const ro = await dataUrl('public/social/bookme-ro.png', 'image/png');
+  const ru = await dataUrl('public/social/bookme-ru.png', 'image/png');
   const en = await dataUrl('public/social/bookme-en.png', 'image/png');
-  await page.setContent(`<style>body { margin: 0; } img { display: block; width: 600px; height: 315px; }</style><img src="${ro}" alt="Romanian preview"><img src="${en}" alt="English preview">`);
+  await page.setContent(`<style>body { margin: 0; } img { display: block; width: 600px; height: 315px; }</style><img src="${ro}" alt="Romanian preview"><img src="${ru}" alt="Russian preview"><img src="${en}" alt="English preview">`);
   await page.evaluate(() => Promise.all([...document.images].map((image) => image.decode())));
   await page.screenshot({ path: fileURLToPath(new URL('social-size-check.png', source)) });
 } finally {

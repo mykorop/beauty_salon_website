@@ -1,6 +1,7 @@
 ---
 import PhoneDemo from './PhoneDemo.astro';
 import Icon from './DemoIcon.astro';
+import { formatDuration } from '../content/booking-demo';
 import { calendarAppointments, calendarDemoContent, calendarFrames } from '../content/calendar-demo';
 import type { Locale } from '../i18n';
 interface Props { locale: Locale }
@@ -22,7 +23,7 @@ const text = calendarDemoContent[locale];
           <div class="appointment-card">
             <div class="card-header"><span class="avatar"><Icon name="person" /></span><div class="client"><strong>{appointment.client}</strong><small>{text.services[appointment.service]}</small></div><span class="status">{text.confirmed}</span></div>
             <div class="master"><Icon name="person" /><span>{appointment.master}</span></div>
-            <div class="card-footer"><span><Icon name="time" />{appointment.time} ({appointment.duration})</span><strong>{appointment.price}</strong></div>
+            <div class="card-footer"><span><Icon name="time" />{appointment.time} ({formatDuration(appointment.durationMinutes, text.units)})</span><strong>{appointment.price}</strong></div>
           </div>
         </div>)}
       </div>

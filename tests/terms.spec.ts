@@ -1,5 +1,5 @@
 import { expect, test } from './fixtures';
-import { homePath, locales, type Locale } from './support/public-pages';
+import { homePath, legalLocales, type LegalLocale } from './support/public-pages';
 
 const terms = {
   ro: {
@@ -22,9 +22,10 @@ const terms = {
     privacy: 'Privacy Policy', deletion: 'Account deletion instructions', support: 'Contact support',
     webVersions: 'These terms apply to these web versions too.',
   },
-} satisfies Record<Locale, Record<string, string>>;
+} satisfies Record<LegalLocale, Record<string, string>>;
 
-for (const locale of locales) {
+// Languages that have published the legal documents.
+for (const locale of legalLocales) {
   const prefix = homePath(locale);
   const text = terms[locale];
 
