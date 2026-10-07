@@ -10,6 +10,8 @@ const cyrillicFaces = [
   { family: 'Noto Serif Display', file: /\/noto-serif-display-cyrillic-wdth-normal\.[\w-]+\.woff2$/ },
 ];
 const cyrillicFile = /cyrillic/i;
+// DM Sans regular, the text font, in the basic Latin subset.
+const latinTextFile = /\/dm-sans-latin-400-normal\.[\w-]+\.woff2$/;
 const cyrillicRange = /U\+400-45F/i;
 
 function recordFonts(page: Page) {
@@ -60,5 +62,27 @@ for (const { locale, path } of indexablePages.filter(({ locale }) => script[loca
     const loaded = await loadedFaces(page);
     expect(loaded.filter(({ unicodeRange }) => cyrillicRange.test(unicodeRange))).toEqual([]);
     expect(loaded.map(({ family }) => family).sort()).toEqual(expect.arrayContaining(['DM Sans', 'Instrument Serif']));
+  });
+}
+
+for (const { locale, path } of indexablePages.filter(({ locale }) => script[locale] === 'latin')) {
+  // Without a unicode-range on each subset face, the Latin Extended face claims every character and the browser
+  // requests the Latin file only after that one arrives: text swaps fonts twice and the page shifts.
+  test(`${path} requests its Latin text font before any font file arrives in ${locale}`, async ({ page }) => {
+    const requested: string[] = [];
+    let releaseFonts!: () => void;
+    const fontsReleased = new Promise<void>((resolve) => { releaseFonts = resolve; });
+    await page.route('**/*.woff2', async (route) => {
+      requested.push(route.request().url());
+      await fontsReleased;
+      await route.continue();
+    });
+    try {
+      await page.goto(path, { waitUntil: 'domcontentloaded' });
+      await expect.poll(() => requested.filter((url) => latinTextFile.test(url))).toHaveLength(1);
+    } finally {
+      releaseFonts();
+    }
+    await waitForFonts(page);
   });
 }

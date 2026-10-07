@@ -153,6 +153,8 @@ personal data or image downloads required by the illustrations.
 
 DM Sans and Instrument Serif are bundled locally from the pinned Fontsource
 packages with Latin and Latin Extended subsets, including Romanian diacritics.
+Each subset face keeps its `unicode-range`, so a page requests the subsets it uses together
+instead of swapping fonts twice.
 Neither has Cyrillic glyphs, so Russian text falls back to two bundled companions:
 Manrope (text, Cyrillic 400/500/600) and the variable Noto Serif Display (headings,
 Cyrillic, set to a condensed width close to Instrument Serif). Their faces cover only

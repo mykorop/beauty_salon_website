@@ -1,12 +1,11 @@
 ---
-import '@fontsource/dm-sans/latin-400.css';
-import '@fontsource/dm-sans/latin-ext-400.css';
-import '@fontsource/dm-sans/latin-500.css';
-import '@fontsource/dm-sans/latin-ext-500.css';
-import '@fontsource/dm-sans/latin-600.css';
-import '@fontsource/dm-sans/latin-ext-600.css';
-import '@fontsource/instrument-serif/latin-400.css';
-import '@fontsource/instrument-serif/latin-ext-400.css';
+// Each weight file declares its Latin and Latin Extended faces with a unicode-range, so the browser
+// requests the subsets a page needs together. The single-subset files have no range: the Latin Extended
+// face then claims every character and the Latin file is only requested after it arrives, a second font swap.
+import '@fontsource/dm-sans/400.css';
+import '@fontsource/dm-sans/500.css';
+import '@fontsource/dm-sans/600.css';
+import '@fontsource/instrument-serif/400.css';
 import '../styles/cyrillic-fonts.css';
 import '../styles/global.css';
 import Navigation from '../components/Navigation.astro';

@@ -45,8 +45,8 @@ initialization, expiry in an open document and cross-tab/history restoration. An
 incomplete-provider build verifies that missing disclosures block opt-in.
 Both modes receive RO/RU/EN keyboard, axe, print, no-JavaScript and 320/768/1440px checks.
 `fonts.spec.ts` checks through network requests and `document.fonts` that Russian text and
-headings render with the bundled Cyrillic fonts and that Romanian and English pages download
-no Cyrillic font file.
+headings render with the bundled Cyrillic fonts, that Romanian and English pages download
+no Cyrillic font file, and that they request the Latin text font before any font file arrives.
 Additional checks cover 44×44 CSS px targets, keyboard focus outlines and
 obstruction at 320px, reflow, and reduced motion.
 
