@@ -1,10 +1,13 @@
 ---
-import { labels, pageUrl, type Locale, type Page } from '../i18n';
+import { labels, languages, locales, pageUrl, type Locale, type Page } from '../i18n';
 interface Props { locale: Locale; page?: Page }
 const { locale, page } = Astro.props;
 ---
 <nav class="languages" aria-label={labels[locale].language}>
-  <a href={pageUrl('ro', page ?? 'home')} lang="ro" hreflang="ro" aria-label="Română" aria-current={page && locale === 'ro' ? 'page' : undefined}>RO</a>
-  <span aria-hidden="true">/</span>
-  <a href={pageUrl('en', page ?? 'home')} lang="en" hreflang="en" aria-label="English" aria-current={page && locale === 'en' ? 'page' : undefined}>EN</a>
+  {locales.map((language, index) => (
+    <>
+      {index > 0 && <span aria-hidden="true">/</span>}
+      <a href={pageUrl(language, page ?? 'home')} lang={language} hreflang={language} aria-label={languages[language].name} aria-current={page && locale === language ? 'page' : undefined}>{language.toUpperCase()}</a>
+    </>
+  ))}
 </nav>

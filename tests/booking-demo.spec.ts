@@ -1,10 +1,12 @@
 import { expect, test } from './fixtures';
 import AxeBuilder from '@axe-core/playwright';
+import { homePath, locales, type Locale } from './support/public-pages';
 
-const languages = [
-  { path: '/', label: 'Demonstrație de programare', pause: 'Pauză', resume: 'Continuă', replay: 'Repetă', next: 'Pasul următor', steps: 'Toți pașii, pe scurt', success: 'Programare confirmată cu succes!', account: 'Ana Demo · deja conectată' },
-  { path: '/en/', label: 'Booking demo', pause: 'Pause', resume: 'Resume', replay: 'Replay', next: 'Next step', steps: 'Read all the steps', success: 'Booking confirmed successfully!', account: 'Ana Demo · already signed in' },
-];
+const demos = {
+  ro: { label: 'Demonstrație de programare', pause: 'Pauză', resume: 'Continuă', replay: 'Repetă', next: 'Pasul următor', steps: 'Toți pașii, pe scurt', success: 'Programare confirmată cu succes!', account: 'Ana Demo · deja conectată' },
+  en: { label: 'Booking demo', pause: 'Pause', resume: 'Resume', replay: 'Replay', next: 'Next step', steps: 'Read all the steps', success: 'Booking confirmed successfully!', account: 'Ana Demo · already signed in' },
+} satisfies Record<Locale, Record<string, string>>;
+const languages = locales.map((locale) => ({ path: homePath(locale), ...demos[locale] }));
 
 test.describe('booking demo playback', () => {
   test.use({ reducedMotion: 'no-preference', viewport: { width: 1440, height: 1100 } });

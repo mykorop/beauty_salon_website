@@ -1,4 +1,5 @@
 const { chromium } = require('@playwright/test');
+const { indexablePaths } = require('./tests/support/public-pages.ts');
 
 const profile = process.env.LIGHTHOUSE_PROFILE || 'mobile';
 if (!['mobile', 'desktop'].includes(profile)) throw new Error(`Unknown Lighthouse profile: ${profile}`);
@@ -6,7 +7,7 @@ if (!['mobile', 'desktop'].includes(profile)) throw new Error(`Unknown Lighthous
 module.exports = {
   ci: {
     collect: {
-      url: ['/', '/privacy.html', '/terms.html', '/delete-account.html', '/en/', '/en/privacy.html', '/en/terms.html', '/en/delete-account.html'].map((path) => `http://127.0.0.1:4330${path}`),
+      url: indexablePaths.map((path) => `http://127.0.0.1:4330${path}`),
       numberOfRuns: 3,
       chromePath: chromium.executablePath(),
       startServerCommand: 'npm run preview -- --host 127.0.0.1 --port 4330 --ignore-lock',

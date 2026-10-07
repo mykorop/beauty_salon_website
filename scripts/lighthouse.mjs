@@ -1,5 +1,6 @@
 import { spawnSync } from 'node:child_process';
 import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { indexablePaths } from '../tests/support/public-pages.ts';
 
 const rows = [];
 let failed = false;
@@ -21,7 +22,7 @@ for (const profile of ['mobile', 'desktop']) {
   cpSync('.lighthouseci', `${directory}/raw`, { recursive: true });
   const reports = readdirSync('.lighthouseci').filter((name) => /^lhr-.*\.json$/.test(name)).map((name) => JSON.parse(readFileSync(`.lighthouseci/${name}`, 'utf8')));
   const urls = [...new Set(reports.map((report) => report.requestedUrl))];
-  if (urls.length !== 8 || reports.length !== 24) failed = true;
+  if (urls.length !== indexablePaths.length || reports.length !== indexablePaths.length * 3) failed = true;
   for (const url of urls) {
     const runs = reports.filter((report) => report.requestedUrl === url);
     if (runs.length !== 3) failed = true;

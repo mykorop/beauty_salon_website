@@ -1,7 +1,10 @@
 import { expect, test, waitForFonts } from './fixtures';
 import AxeBuilder from '@axe-core/playwright';
+import { homePath, locales, type Locale } from './support/public-pages';
 
-for (const path of ['/', '/en/']) {
+const illustrations = { ro: /ilustrativ/, en: /Illustrative/ } satisfies Record<Locale, RegExp>;
+
+for (const path of locales.map(homePath)) {
   test(`visitors can download the correct client and business apps from ${path}`, async ({ page }) => {
     await page.goto(path);
     const client = page.getByRole('region', { name: 'BookMe', exact: true });
@@ -16,7 +19,8 @@ for (const path of ['/', '/en/']) {
   });
 }
 
-for (const path of ['/', '/en/']) {
+for (const locale of locales) {
+  const path = homePath(locale);
   for (const width of [320, 768, 1440]) {
     test(`homepage content stays visible and fits ${width}px on ${path}`, async ({ page }) => {
       await page.setViewportSize({ width, height: 900 });
@@ -33,7 +37,7 @@ for (const path of ['/', '/en/']) {
         await expect(page.locator(`#${section}`)).toBeVisible();
         await expect(page.locator(`#${section}`)).toHaveCSS('opacity', '1');
       }
-      await expect(page.getByRole('img', { name: /ilustrativ|Illustrative/ })).toHaveCount(2);
+      await expect(page.getByRole('img', { name: illustrations[locale] })).toHaveCount(2);
     });
 
     test(`homepage has no axe violations at ${width}px on ${path}`, async ({ page, javaScriptEnabled }) => {
@@ -47,22 +51,25 @@ for (const path of ['/', '/en/']) {
   }
 }
 
-for (const language of [
-  {
-    path: '/', clientLink: 'Vreau o programare', businessLink: 'Îmi organizez afacerea',
+const journeys = {
+  ro: {
+    clientLink: 'Vreau o programare', businessLink: 'Îmi organizez afacerea',
     clientTitle: 'Un loc pentru rutina ta de îngrijire.', businessTitle: 'Agenda ta. Echipa ta. În același loc.',
     clientFeatures: ['Caută în Moldova', 'Alege ce ți se potrivește', 'Gestionează-ți programările'],
     businessFeatures: ['Calendarul de lucru', 'Serviciile tale', 'În echipă sau independent'],
     clientDownload: 'Descarcă BookMe pentru clienți', businessDownload: 'Descarcă BookMe Business',
   },
-  {
-    path: '/en/', clientLink: 'Find my next appointment', businessLink: 'Organize my business',
+  en: {
+    clientLink: 'Find my next appointment', businessLink: 'Organize my business',
     clientTitle: 'A place for your beauty routine.', businessTitle: 'Your calendar. Your team. Together.',
     clientFeatures: ['Search in Moldova', 'Choose what suits you', 'Manage your appointments'],
     businessFeatures: ['Your working calendar', 'Your services', 'With a team or on your own'],
     clientDownload: 'Download BookMe for clients', businessDownload: 'Download BookMe Business',
   },
-]) {
+} satisfies Record<Locale, Record<string, string | string[]>>;
+
+for (const locale of locales) {
+  const language = { path: homePath(locale), ...journeys[locale] };
   test(`clients and independent professionals can follow their own path on ${language.path}`, async ({ page }) => {
     await page.goto(language.path);
     await page.getByRole('link', { name: language.clientLink, exact: true }).click();

@@ -1,11 +1,12 @@
 import { analyticsProvider } from '#analytics-provider';
 import { noticeVersion } from './record';
+import { locales } from '../i18n';
 
 // Missing information must never produce a usable analytics opt-in.
 function completeProvider() {
   const provider = analyticsProvider;
   if (!provider || !provider.id?.trim() || !provider.revision?.trim() || typeof provider.createAdapter !== 'function') return null;
-  for (const locale of ['ro', 'en'] as const) {
+  for (const locale of locales) {
     const disclosure = provider.disclosure?.[locale];
     if (!disclosure || ['name', 'purpose', 'data', 'retention'].some((key) => {
       const value = disclosure[key as keyof typeof disclosure];

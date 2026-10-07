@@ -1,4 +1,5 @@
 import { consentText } from './text';
+import { isLocale } from '../i18n';
 import { lifetime, readChoice, storageKey, type Choice, type ConsentRecord } from './record';
 import { consentVersion, provider } from './config';
 import type { AnalyticsAdapter } from './provider-contract';
@@ -7,7 +8,10 @@ const banner = document.querySelector<HTMLElement>('#cookie-notice')!;
 const dialog = document.querySelector<HTMLDialogElement>('#cookie-settings')!;
 const footer = document.querySelector<HTMLAnchorElement>('[data-cookie-footer]')!;
 const checkbox = dialog.querySelector<HTMLInputElement>('input[name="analytics"]')!;
-const text = consentText[banner.dataset.locale === 'ro' ? 'ro' : 'en'];
+const locale = banner.dataset.locale;
+// An unknown page language stops the controller instead of showing another language's text.
+if (!isLocale(locale)) throw new Error(`Cookie notice has no text for page language ${locale}`);
+const text = consentText[locale];
 let saved: ConsentRecord | null = null;
 let failed = false;
 let dismissed = false;

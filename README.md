@@ -29,6 +29,8 @@ npm run package:site
 `npm test` starts its own production preview server on `127.0.0.1:4329` and tests
 the existing `dist/` build. Rebuild after source changes; do not leave another
 server on that port. Run a single test file with `npm test -- tests/site.spec.ts`.
+`tests/support/public-pages.ts` lists the public languages and page URLs once for
+the test tables, Lighthouse and demo captures, independently of `src/i18n.ts`.
 Run `npm run test:seo` to rebuild and check SEO on the production HTML, including
 metadata, language alternatives, sitemap, JSON-LD, links and HTTP 404 behavior.
 CI runs type checking, the static build, Chromium/Firefox/WebKit tests (including
@@ -71,7 +73,8 @@ the web manifest, and localized Open Graph/Twitter metadata on all eight pages.
 The production origin is `siteOrigin` in `src/i18n.ts`, also used by `site` in
 `astro.config.mjs`, canonical URLs, social URLs and the generated sitemap/robots files.
 
-- `src/i18n.ts`: shared labels, production origin and the canonical public page map.
+- `src/i18n.ts`: the locale list, language names, shared labels, production origin and the
+  canonical public page map.
 - `src/content/apps.ts`: app identities and store links shared by downloads and JSON-LD.
 - `src/content/home.ts`: localized homepage copy.
 - `src/content/booking-demo.ts`: fixed fictional booking data, RO/EN demo copy and frame timing.

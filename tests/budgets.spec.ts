@@ -1,10 +1,9 @@
 import { gzipSync } from 'node:zlib';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { expect, test } from './fixtures';
+import { indexablePages } from './support/public-pages';
 
-const paths = ['/', '/privacy.html', '/terms.html', '/delete-account.html', '/en/', '/en/privacy.html', '/en/terms.html', '/en/delete-account.html'];
-
-for (const path of paths) {
+for (const { path, page: name } of indexablePages) {
   test(`production asset budget for ${path}`, async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== 'chromium', 'Identical production assets are measured once in Chromium.');
     const resources = new Map<string, Promise<{ kind: string; bytes: number }>>();
@@ -37,7 +36,7 @@ for (const path of paths) {
     expect(failedRequests, 'Blocked or failed resources must not silently escape the budget').toEqual([]);
     expect(javascript).toBeLessThanOrEqual(20_000);
     expect(css).toBeLessThanOrEqual(40_000);
-    if (path !== '/' && path !== '/en/') {
+    if (name !== 'home') {
       expect(size(inline.scripts), 'Legal pages have no inline executable scripts').toBe(0);
       expect(assets.filter(({ kind }) => kind === 'script').every(({ url }) => /CookieConsent\..*\.js$/.test(url)), 'Only consent JavaScript belongs on pages without demos').toBe(true);
     }

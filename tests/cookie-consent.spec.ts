@@ -1,17 +1,19 @@
 import { expect, test } from './fixtures';
 import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
+import { consentText } from './support/consent-text';
+import { indexablePages, languageNames, locales } from './support/public-pages';
 
-const paths = ['/', '/privacy.html', '/terms.html', '/delete-account.html', '/en/', '/en/privacy.html', '/en/terms.html', '/en/delete-account.html'];
-
-for (const path of paths) {
+for (const { locale, path } of indexablePages) {
   test(`notice and storage inventory on ${path}`, async ({ page, javaScriptEnabled }, testInfo) => {
-    const english = path.startsWith('/en/');
+    // A choice made in one language must hold in the next one, wrapping around the list.
+    const next = locales[(locales.indexOf(locale) + 1) % locales.length];
+    const text = consentText[locale];
     const requests: string[] = [];
     page.on('request', (request) => requests.push(request.url()));
     await page.goto(path);
     await page.waitForLoadState('networkidle');
-    const banner = page.getByRole('region', { name: english ? 'Cookies and your privacy' : 'Cookies și confidențialitatea ta' });
-    await expect(banner).toContainText(english ? 'Analytics is not connected' : 'Analiza nu este conectată');
+    const banner = page.getByRole('region', { name: text.banner });
+    await expect(banner).toContainText(text.intro);
     expect(await page.evaluate(() => document.activeElement?.tagName)).toBe('BODY');
     const inventory = await page.evaluate(() => ({ local: { ...localStorage }, session: { ...sessionStorage }, cookies: document.cookie, scripts: [...document.scripts].map((script) => script.src || script.type), connections: [...document.querySelectorAll('link[rel="preconnect"], link[rel="dns-prefetch"], iframe')].map((node) => node.outerHTML) }));
     expect(inventory.local).toEqual({});
@@ -23,26 +25,28 @@ for (const path of paths) {
     await writeFile(`reports/consent-inventory/${testInfo.project.name}-${path.replaceAll('/', '_') || 'home'}.json`, JSON.stringify({ path, requests, ...inventory }, null, 2));
     if (!javaScriptEnabled) {
       await expect(banner.getByRole('button')).toHaveCount(0);
-      await expect(banner.getByText(english ? /^Without JavaScript/ : /^Fără JavaScript/)).toBeVisible();
+      await expect(banner.getByText(text.noJs)).toBeVisible();
     } else {
-      await banner.getByRole('button', { name: english ? 'Understood' : 'Am înțeles', exact: true }).click();
+      await banner.getByRole('button', { name: text.understood, exact: true }).click();
       await expect(banner).toBeHidden();
       const stored = await page.evaluate(() => ({ ...localStorage }));
       expect(Object.keys(stored)).toEqual(['bookme.cookie-consent']);
       const record = JSON.parse(stored['bookme.cookie-consent']);
       expect(record).toEqual({ schemaVersion: 1, noticeVersion: '2026-09-18:none', choice: 'acknowledged', actedAt: expect.any(Number), expiresAt: expect.any(Number) });
       expect(record.expiresAt - record.actedAt).toBe(15_552_000_000);
-      await page.getByRole('link', { name: english ? 'Română' : 'English', exact: true }).click();
-      await expect(page.getByRole('region', { name: english ? 'Cookies și confidențialitatea ta' : 'Cookies and your privacy' })).toBeHidden();
+      await page.getByRole('link', { name: languageNames[next], exact: true }).click();
+      await expect(page.getByRole('region', { name: consentText[next].banner })).toBeHidden();
       expect(await page.evaluate(() => localStorage.getItem('bookme.cookie-consent'))).toBe(stored['bookme.cookie-consent']);
     }
+    // With JavaScript the visitor is now on the next language's page.
+    const shown = consentText[javaScriptEnabled ? next : locale];
     const footer = page.getByRole('contentinfo');
-    await footer.getByRole('link', { name: /Cookie settings|Setări cookie/ }).click();
+    await footer.getByRole('link', { name: shown.settings }).click();
     if (javaScriptEnabled) {
-      await expect(page.getByRole('dialog')).toContainText(/Notice acknowledged|Mesaj confirmat/);
-      await page.getByRole('dialog').getByRole('link', { name: /Cookies in|Cookies în/ }).click();
+      await expect(page.getByRole('dialog')).toContainText(shown.acknowledged);
+      await page.getByRole('dialog').getByRole('link', { name: shown.policyLink }).click();
     }
-    await expect(page.getByRole('heading', { name: /Cookies and similar technologies|Cookies și tehnologii similare/, exact: true })).toBeInViewport();
+    await expect(page.getByRole('heading', { name: shown.policyHeading, exact: true })).toBeInViewport();
   });
 }
 

@@ -9,6 +9,11 @@ import { pageNames, type Locale, type Page } from '../i18n';
 export type LegalPage = Exclude<Page, 'home'>;
 export const legalPages = pageNames.filter((page): page is LegalPage => page !== 'home');
 
+export const legalLabels = {
+  ro: { contents: 'Cuprins', deletionRequest: 'Solicită ștergerea prin e-mail', deletionSubject: 'Cerere de ștergere a contului BookMe' },
+  en: { contents: 'Contents', deletionRequest: 'Request deletion by email', deletionSubject: 'BookMe account deletion request' },
+} satisfies Record<Locale, { contents: string; deletionRequest: string; deletionSubject: string }>;
+
 export const legalContent = {
   ro: {
     privacy: { Content: PrivacyRo, getHeadings: headingsPrivacyRo, title: 'Politica de confidențialitate', description: 'Cum prelucrează BookMe datele personale, ce date folosim și cum îți poți exercita drepturile.', updated: 'Ultima actualizare: 18 septembrie 2026' },

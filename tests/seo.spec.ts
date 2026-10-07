@@ -1,15 +1,12 @@
 import { expect, test } from './fixtures';
 import AxeBuilder from '@axe-core/playwright';
+import { defaultLocale, filePath, homePath, indexablePaths, locales, pagePath, pages, type Locale } from './support/public-pages';
 
-// The public URLs in ticket 08 are independent of the implementation's page map.
-const translations = [
-  { ro: '/', en: '/en/' },
-  { ro: '/privacy.html', en: '/en/privacy.html' },
-  { ro: '/terms.html', en: '/en/terms.html' },
-  { ro: '/delete-account.html', en: '/en/delete-account.html' },
-];
+// Each page with its canonical path in every language.
+const translations = pages.map((page) => ({ page, ...Object.fromEntries(locales.map((locale) => [locale, pagePath(locale, page)])) as Record<Locale, string> }));
+const alternates = [...locales, 'x-default'] as const;
+const alternatePath = (pair: Record<Locale, string>, language: (typeof alternates)[number]) => pair[language === 'x-default' ? defaultLocale : language];
 const origin = 'https://bookme.md';
-const locales = ['ro', 'en'] as const;
 
 test('all eight static pages have unique metadata and reciprocal canonical language URLs', async ({ page }) => {
   const titles = new Set<string>();
@@ -38,10 +35,10 @@ test('all eight static pages have unique metadata and reciprocal canonical langu
       }
       await expect(page.locator('head link[rel="canonical"]')).toHaveCount(1);
       await expect(page.locator('head link[rel="canonical"]')).toHaveAttribute('href', origin + pair[locale]);
-      await expect(page.locator('head link[hreflang]')).toHaveCount(3);
-      for (const language of ['ro', 'en', 'x-default'] as const) {
+      await expect(page.locator('head link[hreflang]')).toHaveCount(alternates.length);
+      for (const language of alternates) {
         await expect(page.locator(`head link[rel="alternate"][hreflang="${language}"]`))
-          .toHaveAttribute('href', origin + pair[language === 'x-default' ? 'ro' : language]);
+          .toHaveAttribute('href', origin + alternatePath(pair, language));
       }
       for (const language of locales) {
         await expect(page.locator(`nav a[hreflang="${language}"]`)).toHaveAttribute('href', pair[language]);
@@ -51,11 +48,11 @@ test('all eight static pages have unique metadata and reciprocal canonical langu
 });
 
 test('legacy index.html aliases identify the directory homepages as canonical', async ({ page }) => {
-  for (const [alias, canonical] of [['/index.html', '/'], ['/en/index.html', '/en/']]) {
+  for (const [alias, canonical] of locales.map((locale) => [filePath(locale, 'home'), homePath(locale)])) {
     expect((await page.goto(alias))?.status()).toBe(200);
     await expect(page.locator('head link[rel="canonical"]')).toHaveAttribute('href', origin + canonical);
     await expect(page.locator('head meta[property="og:url"]')).toHaveAttribute('content', origin + canonical);
-    await expect(page.locator('head link[hreflang="x-default"]')).toHaveAttribute('href', origin + '/');
+    await expect(page.locator('head link[hreflang="x-default"]')).toHaveAttribute('href', origin + homePath(defaultLocale));
   }
 });
 
@@ -82,19 +79,19 @@ test('robots allows crawling and the sitemap lists exactly eight canonical URLs 
   }, await response.text());
   expect(sitemap.valid).toBe(true);
   expect(sitemap.namespace).toBe('http://www.sitemaps.org/schemas/sitemap/0.9');
-  expect(sitemap.urls.map(({ loc }) => loc).sort()).toEqual(translations.flatMap((pair) => locales.map((locale) => origin + pair[locale])).sort());
+  expect(sitemap.urls.map(({ loc }) => loc).sort()).toEqual(indexablePaths.map((path) => origin + path).sort());
   for (const pair of translations) {
     for (const locale of locales) {
       const entry = sitemap.urls.find(({ loc }) => loc === origin + pair[locale])!;
-      expect(entry.links).toHaveLength(3);
-      expect(entry.links).toEqual(expect.arrayContaining([
-        { rel: 'alternate', language: 'ro', href: origin + pair.ro },
-        { rel: 'alternate', language: 'en', href: origin + pair.en },
-        { rel: 'alternate', language: 'x-default', href: origin + pair.ro },
-      ]));
+      expect(entry.links).toHaveLength(alternates.length);
+      expect(entry.links).toEqual(expect.arrayContaining(alternates.map((language) => (
+        { rel: 'alternate', language, href: origin + alternatePath(pair, language) }
+      ))));
     }
   }
 });
+
+const notFoundReturn = { ro: 'Înapoi la pagina principală', en: 'Back to the English homepage' } satisfies Record<Locale, string>;
 
 test('unknown URLs return a styled noindex 404 with working Romanian and English return paths', async ({ page, javaScriptEnabled }) => {
   for (const path of ['/missing-page', '/en/missing/nested.html', '/404.html']) {
@@ -105,7 +102,7 @@ test('unknown URLs return a styled noindex 404 with working Romanian and English
     await expect(page.locator('head meta[name="robots"]')).toHaveAttribute('content', 'noindex, follow');
     await expect(page.locator('head link[rel="canonical"], head link[hreflang], script[type="application/ld+json"]')).toHaveCount(0);
     await expect(page.getByRole('main')).toContainText('Page not found');
-    for (const [label, href] of [['Înapoi la pagina principală', '/'], ['Back to the English homepage', '/en/']]) {
+    for (const [label, href] of locales.map((locale) => [notFoundReturn[locale], homePath(locale)])) {
       const link = page.getByRole('main').getByRole('link', { name: label, exact: true });
       await expect(link).toHaveAttribute('href', href);
       await link.click();
@@ -134,7 +131,7 @@ test('JSON-LD identifies BookMe, each translated page and the two real apps with
       const data = JSON.parse(source);
       expect(data['@context']).toBe('https://schema.org');
       const graph: Record<string, unknown>[] = data['@graph'];
-      const home = pair.ro === '/';
+      const home = pair.page === 'home';
       expect(graph).toHaveLength(home ? 5 : 3);
       expect(new Set(graph.map((node) => node['@id'])).size).toBe(graph.length);
       expect(graph.find((node) => node['@type'] === 'Organization')).toMatchObject({
@@ -142,7 +139,7 @@ test('JSON-LD identifies BookMe, each translated page and the two real apps with
         url: origin + '/', email: 'support@bookme.md',
       });
       expect(graph.find((node) => node['@type'] === 'WebSite')).toMatchObject({
-        '@id': origin + '/#website', name: 'BookMe', url: origin + '/', inLanguage: ['ro', 'en'],
+        '@id': origin + '/#website', name: 'BookMe', url: origin + '/', inLanguage: [...locales],
         publisher: { '@id': origin + '/#organization' },
       });
       const webpage = graph.find((node) => node['@type'] === 'WebPage');
@@ -177,7 +174,7 @@ test('JSON-LD identifies BookMe, each translated page and the two real apps with
 });
 
 test('production pages have a coherent outline, named images and working canonical internal links', async ({ page, request }) => {
-  const paths = [...translations.flatMap((pair) => locales.map((locale) => pair[locale])), '/404.html'];
+  const paths = [...indexablePaths, '/404.html'];
   const links = new Set<string>();
   const anchors = new Map<string, string[]>();
   for (const path of paths) {

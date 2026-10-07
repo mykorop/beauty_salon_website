@@ -100,7 +100,8 @@ with Playwright, not a system Chrome that updates independently. CI uses
 
 `lighthouserc.cjs` uses Lighthouse's pinned standard simulated mobile profile and
 desktop preset. `scripts/lighthouse.mjs` runs both sequentially, three cold runs
-for each of the eight URLs: **48 reports**. Every audit remains enabled.
+for each of the eight URLs listed in `tests/support/public-pages.ts`:
+**48 reports**. Every audit remains enabled.
 Assertions follow [Lighthouse CI's aggregation rules](https://github.com/GoogleChrome/lighthouse-ci/blob/main/docs/configuration.md#aggregation-methods):
 
 | Measure | Aggregation | Gate |

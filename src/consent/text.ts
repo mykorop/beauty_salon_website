@@ -1,3 +1,5 @@
+import type { Locale } from '../i18n';
+
 export const consentText = {
   en: {
     title: 'Cookies and your privacy', settings: 'Cookie settings', details: 'Details',
@@ -31,6 +33,6 @@ export const consentText = {
     allowed: 'Analiză permisă', denied: 'Doar necesare', current: 'Alegere salvată:',
     provider: 'Furnizor', purpose: 'Scop', data: 'Date și tehnologii', retention: 'Durată de păstrare',
   },
-};
+} satisfies Record<Locale, Record<string, string>>;
 
-export const policySection = { en: 'cookies-and-similar-technologies', ro: 'cookies-și-tehnologii-similare' };
+export const policySection = { en: 'cookies-and-similar-technologies', ro: 'cookies-și-tehnologii-similare' } satisfies Record<Locale, string>;

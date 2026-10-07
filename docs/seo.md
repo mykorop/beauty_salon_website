@@ -5,13 +5,15 @@ The build contains eight indexable RO/EN pages and one shared, bilingual
 
 ## URLs and languages
 
-`src/i18n.ts` owns the `https://bookme.md` origin and the public page map used by
-navigation, language switches, canonical URLs, language alternatives and sitemap.
-Legal route generation also reads that map. Homepage canonical URLs are `/` and
-`/en/`; directly served `/index.html` and `/en/index.html` identify those same
-canonical URLs. Every page has reciprocal `ro`, `en` and `x-default` alternatives;
-`x-default` points to its Romanian counterpart. Existing legal Markdown links use
-canonical paths and are covered by the link crawler.
+`src/i18n.ts` owns the `https://bookme.md` origin, the locale list and the public
+page map used by navigation, language switches, canonical URLs, language
+alternatives, Open Graph locales and sitemap. Romanian pages are routed from the
+site root; the homepage and legal pages of every other locale are generated from
+that list by the two templates in `src/pages/[locale]/`. Homepage canonical URLs
+are `/` and `/en/`; directly served `/index.html` and `/en/index.html` identify
+those same canonical URLs. Every page has reciprocal `ro`, `en` and `x-default`
+alternatives; `x-default` points to its Romanian counterpart. Existing legal
+Markdown links use canonical paths and are covered by the link crawler.
 
 `/sitemap.xml` contains exactly the eight canonical URLs, each with all three
 language alternatives. `/robots.txt` allows all crawling, including assets and

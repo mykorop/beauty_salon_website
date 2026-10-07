@@ -1,8 +1,23 @@
 import { expect, test, waitForFonts } from './fixtures';
 import AxeBuilder from '@axe-core/playwright';
+import { homePath, legalPages, locales, type Locale } from './support/public-pages';
 
-for (const locale of ['ro', 'en']) {
-  const prefix = locale === 'ro' ? '/' : '/en/';
+const legal = {
+  ro: {
+    deletionInstructions: 'Instrucțiuni de ștergere a contului', request: 'Solicită ștergerea prin e-mail', subject: 'Cerere de ștergere a contului BookMe',
+    clientPath: 'Profil → Șterge contul', salonPath: 'Setările administratorului → Șterge contul', specialistPath: 'Setările specialistului → Șterge contul',
+    thirtyDays: '30 de zile', ninetyDays: '90 de zile', contents: 'Cuprins', updated: (day: number) => `${day} septembrie 2026`,
+  },
+  en: {
+    deletionInstructions: 'Account deletion instructions', request: 'Request deletion by email', subject: 'BookMe account deletion request',
+    clientPath: 'Profile → Delete account', salonPath: 'Administrator settings → Delete account', specialistPath: 'Specialist settings → Delete account',
+    thirtyDays: '30 days', ninetyDays: '90 days', contents: 'Contents', updated: (day: number) => `September ${day}, 2026`,
+  },
+} satisfies Record<Locale, Record<string, string | ((day: number) => string)>>;
+
+for (const locale of locales) {
+  const prefix = homePath(locale);
+  const text = legal[locale];
   test(`privacy reader can identify the operator and exercise rights in ${locale}`, async ({ page }) => {
     await page.goto(`${prefix}privacy.html`);
     const main = page.getByRole('main');
@@ -13,28 +28,28 @@ for (const locale of ['ro', 'en']) {
     await expect(main).toContainText('195/2024');
     await expect(main.getByRole('link', { name: 'support@bookme.md', exact: true }).first()).toHaveAttribute('href', 'mailto:support@bookme.md');
     await expect(main.getByRole('link', { name: 'centru@datepersonale.md', exact: true })).toHaveAttribute('href', 'mailto:centru@datepersonale.md');
-    await main.getByRole('link', { name: locale === 'ro' ? 'Instrucțiuni de ștergere a contului' : 'Account deletion instructions', exact: true }).click();
+    await main.getByRole('link', { name: text.deletionInstructions, exact: true }).click();
     await expect(page).toHaveURL(`${prefix}delete-account.html`);
   });
   test(`visitor can request deletion without an account at ${prefix}delete-account.html`, async ({ page }) => {
     await page.goto(`${prefix}delete-account.html`);
-    const request = page.getByRole('link', { name: locale === 'ro' ? 'Solicită ștergerea prin e-mail' : 'Request deletion by email', exact: true });
+    const request = page.getByRole('link', { name: text.request, exact: true });
     await expect(request).toBeVisible();
     const href = new URL((await request.getAttribute('href'))!);
     expect(href.protocol).toBe('mailto:');
     expect(href.pathname).toBe('support@bookme.md');
-    expect(href.searchParams.get('subject')).toBe(locale === 'ro' ? 'Cerere de ștergere a contului BookMe' : 'BookMe account deletion request');
+    expect(href.searchParams.get('subject')).toBe(text.subject);
     const main = page.getByRole('main');
     await expect(main).toContainText('BookMe Business');
     await expect(main).toContainText('BookMe Salon');
-    await expect(main).toContainText(locale === 'ro' ? 'Profil → Șterge contul' : 'Profile → Delete account');
-    await expect(main).toContainText(locale === 'ro' ? 'Setările administratorului → Șterge contul' : 'Administrator settings → Delete account');
-    await expect(main).toContainText(locale === 'ro' ? 'Setările specialistului → Șterge contul' : 'Specialist settings → Delete account');
+    await expect(main).toContainText(text.clientPath);
+    await expect(main).toContainText(text.salonPath);
+    await expect(main).toContainText(text.specialistPath);
     await expect(main).toContainText('DELETE');
-    await expect(main).toContainText(locale === 'ro' ? '30 de zile' : '30 days');
-    await expect(main).toContainText(locale === 'ro' ? '90 de zile' : '90 days');
+    await expect(main).toContainText(text.thirtyDays);
+    await expect(main).toContainText(text.ninetyDays);
   });
-  for (const document of ['privacy', 'terms', 'delete-account']) {
+  for (const document of legalPages) {
     for (const width of [320, 768, 1440]) {
       test(`${prefix}${document}.html is readable and accessible at ${width}px`, async ({ page, javaScriptEnabled }) => {
         await page.setViewportSize({ width, height: 900 });
@@ -72,7 +87,7 @@ for (const locale of ['ro', 'en']) {
 
     test(`reader can navigate every section of ${prefix}${document}.html`, async ({ page }) => {
       await page.goto(`${prefix}${document}.html`);
-      const contents = page.getByRole('navigation', { name: locale === 'ro' ? 'Cuprins' : 'Contents', exact: true });
+      const contents = page.getByRole('navigation', { name: text.contents, exact: true });
       await expect(contents).toBeVisible();
       const links = contents.getByRole('link');
       const headings = page.getByRole('main').getByRole('heading', { level: 2 });
@@ -92,7 +107,7 @@ for (const locale of ['ro', 'en']) {
         await expect(target).toHaveText((await link.textContent())!);
       }
       const day = document === 'privacy' ? 18 : 17;
-      await expect(page.getByRole('main')).toContainText(locale === 'ro' ? `${day} septembrie 2026` : `September ${day}, 2026`);
+      await expect(page.getByRole('main')).toContainText(text.updated(day));
     });
   }
 }

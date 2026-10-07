@@ -1,10 +1,13 @@
 import { expect, test } from './fixtures';
 import AxeBuilder from '@axe-core/playwright';
+import { consentText } from './support/consent-text';
+import { homePath, locales, type Locale } from './support/public-pages';
 
-const languages = [
-  { path: '/', label: 'Demonstrație de calendar Business', clientLabel: 'Demonstrație de programare', pause: 'Pauză', resume: 'Continuă', replay: 'Repetă', next: 'Pasul următor', steps: 'Toți pașii, pe scurt', service: 'Manichiură', status: 'Confirmată' },
-  { path: '/en/', label: 'Business calendar demo', clientLabel: 'Booking demo', pause: 'Pause', resume: 'Resume', replay: 'Replay', next: 'Next step', steps: 'Read all the steps', service: 'Manicure', status: 'Confirmed' },
-];
+const demos = {
+  ro: { label: 'Demonstrație de calendar Business', clientLabel: 'Demonstrație de programare', pause: 'Pauză', resume: 'Continuă', replay: 'Repetă', next: 'Pasul următor', steps: 'Toți pașii, pe scurt', service: 'Manichiură', status: 'Confirmată' },
+  en: { label: 'Business calendar demo', clientLabel: 'Booking demo', pause: 'Pause', resume: 'Resume', replay: 'Replay', next: 'Next step', steps: 'Read all the steps', service: 'Manicure', status: 'Confirmed' },
+} satisfies Record<Locale, Record<string, string>>;
+const languages = locales.map((locale) => ({ path: homePath(locale), understood: consentText[locale].understood, ...demos[locale] }));
 
 test.describe('business calendar playback', () => {
   test.use({ reducedMotion: 'no-preference', viewport: { width: 1440, height: 1100 } });
@@ -55,7 +58,7 @@ test.describe('business calendar playback', () => {
       await page.goto(language.path);
       // Dismiss the floating notice: clicked controls are scrolled above it, which can leave too little of the phone in view.
       const notice = page.locator('#cookie-notice');
-      await notice.getByRole('button', { name: language.path === '/en/' ? 'Understood' : 'Am înțeles', exact: true }).click();
+      await notice.getByRole('button', { name: language.understood, exact: true }).click();
       await expect(notice).toBeHidden();
       const client = page.getByRole('region', { name: language.clientLabel, exact: true });
       const demo = page.getByRole('region', { name: language.label, exact: true });
@@ -250,7 +253,7 @@ for (const language of languages) {
       if (javaScriptEnabled) {
         // Dismiss the floating notice before checking the illustration for occluded text.
         const notice = page.locator('#cookie-notice');
-        await notice.getByRole('button', { name: language.path === '/en/' ? 'Understood' : 'Am înțeles', exact: true }).click();
+        await notice.getByRole('button', { name: language.understood, exact: true }).click();
         await expect(notice).toBeHidden();
         await demo.getByRole('button', { name: language.replay, exact: true }).click();
       }

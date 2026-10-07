@@ -1,41 +1,46 @@
 import { expect, test, waitForFonts } from './fixtures';
+import { defaultLocale, filePath, homePath, indexablePaths, languageNames, locales, pagePath, pages, prefixedLocales, type Locale } from './support/public-pages';
 
-for (const filename of ['index.html', 'privacy.html', 'terms.html', 'delete-account.html']) {
-  test(`language switch keeps the visitor on ${filename}`, async ({ page }) => {
-    await page.goto(`/${filename}`);
-    await page.getByRole('link', { name: 'English', exact: true }).click();
-    const suffix = filename === 'index.html' ? '' : filename;
-    await expect(page).toHaveURL(`/en/${suffix}`);
-    await expect(page.locator('html')).toHaveAttribute('lang', 'en');
-    await expect(page.getByRole('link', { name: 'English', exact: true })).toHaveAttribute('aria-current', 'page');
+for (const name of pages) {
+  test(`language switch keeps the visitor on ${filePath(defaultLocale, name).slice(1)}`, async ({ page }) => {
+    await page.goto(filePath(defaultLocale, name));
+    for (const locale of prefixedLocales) {
+      await page.getByRole('link', { name: languageNames[locale], exact: true }).click();
+      await expect(page).toHaveURL(pagePath(locale, name));
+      await expect(page.locator('html')).toHaveAttribute('lang', locale);
+      await expect(page.getByRole('link', { name: languageNames[locale], exact: true })).toHaveAttribute('aria-current', 'page');
 
-    await page.getByRole('link', { name: 'Română', exact: true }).click();
-    await expect(page).toHaveURL(`/${suffix}`);
-    await expect(page.locator('html')).toHaveAttribute('lang', 'ro');
-    await expect(page.getByRole('link', { name: 'Română', exact: true })).toHaveAttribute('aria-current', 'page');
+      await page.getByRole('link', { name: languageNames[defaultLocale], exact: true }).click();
+      await expect(page).toHaveURL(pagePath(defaultLocale, name));
+      await expect(page.locator('html')).toHaveAttribute('lang', defaultLocale);
+      await expect(page.getByRole('link', { name: languageNames[defaultLocale], exact: true })).toHaveAttribute('aria-current', 'page');
+    }
   });
 }
 
-for (const language of [
-  { prefix: '/', nav: 'Navigare principală', how: 'Cum funcționează', features: 'Funcționalități', privacy: 'Confidențialitate', terms: 'Condiții', deletion: 'Ștergerea contului' },
-  { prefix: '/en/', nav: 'Main navigation', how: 'How it works', features: 'Features', privacy: 'Privacy', terms: 'Terms', deletion: 'Delete your account' },
-]) {
-  test(`navigation reaches homepage sections and all legal pages in ${language.prefix}`, async ({ page }) => {
-    await page.goto(`${language.prefix}privacy.html`);
-    const navigation = page.getByRole('navigation', { name: language.nav });
-    for (const [name, id] of [[language.how, 'how-it-works'], [language.features, 'features'], ['Contact', 'contact']]) {
+const navigationText = {
+  ro: { nav: 'Navigare principală', how: 'Cum funcționează', features: 'Funcționalități', privacy: 'Confidențialitate', terms: 'Condiții', deletion: 'Ștergerea contului' },
+  en: { nav: 'Main navigation', how: 'How it works', features: 'Features', privacy: 'Privacy', terms: 'Terms', deletion: 'Delete your account' },
+} satisfies Record<Locale, Record<string, string>>;
+
+for (const locale of locales) {
+  const text = navigationText[locale];
+  test(`navigation reaches homepage sections and all legal pages in ${homePath(locale)}`, async ({ page }) => {
+    await page.goto(pagePath(locale, 'privacy'));
+    const navigation = page.getByRole('navigation', { name: text.nav });
+    for (const [name, id] of [[text.how, 'how-it-works'], [text.features, 'features'], ['Contact', 'contact']]) {
       await navigation.getByRole('link', { name, exact: true }).click();
-      await expect(page).toHaveURL(`${language.prefix}#${id}`);
+      await expect(page).toHaveURL(`${homePath(locale)}#${id}`);
       await expect(page.locator(`#${id}`)).toBeInViewport();
     }
-    await navigation.getByRole('link', { name: language.privacy, exact: true }).click();
-    await expect(page).toHaveURL(`${language.prefix}privacy.html`);
-    await navigation.getByRole('link', { name: language.terms, exact: true }).click();
-    await expect(page).toHaveURL(`${language.prefix}terms.html`);
-    await page.getByRole('contentinfo').getByRole('link', { name: language.deletion }).click();
-    await expect(page).toHaveURL(`${language.prefix}delete-account.html`);
+    await navigation.getByRole('link', { name: text.privacy, exact: true }).click();
+    await expect(page).toHaveURL(pagePath(locale, 'privacy'));
+    await navigation.getByRole('link', { name: text.terms, exact: true }).click();
+    await expect(page).toHaveURL(pagePath(locale, 'terms'));
+    await page.getByRole('contentinfo').getByRole('link', { name: text.deletion }).click();
+    await expect(page).toHaveURL(pagePath(locale, 'delete-account'));
     await page.getByRole('link', { name: 'BookMe', exact: true }).click();
-    await expect(page).toHaveURL(language.prefix);
+    await expect(page).toHaveURL(homePath(locale));
   });
 }
 
@@ -68,7 +73,7 @@ test('pages fit a 320px screen and load Romanian fonts from the same origin', as
   page.on('request', (request) => {
     if (request.resourceType() === 'font') fontRequests.push(request.url());
   });
-  for (const path of ['/', '/privacy.html', '/terms.html', '/delete-account.html', '/en/', '/en/privacy.html', '/en/terms.html', '/en/delete-account.html']) {
+  for (const path of indexablePaths) {
     await page.goto(path);
     await waitForFonts(page);
     const widths = await page.evaluate(() => {

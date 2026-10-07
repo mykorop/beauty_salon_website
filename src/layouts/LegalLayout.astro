@@ -1,24 +1,22 @@
 ---
 import SiteLayout from './SiteLayout.astro';
-import { legalContent, type LegalPage } from '../content/legal';
+import { legalContent, legalLabels, type LegalPage } from '../content/legal';
 import type { Locale } from '../i18n';
 interface Props { locale: Locale; page: LegalPage }
 const { locale, page } = Astro.props;
 const { Content, getHeadings, title, description, updated } = legalContent[locale][page];
 const headings = getHeadings().filter(({ depth }) => depth === 2);
-const contentsLabel = locale === 'ro' ? 'Cuprins' : 'Contents';
-const deletionLabel = locale === 'ro' ? 'Solicită ștergerea prin e-mail' : 'Request deletion by email';
-const deletionSubject = locale === 'ro' ? 'Cerere de ștergere a contului BookMe' : 'BookMe account deletion request';
+const labels = legalLabels[locale];
 ---
 <SiteLayout locale={locale} page={page} title={`${title} — BookMe`} description={description}>
   <article class="legal-page">
     <h1>{title}</h1>
     <p class="updated">{updated}</p>
     {page === 'delete-account' && (
-      <p><a class="btn-primary" href={`mailto:support@bookme.md?subject=${encodeURIComponent(deletionSubject)}`}>{deletionLabel}</a></p>
+      <p><a class="btn-primary" href={`mailto:support@bookme.md?subject=${encodeURIComponent(labels.deletionSubject)}`}>{labels.deletionRequest}</a></p>
     )}
-    <nav class="legal-contents" aria-label={contentsLabel}>
-      <p class="legal-contents-title">{contentsLabel}</p>
+    <nav class="legal-contents" aria-label={labels.contents}>
+      <p class="legal-contents-title">{labels.contents}</p>
       <ul>
         {headings.map(({ slug, text }) => <li><a href={`#${slug}`}>{text}</a></li>)}
       </ul>

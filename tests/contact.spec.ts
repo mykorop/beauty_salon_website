@@ -1,5 +1,6 @@
 import { expect, test } from './fixtures';
 import AxeBuilder from '@axe-core/playwright';
+import { homePath, locales, pagePath, type Locale } from './support/public-pages';
 
 const endpoint = 'https://formbold.com/s/oD7mJ';
 
@@ -9,9 +10,9 @@ test.beforeEach(async ({ page }) => {
   await page.route(endpoint, (route) => route.abort());
 });
 
-for (const language of [
-  {
-    path: '/', name: 'Numele tău', email: 'Adresa de e-mail', message: 'Cum te putem ajuta?', send: 'Trimite mesajul',
+const forms = {
+  ro: {
+    name: 'Numele tău', email: 'Adresa de e-mail', message: 'Cum te putem ajuta?', send: 'Trimite mesajul',
     sending: 'Se trimite mesajul…', sent: 'Mesajul tău a fost trimis. Îți mulțumim că ne-ai scris!',
     error: 'Nu am putut confirma trimiterea mesajului. Datele introduse au fost păstrate. Încearcă din nou sau scrie la support@bookme.md.',
     invalid: 'Verifică numele și adresa de e-mail înainte de a trimite.',
@@ -19,8 +20,8 @@ for (const language of [
     privacy: 'Politica de confidențialitate',
     formNote: 'Numele, adresa de e-mail și mesajul sunt transmise prin FormBold echipei BookMe pentru a răspunde solicitării tale.',
   },
-  {
-    path: '/en/', name: 'Your name', email: 'Email address', message: 'How can we help?', send: 'Send message',
+  en: {
+    name: 'Your name', email: 'Email address', message: 'How can we help?', send: 'Send message',
     sending: 'Sending your message…', sent: 'Your message has been sent. Thank you for contacting BookMe!',
     error: 'We could not confirm your message was sent. Your text has been kept. Try again or email support@bookme.md.',
     invalid: 'Check your name and email address before sending.',
@@ -28,12 +29,15 @@ for (const language of [
     privacy: 'Privacy Policy',
     formNote: 'Your name, email address and message are sent through FormBold to the BookMe team to respond to your request.',
   },
-]) {
+} satisfies Record<Locale, Record<string, string>>;
+
+for (const locale of locales) {
+  const language = { path: homePath(locale), ...forms[locale] };
   test(`support alternatives on ${language.path} stay available without JavaScript`, async ({ page, javaScriptEnabled }) => {
     await page.goto(language.path);
     const contact = page.locator('#contact');
     await expect(contact.getByText(language.formNote, { exact: false })).toBeVisible();
-    await expect(contact.getByRole('link', { name: language.privacy })).toHaveAttribute('href', `${language.path}privacy.html`);
+    await expect(contact.getByRole('link', { name: language.privacy })).toHaveAttribute('href', pagePath(locale, 'privacy'));
     await expect(contact.getByRole('link', { name: 'support@bookme.md', exact: true })).toHaveAttribute('href', 'mailto:support@bookme.md');
     await expect(contact.getByRole('status')).toBeEmpty();
     if (javaScriptEnabled) {

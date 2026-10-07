@@ -1,8 +1,7 @@
 import { expect, test } from './fixtures';
+import { indexablePaths } from './support/public-pages';
 
-const paths = ['/', '/privacy.html', '/terms.html', '/delete-account.html', '/en/', '/en/privacy.html', '/en/terms.html', '/en/delete-account.html'];
-
-for (const path of paths) {
+for (const path of indexablePaths) {
   test(`interactive targets are at least 44px and reflow at 320px on ${path}`, async ({ page }) => {
     await page.setViewportSize({ width: 320, height: 800 });
     await page.goto(path);

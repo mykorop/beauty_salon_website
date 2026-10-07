@@ -1,19 +1,21 @@
 import { expect, test, waitForFonts } from './fixtures';
+import { homePath, locales, pagePath, pages, type Locale } from './support/public-pages';
 
-const languages = [
-  {
-    path: '/', label: 'Deschide aplicația web',
+const webApp = {
+  ro: {
+    label: 'Deschide aplicația web',
     hero: 'Programări la salon, în ritmul tău.', downloads: 'Următorul pas începe aici.',
     browserDescription: 'Folosește BookMe direct în browser, pe telefon sau computer. Pentru instalare, alege mai jos aplicația potrivită.',
   },
-  {
-    path: '/en/', label: 'Open web app',
+  en: {
+    label: 'Open web app',
     hero: 'Beauty appointments, at your pace.', downloads: 'Your next step starts here.',
     browserDescription: 'Use BookMe directly in your browser, on your phone or computer. To install an app, choose the one that fits you below.',
   },
-];
+} satisfies Record<Locale, Record<string, string>>;
 
-for (const language of languages) {
+for (const locale of locales) {
+  const language = { path: homePath(locale), ...webApp[locale] };
   test(`loading fonts does not move content below navigation on ${language.path}`, async ({ page }) => {
     await page.setViewportSize({ width: 412, height: 900 });
     let releaseFonts!: () => void;
@@ -97,9 +99,9 @@ for (const language of languages) {
     }
   });
 
-  for (const filename of ['', 'privacy.html', 'terms.html', 'delete-account.html']) {
-    test(`web app is visible in navigation on ${language.path}${filename}`, async ({ page }) => {
-      await page.goto(`${language.path}${filename}`);
+  for (const path of pages.map((name) => pagePath(locale, name))) {
+    test(`web app is visible in navigation on ${path}`, async ({ page }) => {
+      await page.goto(path);
       const header = page.getByRole('banner');
       const link = header.getByRole('navigation').getByRole('link', { name: language.label, exact: true });
       await expect(link).toHaveAttribute('href', 'https://app.bookme.md/');
