@@ -53,6 +53,10 @@ test.describe('business calendar playback', () => {
       test.skip(!javaScriptEnabled, 'Playback needs JavaScript.');
       await page.clock.install();
       await page.goto(language.path);
+      // Dismiss the floating notice: clicked controls are scrolled above it, which can leave too little of the phone in view.
+      const notice = page.locator('#cookie-notice');
+      await notice.getByRole('button', { name: language.path === '/en/' ? 'Understood' : 'Am înțeles', exact: true }).click();
+      await expect(notice).toBeHidden();
       const client = page.getByRole('region', { name: language.clientLabel, exact: true });
       const demo = page.getByRole('region', { name: language.label, exact: true });
       await client.getByRole('img').scrollIntoViewIfNeeded();

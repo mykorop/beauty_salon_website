@@ -74,6 +74,11 @@ const disclosure = provider?.disclosure[locale];
   .cookie-toggle input { width: 44px; height: 44px; flex: 0 0 44px; accent-color: var(--accent); }
   .cookie-error { color: var(--text); border-left: 3px solid var(--accent); padding-left: 0.75rem; }
   .cookie-notice [hidden], .cookie-dialog [hidden], .cookie-notice[hidden] { display: none; }
+  @media screen {
+    /* Keep the footer and focused controls above the shown notice (height, offset and a gap).
+       The height is unset without JavaScript or once hidden, so nothing is reserved then. */
+    html { --cookie-notice-space: calc(var(--cookie-notice-height) + 2rem + env(safe-area-inset-bottom, 0px)); padding-bottom: var(--cookie-notice-space, 0px); scroll-padding-bottom: var(--cookie-notice-space, 0px); }
+  }
   @media (min-width: 769px) {
     .cookie-notice { grid-template-columns: minmax(0, 1fr) auto; }
     .cookie-copy, .cookie-policy { grid-column: 1; }

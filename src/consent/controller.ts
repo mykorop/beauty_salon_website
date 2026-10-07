@@ -129,6 +129,12 @@ for (const button of banner.querySelectorAll<HTMLButtonElement>('[data-choice]')
   button.addEventListener('click', () => save(button.dataset.choice as Choice, button));
 }
 banner.querySelector('[data-cookie-dismiss]')!.addEventListener('click', () => { dismissed = true; render(); });
+// The notice floats over the page: expose its current height so CSS can reserve space while it is shown.
+const root = document.documentElement.style;
+new ResizeObserver(() => {
+  if (banner.offsetHeight) root.setProperty('--cookie-notice-height', `${banner.offsetHeight}px`);
+  else root.removeProperty('--cookie-notice-height');
+}).observe(banner);
 window.addEventListener('storage', (event) => { if (event.key === storageKey || event.key === null) refresh(); });
 window.addEventListener('pageshow', () => { suspended = false; refresh(); });
 window.addEventListener('pagehide', () => { suspended = true; clearTimeout(timer); stop(false); });
