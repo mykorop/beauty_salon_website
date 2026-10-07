@@ -3,6 +3,7 @@ import { Content as TermsRo, getHeadings as headingsTermsRo } from './legal/ro/t
 import { Content as DeletionRo, getHeadings as headingsDeletionRo } from './legal/ro/delete-account.md';
 import { Content as PrivacyRu, getHeadings as headingsPrivacyRu } from './legal/ru/privacy.md';
 import { Content as TermsRu, getHeadings as headingsTermsRu } from './legal/ru/terms.md';
+import { Content as DeletionRu, getHeadings as headingsDeletionRu } from './legal/ru/delete-account.md';
 import { Content as PrivacyEn, getHeadings as headingsPrivacyEn } from './legal/en/privacy.md';
 import { Content as TermsEn, getHeadings as headingsTermsEn } from './legal/en/terms.md';
 import { Content as DeletionEn, getHeadings as headingsDeletionEn } from './legal/en/delete-account.md';
@@ -30,6 +31,7 @@ const legalContent = {
   ru: {
     privacy: { Content: PrivacyRu, getHeadings: headingsPrivacyRu, title: 'Политика конфиденциальности', description: 'Как BookMe обрабатывает персональные данные, какие данные мы используем и как вы можете осуществить свои права.', updated: 'Последнее обновление: 7 октября 2026 г.' },
     terms: { Content: TermsRu, getHeadings: headingsTermsRu, title: 'Условия использования', description: 'Условия использования BookMe для клиентов, салонов и независимых мастеров в Молдове.', updated: 'Последнее обновление: 7 октября 2026 г.' },
+    'delete-account': { Content: DeletionRu, getHeadings: headingsDeletionRu, title: 'Удаление аккаунта BookMe', description: 'Как удалить аккаунт BookMe, какие данные удаляются и какая информация может сохраниться.', updated: 'Последнее обновление: 7 октября 2026 г.' },
   },
   en: {
     privacy: { Content: PrivacyEn, getHeadings: headingsPrivacyEn, title: 'Privacy Policy', description: 'How BookMe handles personal data, what data we use, and how you can exercise your rights.', updated: 'Last updated: October 7, 2026' },

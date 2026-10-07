@@ -15,7 +15,7 @@ export const legalPages = pages.filter((page): page is LegalPageName => page !==
 // A language lists only the pages it has published; the default language publishes every page.
 const canonicalPaths = {
   ro: { home: '/', privacy: '/privacy.html', terms: '/terms.html', 'delete-account': '/delete-account.html' },
-  ru: { home: '/ru/', privacy: '/ru/privacy.html', terms: '/ru/terms.html' },
+  ru: { home: '/ru/', privacy: '/ru/privacy.html', terms: '/ru/terms.html', 'delete-account': '/ru/delete-account.html' },
   en: { home: '/en/', privacy: '/en/privacy.html', terms: '/en/terms.html', 'delete-account': '/en/delete-account.html' },
 } as const satisfies Record<Locale, Partial<Record<PageName, string>>>;
 type Published = { [L in Locale]: keyof (typeof canonicalPaths)[L] };

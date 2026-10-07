@@ -58,6 +58,25 @@ const deletion = {
     salonList: 'după confirmare, aplicația afișează lista acestor specialiști: încheie colaborarea cu fiecare',
     invitations: 'Invitațiile neacceptate nu blochează ștergerea și sunt revocate automat',
     otherAccounts: 'Ștergerea contului unui salon nu șterge conturile celorlalți specialiști',
+    endCooperation: 'Încheie colaborarea',
+    mailFallback: 'Dacă butonul nu deschide o aplicație de e-mail, scrie la support@bookme.md din serviciul tău obișnuit de e-mail',
+    noSecrets: 'Nu trimite parole, coduri de autentificare sau acte de identitate în mesajul inițial',
+  },
+  // The Russian routes use the labels of the BookMe app's Russian dictionary; the app does not translate DELETE.
+  // Salons and specialists both open «Настройки», so their routes are checked with the role that precedes them.
+  ru: {
+    request: 'Запросить удаление по электронной почте', subject: 'Запрос на удаление аккаунта BookMe',
+    clientPath: 'Профиль → Удалить аккаунт', salonPath: 'салон: Настройки → Удалить аккаунт', specialistPath: 'мастер: Настройки → Удалить аккаунт',
+    thirtyDays: '30 дней', ninetyDays: '90 дней',
+    webRoutes: 'Те же пути работают и в веб-версиях app.bookme.md и business.bookme.md',
+    notDeletion: 'Удаление приложения, выход из аккаунта, закрытие вкладки браузера или очистка данных браузера не удаляют аккаунт',
+    salonRefused: 'Удаление отклоняется, пока в салоне работает хотя бы один мастер, кроме владельца',
+    salonList: 'после подтверждения приложение показывает список этих мастеров: завершите сотрудничество с каждым из них',
+    invitations: 'Непринятые приглашения не блокируют удаление и автоматически отзываются',
+    otherAccounts: 'Удаление аккаунта салона не удаляет аккаунты других мастеров',
+    endCooperation: 'Завершить сотрудничество',
+    mailFallback: 'Если кнопка не открывает почтовое приложение, напишите на support@bookme.md из своего обычного почтового сервиса',
+    noSecrets: 'Не отправляйте в первом письме пароли, коды входа или документы, удостоверяющие личность',
   },
   en: {
     request: 'Request deletion by email', subject: 'BookMe account deletion request',
@@ -69,6 +88,9 @@ const deletion = {
     salonList: 'after you confirm, the app lists those specialists: end the cooperation with each of them',
     invitations: 'Invitations that have not been accepted do not block deletion and are revoked automatically',
     otherAccounts: "Removing a salon account does not delete other specialists' accounts",
+    endCooperation: 'End cooperation',
+    mailFallback: 'If this button does not open an email app, write to support@bookme.md from your usual email service',
+    noSecrets: 'Do not send passwords, sign-in codes or identity documents in the initial email',
   },
 } satisfies Record<PublishedLocale<'delete-account'>, Record<string, string>>;
 
@@ -131,6 +153,9 @@ for (const locale of pageLocales('delete-account')) {
     expect(href.pathname).toBe('support@bookme.md');
     expect(href.searchParams.get('subject')).toBe(text.subject);
     const main = page.getByRole('main');
+    // Without a mail app the reader can still write, and the first email asks for no secrets.
+    await expect(main).toContainText(text.mailFallback);
+    await expect(main).toContainText(text.noSecrets);
     await expect(main).toContainText('BookMe Business');
     await expect(main).toContainText('BookMe Salon');
     await expect(main).toContainText(text.clientPath);
@@ -147,6 +172,8 @@ for (const locale of pageLocales('delete-account')) {
     const main = page.getByRole('main');
     await expect(main).toContainText(text.salonRefused);
     await expect(main).toContainText(text.salonList);
+    // The app's own label for ending each cooperation, quoted as a whole.
+    await expect(main).toContainText(`(${text.endCooperation})`);
     await expect(main).toContainText(text.invitations);
     await expect(main).toContainText(text.otherAccounts);
   });

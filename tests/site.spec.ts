@@ -21,6 +21,7 @@ const content = {
     home: { heading: 'Запись в\u00a0салон\u00a0— в\u00a0вашем ритме.', section: 'Найдите салон' },
     privacy: { heading: 'Политика конфиденциальности', section: 'Конфиденциальность детей' },
     terms: { heading: 'Условия использования', section: 'Применимое право' },
+    'delete-account': { heading: 'Удаление аккаунта BookMe', section: 'Какие данные могут сохраняться' },
   },
   en: {
     home: { heading: 'Beauty appointments, at your pace.', section: 'Find a salon' },
