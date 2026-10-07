@@ -52,7 +52,7 @@ export const consentText = {
 } satisfies Record<Locale, Record<string, string>>;
 
 // The cookie section of each published privacy policy.
-const policySection = { en: 'cookies-and-similar-technologies', ro: 'cookies-și-tehnologii-similare' } satisfies Record<PageLocale<'privacy'>, string>;
+const policySection = { ro: 'cookies-și-tehnologii-similare', ru: 'файлы-cookie-и-аналогичные-технологии', en: 'cookies-and-similar-technologies' } satisfies Record<PageLocale<'privacy'>, string>;
 
 // The policy's cookie section that cookie links lead to from a page in this language, in the default language until the policy is translated.
 export function cookiePolicyUrl(locale: Locale): string {

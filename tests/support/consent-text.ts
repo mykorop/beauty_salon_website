@@ -29,4 +29,4 @@ export const consentText = {
 } satisfies Record<Locale, Record<string, string | RegExp>>;
 
 // The cookie section heading of each published privacy policy, where cookie links lead.
-export const policyHeading = { ro: 'Cookies și tehnologii similare', en: 'Cookies and similar technologies' } satisfies Record<PublishedLocale<'privacy'>, string>;
+export const policyHeading = { ro: 'Cookies și tehnologii similare', ru: 'Файлы cookie и аналогичные технологии', en: 'Cookies and similar technologies' } satisfies Record<PublishedLocale<'privacy'>, string>;

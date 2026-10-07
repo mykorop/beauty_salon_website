@@ -10,6 +10,7 @@ const metadata = {
   },
   ru: {
     home: { title: 'BookMe — запись в салоны красоты в Молдове', description: /бесплатная платформа.*Молдове/ },
+    privacy: { title: 'Политика конфиденциальности — BookMe', description: /персональные данные/ },
   },
   en: {
     home: { title: 'BookMe — Beauty appointments in Moldova', description: /free.*Moldova/ },

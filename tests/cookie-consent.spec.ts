@@ -1,7 +1,7 @@
 import { expect, test } from './fixtures';
 import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import { consentText, policyHeading } from './support/consent-text';
-import { homePath, indexablePages, languageNames, linkLocale, locales } from './support/public-pages';
+import { homePath, indexablePages, languageNames, linkLocale, linkPath, locales } from './support/public-pages';
 
 for (const { locale, path } of indexablePages) {
   test(`notice and storage inventory on ${path}`, async ({ page, javaScriptEnabled }, testInfo) => {
@@ -48,6 +48,18 @@ for (const { locale, path } of indexablePages) {
     }
     // The policy's cookie section, in the default language until the policy is translated.
     await expect(page.getByRole('heading', { name: policyHeading[linkLocale(javaScriptEnabled ? next : locale, 'privacy')], exact: true })).toBeInViewport();
+  });
+
+  test(`banner and footer cookie links on ${path} open the policy's cookie section in its language`, async ({ page }) => {
+    const text = consentText[locale];
+    await page.goto(path);
+    const footer = await page.getByRole('contentinfo').getByRole('link', { name: text.settings }).getAttribute('href');
+    const banner = page.getByRole('region', { name: text.banner }).getByRole('link', { name: text.policyLink });
+    await expect(banner).toHaveAttribute('href', footer!);
+    await banner.click();
+    // The page's own policy once its language has published it, the default language's until then.
+    expect(new URL(page.url()).pathname).toBe(linkPath(locale, 'privacy'));
+    await expect(page.getByRole('heading', { name: policyHeading[linkLocale(locale, 'privacy')], exact: true })).toBeInViewport();
   });
 }
 
