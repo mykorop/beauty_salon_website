@@ -1,7 +1,7 @@
 import { expect, test } from './fixtures';
 import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import { consentText } from './support/consent-text';
-import { indexablePages, languageNames, locales } from './support/public-pages';
+import { homePath, indexablePages, languageNames, locales } from './support/public-pages';
 
 for (const { locale, path } of indexablePages) {
   test(`notice and storage inventory on ${path}`, async ({ page, javaScriptEnabled }, testInfo) => {
@@ -47,6 +47,23 @@ for (const { locale, path } of indexablePages) {
       await page.getByRole('dialog').getByRole('link', { name: shown.policyLink }).click();
     }
     await expect(page.getByRole('heading', { name: shown.policyHeading, exact: true })).toBeInViewport();
+  });
+}
+
+for (const locale of locales) {
+  test(`the cookie choice covers every language version of this site but not the web versions in ${locale}`, async ({ page, javaScriptEnabled }) => {
+    const text = consentText[locale];
+    await page.goto(homePath(locale));
+    await page.getByRole('contentinfo').getByRole('link', { name: text.settings }).click();
+    // Without JavaScript the settings link opens the policy's cookie section instead of the dialog.
+    const explanation = javaScriptEnabled ? page.getByRole('dialog', { name: text.settings }) : page.getByRole('main');
+    await expect(explanation).toContainText(text.scope);
+    await expect(explanation).toContainText(text.notShared);
+    if (javaScriptEnabled) {
+      await explanation.getByRole('link', { name: text.policyLink }).click();
+      await expect(page.getByRole('main')).toContainText(text.scope);
+      await expect(page.getByRole('main')).toContainText(text.notShared);
+    }
   });
 }
 

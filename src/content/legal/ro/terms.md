@@ -1,4 +1,4 @@
-Aceste condiții explică utilizarea site-ului BookMe, a aplicației **BookMe** pentru clienți și a aplicației **BookMe Business** pentru saloane și specialiști independenți, listată ca **BookMe Salon** în App Store. Citește-le înainte de a crea un cont sau de a face o programare. Dacă nu ești de acord, nu crea un cont și nu utiliza serviciile de programare și administrare.
+Aceste condiții explică utilizarea site-ului BookMe, a aplicației **BookMe** pentru clienți și a aplicației **BookMe Business** pentru saloane și specialiști independenți, listată ca **BookMe Salon** în App Store. Ambele aplicații funcționează și în browser, cu aceleași conturi și date: BookMe la [app.bookme.md](https://app.bookme.md/) și BookMe Business la [business.bookme.md](https://business.bookme.md/). Aceste condiții se aplică și acestor versiuni web. Citește-le înainte de a crea un cont sau de a face o programare. Dacă nu ești de acord, nu crea un cont și nu utiliza serviciile de programare și administrare.
 
 ## Cine operează BookMe
 

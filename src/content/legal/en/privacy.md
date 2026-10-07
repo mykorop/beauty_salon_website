@@ -1,4 +1,4 @@
-This policy explains how **BOOKME HUB, SRL** processes personal data for the **bookme.md website**, **BookMe** for clients and **BookMe Business** for salons and specialists, listed as **BookMe Salon** on the App Store.
+This policy explains how **BOOKME HUB, SRL** processes personal data for the **bookme.md website**, **BookMe** for clients and **BookMe Business** for salons and specialists, listed as **BookMe Salon** on the App Store. Both apps also work in a browser, with the same accounts and data: BookMe at [app.bookme.md](https://app.bookme.md/) and BookMe Business at [business.bookme.md](https://business.bookme.md/). This policy covers these web versions too.
 
 Our address is **str. Glinka 4, ap./of. 10, Bălți, Moldova**. For privacy questions and requests, contact [support@bookme.md](mailto:support@bookme.md). BOOKME HUB, SRL is the operator responsible for the BookMe processing described here.
 
@@ -42,7 +42,7 @@ The public website currently has **no analytics provider connected**. Its cookie
 
 The record is valid for **180 days from your explicit action**. This is a product decision, not a statutory retention requirement. Reading the record does not renew it. localStorage does not automatically delete it while you are away; we remove expired records on the next check. Clearing browser data resets the choice. If storage is unavailable, we show an error and keep analytics off on the current page; dismissing that message does not promise a saved choice for your next page.
 
-The choice applies only to the **current origin in this browser**, shared by Romanian and English pages. It does not carry over to subdomains, the web app, mobile apps or your account. Necessary choice storage is separate from optional analytics. Acknowledging a notice when no provider is connected never authorises a future provider. A changed notice, purpose or provider requires a new choice.
+The choice applies only to the **current origin in this browser**, shared by all language versions of this site. It does not carry over to the mobile apps, your account or other subdomains, including the web versions app.bookme.md and business.bookme.md. Necessary choice storage is separate from optional analytics. Acknowledging a notice when no provider is connected never authorises a future provider. A changed notice, purpose or provider requires a new choice.
 
 If analytics is connected in future, its purpose, provider, data, technologies and retention must first be disclosed in settings and this policy, with a separate process for confirming consent. Analytics must stay off until you voluntarily allow it. Silence, scrolling, navigation, opening this policy and closing settings do not give consent. Use **Cookie settings** in the footer, turn analytics off and **Save choice** to withdraw. This stops new collection, cancels supported pending sends and clears known, accessible analytics cookies/storage. It cannot recall requests already sent, erase data held by a provider, or delete inaccessible third-party or HttpOnly cookies. No analytics consent is required to read the site, use links or send the contact form. FormBold receives form data only when you submit the form; this support processing is separate from analytics consent.
 
@@ -58,6 +58,8 @@ A device permission controls access to a device feature. It does not, on its own
 - **Camera and photo selection — both apps:** used for profile images, business galleries and certificates where available. iOS can request camera or photo-library access. Android uses the camera application or a system photo picker in the current flow. Selected images are uploaded, not the entire library. If access is refused, retain the existing image or use another available selection method. Limited photo access on iOS may not work in every selection flow.
 - **Saving a QR image — both apps:** adds a generated image to the device's gallery; iOS can ask for permission to add photos. This save action does not upload the QR image. If it fails, use the displayed QR code or the share/copy-link options.
 - **Push notifications — both apps:** offered during onboarding, in settings or after a booking prompt. iOS and Android 13 or later can ask for a system permission. You can decline or disable push and still use appointments, the calendar and the in-app inbox.
+
+**In the web versions**, the browser asks for location in BookMe for clients and for the camera in both apps, and your browser's site settings control that access. Photos are chosen with the browser's file picker. Choosing a contact from the address book, voice search, push notifications and saving a QR image to the gallery are not available there. Enter client details manually, type your search and follow updates in the in-app inbox; the browser downloads a QR image as a file, and the share/copy-link options remain.
 
 Revoking a permission stops future access controlled by that permission. It does not delete information already saved with BookMe or its providers. Use a privacy or deletion request for existing data.
 
@@ -84,6 +86,8 @@ The providers above operate internationally, so processing may take place outsid
 Account functions use authenticated access with AWS Cognito. The website contact form and photo uploads use HTTPS. Diagnostic filters redact selected sensitive fields. These measures do not make all stored records or diagnostic messages anonymous.
 
 The apps keep some information on your device, including sign-in state, language, notification choices, search filters, selected city and onboarding preferences. These support the app's operation and your choices. Clearing local app data is separate from a request to remove information held by BookMe or its providers.
+
+The web versions keep sign-in state and settings such as language, filters, the selected city and onboarding preferences in the browser storage of their own domain. This storage is needed for them to work and is not used for analytics; the cookie settings of this website do not apply there. Clearing a web version's site data in your browser signs you out but does not delete your account or the information held by BookMe or its providers.
 
 ## Retention and account deletion
 

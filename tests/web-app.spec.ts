@@ -1,8 +1,7 @@
 import type { Locator, Page } from '@playwright/test';
 import { expect, test, waitForFonts } from './fixtures';
-import { homePath, locales, pagePath, pages, type Locale } from './support/public-pages';
+import { homePath, locales, pagePath, pages, webApps, type Locale } from './support/public-pages';
 
-const webApps = { client: 'https://app.bookme.md/', business: 'https://business.bookme.md/' } as const;
 const { client: clientWebApp, business: businessWebApp } = webApps;
 
 const webApp = {

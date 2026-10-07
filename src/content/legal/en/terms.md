@@ -1,4 +1,4 @@
-These terms explain how you may use the BookMe website, **BookMe** for clients and **BookMe Business** for salons and independent professionals, listed as **BookMe Salon** on the App Store. Read them before creating an account or making a booking. If you do not agree, do not create an account or use the booking and management services.
+These terms explain how you may use the BookMe website, **BookMe** for clients and **BookMe Business** for salons and independent professionals, listed as **BookMe Salon** on the App Store. Both apps also work in a browser, with the same accounts and data: BookMe at [app.bookme.md](https://app.bookme.md/) and BookMe Business at [business.bookme.md](https://business.bookme.md/). These terms apply to these web versions too. Read them before creating an account or making a booking. If you do not agree, do not create an account or use the booking and management services.
 
 ## Who operates BookMe
 

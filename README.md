@@ -29,8 +29,9 @@ npm run package:site
 `npm test` starts its own production preview server on `127.0.0.1:4329` and tests
 the existing `dist/` build. Rebuild after source changes; do not leave another
 server on that port. Run a single test file with `npm test -- tests/site.spec.ts`.
-`tests/support/public-pages.ts` lists the public languages and page URLs once for
-the test tables, Lighthouse and demo captures, independently of `src/i18n.ts`.
+`tests/support/public-pages.ts` lists the public languages, page URLs and both web-app
+addresses once for the test tables, Lighthouse and demo captures, independently of
+`src/i18n.ts` and `src/content/apps.ts`.
 Run `npm run test:seo` to rebuild and check SEO on the production HTML, including
 metadata, language alternatives, sitemap, JSON-LD, links and HTTP 404 behavior.
 CI runs type checking, the static build, Chromium/Firefox/WebKit tests (including
@@ -103,6 +104,14 @@ print styles. `tests/legal.spec.ts` covers all six legal URLs, rights
 and email-request links, keyboard section navigation, print output, 320/768/1440px
 layouts, and axe checks. Content and navigation also run without JavaScript;
 axe runs in the JavaScript-enabled projects. No deletion email is sent by tests.
+The introductions of all three documents name the web versions at
+`https://app.bookme.md/` and `https://business.bookme.md/`. The privacy policy also
+describes their browser permissions, the features unavailable in a browser and their
+browser storage; the deletion page describes the same routes in the browser and the
+salon's precondition of ending every specialist's cooperation. `tests/legal.spec.ts`
+and `tests/terms.spec.ts` check those claims, and `tests/cookie-consent.spec.ts` checks
+that the cookie settings and policy apply the choice to all language versions of this
+site and not to the web versions.
 The homepage describes the free BookMe platform for Moldova, with separate paths
 for clients and for salons or independent professionals. `DownloadApps.astro`
 contains the exact client/business store URLs and explains the BookMe Salon name

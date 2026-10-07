@@ -1,6 +1,6 @@
-Această pagină acoperă **BookMe** pentru clienți și **BookMe Business** pentru saloane și specialiști, publicat ca **BookMe Salon** în App Store. Operatorul este **BOOKME HUB, SRL**, str. Glinka 4, ap./of. 10, Bălți, Moldova. Contact: [support@bookme.md](mailto:support@bookme.md).
+Această pagină de pe **site-ul bookme.md** acoperă **BookMe** pentru clienți și **BookMe Business** pentru saloane și specialiști, publicat ca **BookMe Salon** în App Store. Ambele aplicații funcționează și în browser, cu aceleași conturi și date: BookMe la [app.bookme.md](https://app.bookme.md/) și BookMe Business la [business.bookme.md](https://business.bookme.md/). Operatorul este **BOOKME HUB, SRL**, str. Glinka 4, ap./of. 10, Bălți, Moldova. Contact: [support@bookme.md](mailto:support@bookme.md).
 
-**Ștergerea din aplicație dezactivează contul și începe o curățare parțială. Nu șterge imediat toate datele asociate.** Eliminarea finală a înregistrărilor rămase necesită un proces separat prin asistență, descris mai jos. Dezinstalarea aplicației nu șterge contul.
+**Ștergerea din aplicație dezactivează contul și începe o curățare parțială. Nu șterge imediat toate datele asociate.** Eliminarea finală a înregistrărilor rămase necesită un proces separat prin asistență, descris mai jos. Dezinstalarea aplicației, deconectarea, închiderea filei din browser sau ștergerea datelor browserului nu șterge contul.
 
 Poți solicita ștergerea contului și a datelor asociate fără autentificare și fără aplicația instalată. Dacă butonul nu deschide o aplicație de e-mail, scrie la **support@bookme.md** din serviciul tău obișnuit de e-mail.
 
@@ -14,10 +14,10 @@ Angajamentul nostru de asistență este să soluționăm cererile de ștergere a
 
 ## Începe ștergerea în aplicație
 
-Autentifică-te în contul pe care vrei să îl ștergi și urmează traseul rolului tău. Denumirile corespund limbii selectate în aplicație.
+Autentifică-te în contul pe care vrei să îl ștergi și urmează traseul rolului tău. Denumirile corespund limbii selectate în aplicație. Aceleași trasee funcționează și în versiunile web app.bookme.md și business.bookme.md.
 
 - **BookMe — client:** Profil → Șterge contul.
-- **BookMe Business / BookMe Salon — salon:** Setările administratorului → Șterge contul.
+- **BookMe Business / BookMe Salon — salon:** Setările administratorului → Șterge contul. Ștergerea este refuzată cât timp în salon lucrează cel puțin un specialist în afară de proprietar. În acest caz, după confirmare, aplicația afișează lista acestor specialiști: încheie colaborarea cu fiecare (**Încheie colaborarea**), apoi alege **Șterge contul**. Invitațiile neacceptate nu blochează ștergerea și sunt revocate automat.
 - **BookMe Business / BookMe Salon — specialist:** Setările specialistului → Șterge contul.
 
 Introdu **DELETE** în dialogul de confirmare și confirmă. Poți anula înainte de confirmare. După reușita cererii, aplicația șterge sesiunea de autentificare și revine la ecranul de intrare. Dacă apare o eroare sau pierzi accesul înainte de finalizare, contactează asistența pentru verificarea etapelor rămase.

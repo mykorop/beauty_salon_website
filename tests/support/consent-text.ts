@@ -7,11 +7,15 @@ export const consentText = {
     understood: 'Am înțeles', details: 'Detalii', configure: 'Setări', allow: 'Permite analiza', deny: 'Doar necesare',
     settings: 'Setări cookie', acknowledged: 'Mesaj confirmat', save: 'Salvează alegerea', error: /^Nu am putut salva/,
     policyLink: /Cookies în/, policyHeading: 'Cookies și tehnologii similare',
+    // Where the choice applies, said the same way in the settings and the policy.
+    scope: 'toate versiunile lingvistice ale acestui site', notShared: 'aplicațiilor mobile, contului tău sau altor subdomenii, inclusiv versiunilor web app.bookme.md și business.bookme.md',
   },
   en: {
     banner: 'Cookies and your privacy', intro: 'Analytics is not connected', noJs: /^Without JavaScript/,
     understood: 'Understood', details: 'Details', configure: 'Settings', allow: 'Allow analytics', deny: 'Necessary only',
     settings: 'Cookie settings', acknowledged: 'Notice acknowledged', save: 'Save choice', error: /^We could not save/,
     policyLink: /Cookies in/, policyHeading: 'Cookies and similar technologies',
+    // Where the choice applies, said the same way in the settings and the policy.
+    scope: 'all language versions of this site', notShared: 'the mobile apps, your account or other subdomains, including the web versions app.bookme.md and business.bookme.md',
   },
 } satisfies Record<Locale, Record<string, string | RegExp>>;

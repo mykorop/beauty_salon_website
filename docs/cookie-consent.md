@@ -28,7 +28,7 @@ Before publishing the “no analytics connected” message, the operator must in
 
 The controller keeps one active permission generation, aborts it before persistence on withdrawal, and rejects stale async continuations. Storage failures block collection on the current document until a new explicit action can be saved and read back. An unsuccessful withdrawal also tries to remove the previous stored grant. If the browser forbids both writing and removal, the UI explicitly makes no persistence promise for the next page.
 
-The record's `noticeVersion` combines the notice date, provider ID and provider revision. Increment the notice or provider revision whenever notices, purposes, data, technologies or retention change. Old/incompatible records never grant permission. No choice is shared with a subdomain, account or app.
+The record's `noticeVersion` combines the notice date, provider ID and provider revision. Increment the notice or provider revision whenever notices, purposes, data, technologies or retention change. Old/incompatible records never grant permission. No choice is shared with a subdomain, account or app. Clarifying where the choice applies is not such a change when purpose, technology, provider, retention and origin stay the same: on 7 October 2026 the scope text began naming all language versions of this site and excluding the web versions `app.bookme.md` and `business.bookme.md`, and `noticeVersion` stayed `2026-09-18`, so existing records remain valid.
 
 ## Isolated browser fixtures
 

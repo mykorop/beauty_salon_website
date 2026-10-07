@@ -30,6 +30,9 @@ export function filePath(locale: Locale, page: PageName): string {
   return page === 'home' ? `${homePath(locale)}index.html` : pagePath(locale, page);
 }
 
+// Each app's web version, linked from the homepage and named in the legal documents.
+export const webApps = { client: 'https://app.bookme.md/', business: 'https://business.bookme.md/' } as const;
+
 // Every indexable page, grouped by language in list order.
 export const indexablePages = locales.flatMap((locale) => pages.map((page) => ({ locale, page, path: pagePath(locale, page) })));
 export const indexablePaths = indexablePages.map(({ path }) => path);

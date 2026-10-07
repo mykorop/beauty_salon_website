@@ -10,6 +10,7 @@ const terms = {
     clientAge: 'cel puțin 16 ani', businessAge: 'cel puțin 18 ani', ageCheck: 'nu verifică tehnic vârsta',
     consent: 'nu reprezintă consimțământul clientului', liability: 'Nu excludem și nu limităm răspunderea', review: 'poți solicita reexaminarea',
     privacy: 'Politica de confidențialitate', deletion: 'Instrucțiuni de ștergere a contului', support: 'Contactează asistența',
+    webVersions: 'Aceste condiții se aplică și acestor versiuni web.',
   },
   en: {
     free: 'The BookMe platform is free for clients, salons and independent professionals.',
@@ -19,6 +20,7 @@ const terms = {
     clientAge: 'at least 16 years old', businessAge: 'at least 18 years old', ageCheck: 'do not technically verify age',
     consent: "is not the client's consent", liability: 'We do not exclude or limit liability', review: 'you may ask for a review',
     privacy: 'Privacy Policy', deletion: 'Account deletion instructions', support: 'Contact support',
+    webVersions: 'These terms apply to these web versions too.',
   },
 } satisfies Record<Locale, Record<string, string>>;
 
@@ -37,6 +39,7 @@ for (const locale of locales) {
     await expect(main).toContainText(text.payment);
     await expect(main).toContainText(text.provider);
     await expect(main).toContainText(text.law);
+    await expect(main).toContainText(text.webVersions);
     await expect(main.getByRole('link', { name: 'support@bookme.md', exact: true }).first()).toHaveAttribute('href', 'mailto:support@bookme.md');
   });
 

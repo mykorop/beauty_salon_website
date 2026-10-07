@@ -1,6 +1,6 @@
-This page covers **BookMe** for clients and **BookMe Business** for salons and specialists, listed as **BookMe Salon** on the App Store. The operator is **BOOKME HUB, SRL**, str. Glinka 4, ap./of. 10, Bălți, Moldova. Contact: [support@bookme.md](mailto:support@bookme.md).
+This page on the **bookme.md website** covers **BookMe** for clients and **BookMe Business** for salons and specialists, listed as **BookMe Salon** on the App Store. Both apps also work in a browser, with the same accounts and data: BookMe at [app.bookme.md](https://app.bookme.md/) and BookMe Business at [business.bookme.md](https://business.bookme.md/). The operator is **BOOKME HUB, SRL**, str. Glinka 4, ap./of. 10, Bălți, Moldova. Contact: [support@bookme.md](mailto:support@bookme.md).
 
-**In-app deletion disables your account and starts partial cleanup. It does not immediately erase all associated data.** Final removal of remaining records requires a separate process through support, described below. Uninstalling the app does not delete your account.
+**In-app deletion disables your account and starts partial cleanup. It does not immediately erase all associated data.** Final removal of remaining records requires a separate process through support, described below. Uninstalling the app, signing out, closing the browser tab or clearing browser data does not delete your account.
 
 You can request account and associated-data deletion without signing in or installing the app. If this button does not open an email app, write to **support@bookme.md** from your usual email service.
 
@@ -14,10 +14,10 @@ Our support commitment is to handle account-deletion requests within **30 days o
 
 ## Start deletion in your app
 
-Sign in to the account you want to delete and follow the route for your role. Labels follow the language selected in the app.
+Sign in to the account you want to delete and follow the route for your role. Labels follow the language selected in the app. The same routes work in the web versions at app.bookme.md and business.bookme.md.
 
 - **BookMe — client:** Profile → Delete account.
-- **BookMe Business / BookMe Salon — salon:** Administrator settings → Delete account.
+- **BookMe Business / BookMe Salon — salon:** Administrator settings → Delete account. Deletion is refused while at least one specialist other than the owner still works at the salon. In that case, after you confirm, the app lists those specialists: end the cooperation with each of them (**End cooperation**), then select **Delete account**. Invitations that have not been accepted do not block deletion and are revoked automatically.
 - **BookMe Business / BookMe Salon — specialist:** Specialist settings → Delete account.
 
 Enter **DELETE** in the confirmation dialog and confirm. You can cancel before confirming. After the request succeeds, the app clears the sign-in session and returns to the sign-in screen. If it reports an error or you lose access before completion, contact support so the remaining steps can be checked.
